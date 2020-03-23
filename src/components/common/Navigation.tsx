@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 interface NavigationProps {
@@ -12,7 +12,7 @@ const Navigation: React.FC<NavigationProps> = ({ categories }) => {
         return (
           <NavLink
             className="nav-item nav-link"
-            to={`/${category.name.toLowerCase()}`}
+            to={`/movies/${category.slug}`}
             key={category.id}
           >
             {category.name}

@@ -6,6 +6,7 @@ import * as API from "../api";
 
 // components
 import Navigation from "./common/Navigation";
+import MoviesPage from "./MoviesPage";
 
 // const categories: MovieCategory[] = [
 //   { id: 1, name: "Första" },
@@ -13,12 +14,13 @@ import Navigation from "./common/Navigation";
 //   { id: 3, name: "Tredje" }
 // ];
 
-function App() {
+const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
 
   useEffect(() => {
     async function setCategoriesAsync() {
       const c: MovieCategory[] = await API.getMovieCategories();
+      c.map(category => (category.slug = category.name.toLowerCase()));
       setCategories(c);
     }
     setCategoriesAsync();
@@ -26,10 +28,14 @@ function App() {
 
   return (
     <div className="container-fluid">
-      <h1>Hello World!</h1>
       <Navigation categories={categories} />
+      <Switch>
+        <Route path="/movies/:slug">
+          <MoviesPage categories={categories} />
+        </Route>
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;

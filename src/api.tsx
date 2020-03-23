@@ -12,9 +12,18 @@ export const getMovieCategories = async () => {
     const categories = response.data;
     return categories;
   } catch (err) {
-    if (err && err.response) {
-      return err.response.data;
-    }
+    if (err && err.response) return err.response.data;
+    throw err;
+  }
+};
+
+export const getMovies = async () => {
+  try {
+    const response = await apiClient.get<Movie[]>("/products");
+    const movies = response.data;
+    return movies;
+  } catch (err) {
+    if (err && err.response) return err.response.data;
     throw err;
   }
 };

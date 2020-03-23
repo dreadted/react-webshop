@@ -1,6 +1,11 @@
 type MovieCategory = {
   id: number;
   name: string;
+  slug?: string;
+};
+
+type ProductCategory = {
+  categoryId: number;
 };
 
 type Movie = {
@@ -11,5 +16,5 @@ type Movie = {
   imageUrl: string;
   year: number;
   added: Date;
-  productCategory: MovieCategory[];
+  productCategory: ProductCategory[];
 };
