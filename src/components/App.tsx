@@ -34,6 +34,7 @@ const App = () => {
         <Route path="/movies/:slug">
           <MoviesPage categories={categories} />
         </Route>
+        <Route path="/movies" component={MoviesPage} />
         <Route component={NoPage} />
       </Switch>
     </div>

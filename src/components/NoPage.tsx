@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 const NoPage: React.FC = () => {
   return (
     <>
-      <div className="display">404</div>
-      <Link to="/">&#8678; Back to homepage</Link>
+      <h1 className="display-1">404</h1>
+      <Link className="btn btn-warning" to="/">
+        &#8678; Back to homepage
+      </Link>
     </>
   );
 };

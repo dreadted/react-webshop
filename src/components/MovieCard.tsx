@@ -7,10 +7,10 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
-    <div className="col-sm-6 col-lg-4">
-      <div className="card my-3 p-4 bg-dark shadow-sm">
+    <div className="col-sm-4 col-lg-3">
+      <div className="card my-3 bg-dark shadow-sm">
         <img className="card-img-top" alt={movie.name} src={movie.imageUrl} />
-        <div className="card-body px-1">
+        <div className="card-body p-4">
           <div className="d-flex flex-md-wrap h5 font-weight-bold">
             <div className="mr-auto">{movie.name}</div>
             <div>{getCurrencyFormat(movie.price)}</div>
