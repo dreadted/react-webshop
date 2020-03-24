@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 // API
 import * as API from "../api";
 import { useParams } from "react-router-dom";
-import { getEnabledCategories } from "trace_events";
+import MovieCard from "./MovieCard";
 
 interface MoviesPageProps {
   categories: MovieCategory[];
@@ -28,16 +28,17 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
   return (
     <>
       <h2>{currentCategory && currentCategory.name}</h2>
-      {currentCategory &&
-        movies.map(movie => {
-          return (
-            <p>
-              {movie.productCategory.map(
-                cat => cat.categoryId === currentCategory.id && movie.name
-              )}
-            </p>
-          );
-        })}
+      <div className="row">
+        {currentCategory &&
+          movies.map(movie => {
+            return movie.productCategory.map(
+              cat =>
+                cat.categoryId === currentCategory.id && (
+                  <MovieCard key={movie.id} movie={movie} />
+                )
+            );
+          })}
+      </div>
     </>
   );
 };
