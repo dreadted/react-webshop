@@ -9,11 +9,9 @@ import Navigation from "./common/Navigation";
 import MoviesPage from "./MoviesPage";
 import NoPage from "./NoPage";
 
-// const categories: MovieCategory[] = [
-//   { id: 1, name: "Första" },
-//   { id: 2, name: "Andra" },
-//   { id: 3, name: "Tredje" }
-// ];
+// css
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
@@ -28,13 +26,16 @@ const App = () => {
   }, [categories]);
 
   return (
-    <div className="container-fluid bg-secondary text-light">
+    <div className="container-fluid text-light p-4">
       <Navigation categories={categories} />
       <Switch>
         <Route path="/movies/:slug">
           <MoviesPage categories={categories} />
         </Route>
-        <Route path="/movies" component={MoviesPage} />
+        <Redirect from="/" exact to="/movies" />
+        <Route path="/movies">
+          <MoviesPage categories={categories} />
+        </Route>
         <Route component={NoPage} />
       </Switch>
     </div>

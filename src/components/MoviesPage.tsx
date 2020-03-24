@@ -40,13 +40,13 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
   return (
     <>
       <h2>{(currentCategory && currentCategory.name) || "Latest additions"}</h2>
-      <div className="card-deck">
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {(currentCategory &&
-          getMoviesFromCategory(currentCategory).map((movie, index) => (
-            <MovieCard key={movie.id} movie={movie} index={index} />
+          getMoviesFromCategory(currentCategory).map(movie => (
+            <MovieCard key={movie.id} movie={movie} categories={categories} />
           ))) ||
-          getLastAddedMovies(4).map((movie, index) => (
-            <MovieCard key={movie.id} movie={movie} index={index} />
+          getLastAddedMovies(4).map(movie => (
+            <MovieCard key={movie.id} movie={movie} categories={categories} />
           ))}
       </div>
     </>

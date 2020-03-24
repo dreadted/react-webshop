@@ -1,34 +1,56 @@
 import React from "react";
 import { getCurrencyFormat } from "../utils";
-import MovieCardWrapper from "./MovieCardWrapper";
 
 interface MovieCardProps {
   movie: Movie;
-  index: number;
+  categories: MovieCategory[];
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, categories }) => {
+  const getCategoryBadges = () => {
+    let result: React.ReactNodeArray = [];
+    const currentCategories = categories.filter(category =>
+      movie.productCategory.find(pc => pc.categoryId === category.id)
+    );
+
+    currentCategories.map(c =>
+      result.push(
+        <span
+          key={c.id}
+          className={`badge badge-pill mr-2 movie-category-${c.id}`}
+        >
+          {c.name}
+        </span>
+      )
+    );
+    return result;
+  };
+
   return (
-    <>
-      <div className="card my-3 bg-dark shadow-sm">
-        <img
-          className="card-img-top img-fluid"
-          alt={movie.name}
-          src={movie.imageUrl}
-        />
-        <div className="card-body p-4">
-          <div className="d-flex flex-md-wrap h5 font-weight-bold">
-            <div className="mr-auto">{movie.name}</div>
-            <div>{getCurrencyFormat(movie.price)}</div>
+    <div className="col-mb-4 d-flex">
+      <div className="card m-3 shadow-sm">
+        <div className="overlay">
+          <img
+            className="card-img-top img-fluid"
+            alt={movie.name}
+            src={movie.imageUrl}
+          />
+          <div className="card-description">
+            <h4>{movie.name}</h4>
+            <p>{movie.description}</p>
           </div>
-          <p>{movie.description}</p>
         </div>
         <div className="card-footer">
-          <button className="btn btn-warning">Add to cart</button>
+          <div className="mb-3">{getCategoryBadges()}</div>
+          <div className="d-flex flex-md-wrap">
+            <div className="h5 font-weight-bold mr-auto">
+              {getCurrencyFormat(movie.price)}
+            </div>
+            <button className="btn btn-warning">Add to cart</button>
+          </div>
         </div>
       </div>
-      <MovieCardWrapper index={index + 1} />
-    </>
+    </div>
   );
 };
 
