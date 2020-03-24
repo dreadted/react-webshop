@@ -25,27 +25,28 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
     setMoviesAsync();
   }, [movies]);
 
-  const lastAddedMovies = () => {
+  const getMoviesFromCategory = (category: MovieCategory) => {
+    return movies.filter(movie => {
+      return movie.productCategory.find(cat => cat.categoryId === category.id);
+    });
+  };
+
+  const getLastAddedMovies = (numberOfMovies: number) => {
     const m: Movie[] = Array.from(movies);
     m.sort((x, y) => (x.added < y.added ? 1 : -1));
-    return m.slice(0, 3);
+    return m.slice(0, numberOfMovies);
   };
 
   return (
     <>
       <h2>{(currentCategory && currentCategory.name) || "Latest additions"}</h2>
-      <div className="row">
+      <div className="card-deck">
         {(currentCategory &&
-          movies.map(movie => {
-            return movie.productCategory.map(
-              cat =>
-                cat.categoryId === currentCategory.id && (
-                  <MovieCard key={movie.id} movie={movie} />
-                )
-            );
-          })) ||
-          lastAddedMovies().map(movie => (
-            <MovieCard key={movie.id} movie={movie} />
+          getMoviesFromCategory(currentCategory).map((movie, index) => (
+            <MovieCard key={movie.id} movie={movie} index={index} />
+          ))) ||
+          getLastAddedMovies(4).map((movie, index) => (
+            <MovieCard key={movie.id} movie={movie} index={index} />
           ))}
       </div>
     </>
