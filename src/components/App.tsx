@@ -23,7 +23,7 @@ const App = () => {
       setCategories(c);
     }
     setCategoriesAsync();
-  }, [categories]);
+  }, []);
 
   return (
     <div className="container-fluid text-light p-4">

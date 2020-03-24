@@ -3,7 +3,7 @@ body {
 }
 
 .card {
-  background: #3b0000;
+  background: #201010;
   border: none;
 }
 .card-img-top {
@@ -31,10 +31,17 @@ body {
   display: inline-block;
 }
 
+.movie-category-5 {
+  background: #6a0000;
+}
+
+.movie-category-6 {
+  background: #6a3000;
+}
 .movie-category-7 {
-  background: #ff0000;
+  background: #005400;
 }
 
 .movie-category-8 {
-  background: #00ff00;
+  background: #002f00;
 }

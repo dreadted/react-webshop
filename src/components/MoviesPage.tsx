@@ -23,7 +23,7 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
       setMovies(m);
     }
     setMoviesAsync();
-  }, [movies]);
+  }, []);
 
   const getMoviesFromCategory = (category: MovieCategory) => {
     return movies.filter(movie => {
