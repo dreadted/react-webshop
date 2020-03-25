@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import slugify from "slugify";
 
 // API
 import * as API from "../api";
@@ -10,8 +11,8 @@ import MoviesPage from "./MoviesPage";
 import NoPage from "./NoPage";
 
 // css
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.scss";
 
 const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
@@ -19,7 +20,9 @@ const App = () => {
   useEffect(() => {
     async function setCategoriesAsync() {
       const c: MovieCategory[] = await API.getMovieCategories();
-      c.map(category => (category.slug = category.name.toLowerCase()));
+      c.map(
+        category => (category.slug = slugify(category.name, { lower: true }))
+      );
       setCategories(c);
     }
     setCategoriesAsync();

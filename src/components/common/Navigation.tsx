@@ -7,7 +7,10 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ categories }) => {
   return (
-    <nav className="nav nav-tabs nav-fill">
+    <nav className="nav nav-pills nav-fill">
+      <NavLink className="nav-item nav-link" to="/movies" exact>
+        Newly added
+      </NavLink>
       {categories.map(category => {
         return (
           <NavLink

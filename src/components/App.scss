@@ -1,9 +1,11 @@
-body {
-  background: #110000;
-}
+$body-bg: #121212;
+$primary: #304f88;
+$warning: #7c5db3;
+$dark: #1e1e1e;
+
+@import "~bootstrap/scss/bootstrap.scss";
 
 .card {
-  background: #201010;
   border: none;
 }
 .card-img-top {
@@ -32,16 +34,16 @@ body {
 }
 
 .movie-category-5 {
-  background: #6a0000;
+  background: #333366;
 }
 
 .movie-category-6 {
-  background: #6a3000;
+  background: #336633;
 }
 .movie-category-7 {
-  background: #005400;
+  background: #663333;
 }
 
 .movie-category-8 {
-  background: #002f00;
+  background: #666633;
 }

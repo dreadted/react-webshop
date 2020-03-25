@@ -28,7 +28,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, categories }) => {
 
   return (
     <div className="col-mb-4 d-flex">
-      <div className="card m-3 shadow-sm">
+      <div className="card m-3 bg-dark shadow-sm">
         <div className="overlay">
           <img
             className="card-img-top img-fluid"
@@ -46,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, categories }) => {
             <div className="h5 font-weight-bold mr-auto">
               {getCurrencyFormat(movie.price)}
             </div>
-            <button className="btn btn-warning">Add to cart</button>
+            <button className="btn btn-primary">Add to cart</button>
           </div>
         </div>
       </div>

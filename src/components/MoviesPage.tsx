@@ -12,9 +12,12 @@ interface MoviesPageProps {
 const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const { slug } = useParams();
+
+  const newsCategory: number = -1;
+
   const currentCategory: MovieCategory | undefined = slug
     ? categories.find(category => category.slug === slug)
-    : undefined;
+    : { id: newsCategory, name: "Newly added" };
 
   useEffect(() => {
     async function setMoviesAsync() {
@@ -39,15 +42,19 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
 
   return (
     <>
-      <h2>{(currentCategory && currentCategory.name) || "Latest additions"}</h2>
+      <h2 className="display-4 m-4">
+        {currentCategory && currentCategory.name}
+      </h2>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {(currentCategory &&
-          getMoviesFromCategory(currentCategory).map(movie => (
-            <MovieCard key={movie.id} movie={movie} categories={categories} />
-          ))) ||
+          currentCategory.id === newsCategory &&
           getLastAddedMovies(4).map(movie => (
             <MovieCard key={movie.id} movie={movie} categories={categories} />
-          ))}
+          ))) ||
+          (currentCategory &&
+            getMoviesFromCategory(currentCategory).map(movie => (
+              <MovieCard key={movie.id} movie={movie} categories={categories} />
+            )))}
       </div>
     </>
   );
