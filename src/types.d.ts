@@ -23,7 +23,8 @@ type Cart = {
   items: Map<Movie, number>;
   articles: number;
   subTotal: number;
-  openState: boolean;
+  blink: boolean;
+  open: boolean;
 };
 
 type CartItem = {

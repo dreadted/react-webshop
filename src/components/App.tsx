@@ -18,7 +18,8 @@ const emptyCart: Cart = {
   items: new Map(),
   articles: 0,
   subTotal: 0,
-  openState: false
+  blink: false,
+  open: false
 };
 
 const MIN_QTY = 1;
@@ -35,7 +36,7 @@ const App = () => {
       if (currentQty) newCartItems.set(movie, currentQty + quantity);
     } else newCartItems.set(movie, quantity);
     const [subTotal, articles] = getTotals(newCartItems);
-    setCart({ ...cart, items: newCartItems, subTotal, articles });
+    setCart({ ...cart, items: newCartItems, subTotal, articles, blink: true });
   };
 
   const updateCart: UpdateCart = (movie, quantity) => {
@@ -46,7 +47,7 @@ const App = () => {
       newCartItems.set(movie, quantity);
     }
     const [subTotal, articles] = getTotals(newCartItems);
-    setCart({ ...cart, items: newCartItems, subTotal, articles });
+    setCart({ ...cart, items: newCartItems, subTotal, articles, blink: true });
   };
 
   const getTotals = (items: Map<Movie, number>) => {
@@ -60,11 +61,14 @@ const App = () => {
     return [subTotal, articles];
   };
 
-  const handleChange = (
-    movie: Movie,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    console.log(e.target.name, e.target.value, movie.name);
+  useEffect(() => {
+    if (cart.blink) {
+      setTimeout(() => setCart({ ...cart, blink: false }), 500);
+    }
+  }, [cart]);
+
+  const toggleCart = () => {
+    setCart({ ...cart, open: !cart.open });
   };
 
   useEffect(() => {
@@ -91,7 +95,7 @@ const App = () => {
         </Route>
         <Route component={NoPage} />
       </Switch>
-      <Cart cart={cart} updateCart={updateCart} />
+      <Cart cart={cart} updateCart={updateCart} toggleCart={toggleCart} />
     </div>
   );
 };

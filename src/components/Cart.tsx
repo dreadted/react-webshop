@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 //components
 import CartItem from "./CartItem";
@@ -21,24 +21,42 @@ library.add(faShoppingCart, faAngleUp, faPlusCircle, faMinusCircle, faTrashAlt);
 interface CartProps {
   cart: Cart;
   updateCart: UpdateCart;
+  toggleCart: () => void;
 }
 
-const Cart: React.FC<CartProps> = ({ cart, updateCart }) => {
-  const [openState, setOpenState] = useState<boolean>();
-
-  const handleClick = (e: React.MouseEvent) => {
-    toggleOpenState();
-  };
-
-  const toggleOpenState = () => {
-    setOpenState(!openState);
-  };
-
+const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
   const getOpenClass = () => {
-    return openState && cart.articles ? "open" : "";
+    return cart.open && cart.articles ? "open" : "";
+  };
+
+  const getBlinkClass = () => {
+    return cart.blink ? "blink" : "";
   };
 
   const getHeader = () => {
+    return (
+      <li
+        onClick={toggleCart}
+        className={`toggle list-group-item d-flex align-items-center
+          ${getOpenClass()} ${getBlinkClass()}`}
+      >
+        <div className="d-flex py-1 align-items-center flex-nowrap">
+          <div>
+            <FontAwesomeIcon icon="shopping-cart" />
+          </div>
+          <div className="ml-2 font-weight-bold">
+            Shopping cart {getOpenClass()}
+          </div>
+        </div>
+        <div className="ml-4"></div>
+        <div className="ml-auto">
+          <FontAwesomeIcon icon="angle-up" size="lg" />
+        </div>
+      </li>
+    );
+  };
+
+  const getCaptions = () => {
     if (cart.articles)
       return (
         <li
@@ -91,23 +109,8 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart }) => {
   return (
     <div className="cart fixed-bottom" id="cart">
       <ul className="list-group m-3">
-        <li
-          onClick={handleClick}
-          className={`toggle list-group-item d-flex align-items-center
-          ${getOpenClass()}`}
-        >
-          <div className="d-flex py-1 align-items-center flex-nowrap">
-            <div>
-              <FontAwesomeIcon icon="shopping-cart" />
-            </div>
-            <div className="ml-2 font-weight-bold">Shopping cart</div>
-          </div>
-          <div className="ml-4"></div>
-          <div className="ml-auto">
-            <FontAwesomeIcon icon="angle-up" size="lg" />
-          </div>
-        </li>
         {getHeader()}
+        {getCaptions()}
         {getItems()}
         {getFooter()}
       </ul>
