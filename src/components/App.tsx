@@ -5,14 +5,14 @@ import slugify from "slugify";
 // API
 import * as API from "../api";
 
+// css
+import "./App.scss";
+
 // components
 import Navigation from "./common/Navigation";
 import MoviesPage from "./MoviesPage";
 import NoPage from "./NoPage";
-
-// css
-// import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.scss";
+import Cart from "./Cart";
 
 const emptyCart: Cart = {
   items: new Map(),
@@ -58,6 +58,7 @@ const App = () => {
         </Route>
         <Route component={NoPage} />
       </Switch>
+      <Cart cart={cart} />
     </div>
   );
 };

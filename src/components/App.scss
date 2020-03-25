@@ -5,6 +5,10 @@ $dark: #1e1e1e;
 
 @import "~bootstrap/scss/bootstrap.scss";
 
+body {
+  overflow-y: scroll;
+}
+
 .card {
   border: none;
 }
