@@ -8,9 +8,10 @@ import NoPage from "./NoPage";
 
 interface MoviesPageProps {
   categories: MovieCategory[];
+  addToCart: AddToCart;
 }
 
-const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
+const MoviesPage: React.FC<MoviesPageProps> = ({ categories, addToCart }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const { slug } = useParams();
 
@@ -51,11 +52,21 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
         {(currentCategory &&
           currentCategory.id === newsCategory &&
           getLastAddedMovies(4).map(movie => (
-            <MovieCard key={movie.id} movie={movie} categories={categories} />
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              categories={categories}
+              addToCart={addToCart}
+            />
           ))) ||
           (currentCategory &&
             getMoviesFromCategory(currentCategory).map(movie => (
-              <MovieCard key={movie.id} movie={movie} categories={categories} />
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                categories={categories}
+                addToCart={addToCart}
+              />
             )))}
       </div>
     </>

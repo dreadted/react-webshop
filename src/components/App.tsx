@@ -14,8 +14,25 @@ import NoPage from "./NoPage";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 
+const emptyCart: Cart = {
+  items: new Map(),
+  articles: 0,
+  subTotal: 0,
+  openState: false
+};
+
 const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
+  const [cart, setCart] = useState<Cart>(emptyCart);
+
+  const addToCart: AddToCart = (movie, quantity) => {
+    const newCartItems = new Map(cart.items);
+    if (newCartItems.has(movie)) {
+      const currentQty = newCartItems.get(movie);
+      if (currentQty) newCartItems.set(movie, currentQty + quantity);
+    } else newCartItems.set(movie, quantity);
+    setCart({ ...cart, items: newCartItems });
+  };
 
   useEffect(() => {
     async function setCategoriesAsync() {
@@ -33,11 +50,11 @@ const App = () => {
       <Navigation categories={categories} />
       <Switch>
         <Route path="/movies/:slug">
-          <MoviesPage categories={categories} />
+          <MoviesPage categories={categories} addToCart={addToCart} />
         </Route>
         <Redirect from="/" exact to="/movies" />
         <Route path="/movies">
-          <MoviesPage categories={categories} />
+          <MoviesPage categories={categories} addToCart={addToCart} />
         </Route>
         <Route component={NoPage} />
       </Switch>
