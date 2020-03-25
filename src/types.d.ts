@@ -32,3 +32,4 @@ type CartItem = {
 };
 
 type AddToCart = (movie: Movie, quantity: number) => void;
+type UpdateCart = (movie: Movie, quantity: number) => void;

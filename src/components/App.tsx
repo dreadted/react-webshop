@@ -21,6 +21,9 @@ const emptyCart: Cart = {
   openState: false
 };
 
+const MIN_QTY = 1;
+const MAX_QTY = 99;
+
 const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
   const [cart, setCart] = useState<Cart>(emptyCart);
@@ -31,17 +34,47 @@ const App = () => {
       const currentQty = newCartItems.get(movie);
       if (currentQty) newCartItems.set(movie, currentQty + quantity);
     } else newCartItems.set(movie, quantity);
-    setCart({ ...cart, items: newCartItems });
+    const [subTotal, articles] = getTotals(newCartItems);
+    setCart({ ...cart, items: newCartItems, subTotal, articles });
+  };
+
+  const updateCart: UpdateCart = (movie, quantity) => {
+    const newCartItems = new Map(cart.items);
+    if (movie && quantity === 0) {
+      newCartItems.delete(movie);
+    } else if (quantity >= MIN_QTY && quantity <= MAX_QTY) {
+      newCartItems.set(movie, quantity);
+    }
+    const [subTotal, articles] = getTotals(newCartItems);
+    setCart({ ...cart, items: newCartItems, subTotal, articles });
+  };
+
+  const getTotals = (items: Map<Movie, number>) => {
+    let subTotal = 0;
+    let articles = 0;
+    for (let [movie, quantity] of items.entries()) {
+      const price = movie.price * quantity;
+      subTotal += price;
+      articles += quantity;
+    }
+    return [subTotal, articles];
+  };
+
+  const handleChange = (
+    movie: Movie,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log(e.target.name, e.target.value, movie.name);
   };
 
   useEffect(() => {
-    async function setCategoriesAsync() {
+    const setCategoriesAsync = async () => {
       const c: MovieCategory[] = await API.getMovieCategories();
       c.map(
         category => (category.slug = slugify(category.name, { lower: true }))
       );
       setCategories(c);
-    }
+    };
     setCategoriesAsync();
   }, []);
 
@@ -58,7 +91,7 @@ const App = () => {
         </Route>
         <Route component={NoPage} />
       </Switch>
-      <Cart cart={cart} />
+      <Cart cart={cart} updateCart={updateCart} />
     </div>
   );
 };
