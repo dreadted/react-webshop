@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 
 // API
 import * as API from "../api";
-import { useParams } from "react-router-dom";
+import { useParams, Route } from "react-router-dom";
 import MovieCard from "./MovieCard";
+import NoPage from "./NoPage";
 
 interface MoviesPageProps {
   categories: MovieCategory[];
@@ -42,6 +43,7 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories }) => {
 
   return (
     <>
+      {!currentCategory && <Route component={NoPage} />}
       <h2 className="display-4 m-4">
         {currentCategory && currentCategory.name}
       </h2>
