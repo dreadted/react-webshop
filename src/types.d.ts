@@ -4,10 +4,6 @@ type MovieCategory = {
   slug?: string;
 };
 
-type ProductCategory = {
-  categoryId: number;
-};
-
 type Movie = {
   id: number;
   name: string;
@@ -18,3 +14,23 @@ type Movie = {
   added: Date;
   productCategory: ProductCategory[];
 };
+
+type ProductCategory = {
+  categoryId: number;
+};
+
+type Cart = {
+  items: Map<Movie, number>;
+  articles: number;
+  subTotal: number;
+  blink: boolean;
+  open: boolean;
+};
+
+type CartItem = {
+  movie: Movie;
+  quantity: number;
+};
+
+type AddToCart = (movie: Movie, quantity: number) => void;
+type UpdateCart = (movie: Movie, quantity: number) => void;

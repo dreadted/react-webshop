@@ -1,9 +1,22 @@
 $body-bg: #121212;
-$primary: #304f88;
-$warning: #7c5db3;
+$primary: #8a323a;
+$secondary: #c3c2c2;
+$info: #363333;
 $dark: #1e1e1e;
 
 @import "~bootstrap/scss/bootstrap.scss";
+
+body {
+  overflow-y: scroll;
+}
+
+.top-margin-sm {
+  margin-top: 3em;
+}
+
+.top-margin-xs {
+  margin-top: 4em;
+}
 
 .card {
   border: none;
@@ -34,16 +47,95 @@ $dark: #1e1e1e;
 }
 
 .movie-category-5 {
-  background: #333366;
+  background: darken($indigo, 20);
 }
 
 .movie-category-6 {
-  background: #336633;
+  background: darken($purple, 20);
 }
 .movie-category-7 {
-  background: #663333;
+  background: darken($pink, 20);
 }
 
 .movie-category-8 {
-  background: #666633;
+  background: darken($blue, 20);
+}
+
+/* cart
+-----------------------------------------------------------------------------*/
+#cart {
+  ul {
+    border: none;
+    min-width: 20rem;
+    user-select: none;
+
+    li {
+      border: none;
+      background: $info;
+      color: $light;
+      &:nth-child(odd) {
+        background: darken($info, 2);
+      }
+
+      &.toggle {
+        transition-duration: 500ms;
+      }
+
+      &.blink {
+        background: $success;
+      }
+    }
+  }
+
+  .cart-item {
+    display: none !important;
+
+    &.open {
+      display: flex !important;
+    }
+  }
+
+  .toggle {
+    cursor: pointer;
+    &.open {
+      .thumbnail,
+      .label {
+        display: none;
+      }
+
+      .fa-angle-up {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .thumbnail {
+    background-color: #ffffff;
+    width: 1.5rem;
+    height: 1.5rem;
+    // border-radius: 1rem;
+    margin-right: 0.3em;
+  }
+
+  .label {
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-right: 1.5em;
+  }
+
+  .update {
+    cursor: pointer;
+  }
+
+  input {
+    background-color: transparent;
+    color: $light;
+    border: none;
+    outline: none;
+    text-align: center;
+    &::-webkit-inner-spin-button {
+      display: none;
+    }
+    width: 2em;
+  }
 }

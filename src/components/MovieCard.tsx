@@ -4,9 +4,14 @@ import { getCurrencyFormat } from "../utils";
 interface MovieCardProps {
   movie: Movie;
   categories: MovieCategory[];
+  addToCart: AddToCart;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, categories }) => {
+const MovieCard: React.FC<MovieCardProps> = ({
+  movie,
+  categories,
+  addToCart
+}) => {
   const getCategoryBadges = () => {
     let result: React.ReactNodeArray = [];
     const currentCategories = categories.filter(category =>
@@ -42,11 +47,16 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, categories }) => {
         </div>
         <div className="card-footer">
           <div className="mb-3">{getCategoryBadges()}</div>
-          <div className="d-flex flex-md-wrap">
-            <div className="h5 font-weight-bold mr-auto">
+          <div className="d-flex flex-md-wrap align-items-center">
+            <div className="h5 font-weight-bold mb-0 mr-auto">
               {getCurrencyFormat(movie.price)}
             </div>
-            <button className="btn btn-primary">Add to cart</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => addToCart(movie, 1)}
+            >
+              Add to cart
+            </button>
           </div>
         </div>
       </div>
