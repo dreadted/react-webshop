@@ -1,12 +1,21 @@
 $body-bg: #121212;
-$primary: #304f88;
-$warning: #7c5db3;
+$primary: #661111;
+$secondary: #c3c2c2;
+$info: #363333;
 $dark: #1e1e1e;
 
 @import "~bootstrap/scss/bootstrap.scss";
 
 body {
   overflow-y: scroll;
+}
+
+.top-margin-sm {
+  margin-top: 3em;
+}
+
+.top-margin-xs {
+  margin-top: 4em;
 }
 
 .card {
@@ -38,18 +47,18 @@ body {
 }
 
 .movie-category-5 {
-  background: #333366;
+  background: darken($indigo, 20);
 }
 
 .movie-category-6 {
-  background: #336633;
+  background: darken($purple, 20);
 }
 .movie-category-7 {
-  background: #663333;
+  background: darken($pink, 20);
 }
 
 .movie-category-8 {
-  background: #666633;
+  background: darken($blue, 20);
 }
 
 /* cart
@@ -58,6 +67,7 @@ body {
   ul {
     border: none;
     min-width: 20rem;
+    max-height: 90vh;
     user-select: none;
 
     li {
@@ -104,7 +114,7 @@ body {
     background-color: #ffffff;
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: 1rem;
+    // border-radius: 1rem;
     margin-right: 0.3em;
   }
 
@@ -127,5 +137,6 @@ body {
     &::-webkit-inner-spin-button {
       display: none;
     }
+    width: 2em;
   }
 }

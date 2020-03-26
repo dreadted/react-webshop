@@ -44,9 +44,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
           <div>
             <FontAwesomeIcon icon="shopping-cart" />
           </div>
-          <div className="ml-2 font-weight-bold">
-            Shopping cart {getOpenClass()}
-          </div>
+          <div className="ml-2 font-weight-bold">Shopping cart</div>
         </div>
         <div className="ml-4"></div>
         <div className="ml-auto">

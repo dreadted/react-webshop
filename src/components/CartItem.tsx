@@ -19,27 +19,34 @@ const CartItem: React.FC<CartItemProps> = ({
     <li
       className={`cart-item list-group-item d-flex align-items-center justify-content-between ${openClass}`}
     >
-      <div className="w-25">{movie.name}</div>
+      <div className="w-25 d-flex align-items-center">
+        <div className="mr-1">
+          <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
+        </div>
+        <div>{movie.name}</div>
+      </div>
       <div className="w-25">
         <div className="d-flex align-items-center justify-content-between">
           <div
-            className="update"
+            className="update p-2"
             onClick={() => updateCart(movie, quantity - 1)}
           >
             <FontAwesomeIcon icon="minus-circle" />
           </div>
-          <input
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateCart(movie, parseInt(e.target.value))
-            }
-            inputMode="numeric"
-            pattern="[0-9]*"
-            type="text"
-            name="quantity"
-            value={quantity}
-          />
+          <div>
+            <input
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                updateCart(movie, parseInt(e.target.value))
+              }
+              inputMode="numeric"
+              pattern="[0-9]*"
+              type="text"
+              name="quantity"
+              value={quantity}
+            />
+          </div>
           <div
-            className="update"
+            className="update p-2"
             onClick={() => updateCart(movie, quantity + 1)}
           >
             <FontAwesomeIcon icon="plus-circle" />
@@ -49,7 +56,10 @@ const CartItem: React.FC<CartItemProps> = ({
       <div className="w-25 text-right">
         {getCurrencyFormat(movie.price * quantity)}
       </div>
-      <div className="update text-right" onClick={() => updateCart(movie, 0)}>
+      <div
+        className="update text-right p-2"
+        onClick={() => updateCart(movie, 0)}
+      >
         <FontAwesomeIcon icon={["far", "trash-alt"]} />
       </div>
     </li>

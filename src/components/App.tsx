@@ -36,7 +36,13 @@ const App = () => {
       if (currentQty) newCartItems.set(movie, currentQty + quantity);
     } else newCartItems.set(movie, quantity);
     const [subTotal, articles] = getTotals(newCartItems);
-    setCart({ ...cart, items: newCartItems, subTotal, articles, blink: true });
+    setCart({
+      ...cart,
+      items: newCartItems,
+      subTotal,
+      articles,
+      blink: !cart.open
+    });
   };
 
   const updateCart: UpdateCart = (movie, quantity) => {
@@ -47,7 +53,13 @@ const App = () => {
       newCartItems.set(movie, quantity);
     }
     const [subTotal, articles] = getTotals(newCartItems);
-    setCart({ ...cart, items: newCartItems, subTotal, articles, blink: true });
+    setCart({
+      ...cart,
+      items: newCartItems,
+      subTotal,
+      articles,
+      blink: !cart.open
+    });
   };
 
   const getTotals = (items: Map<Movie, number>) => {

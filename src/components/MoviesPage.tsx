@@ -45,9 +45,8 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories, addToCart }) => {
   return (
     <>
       {!currentCategory && <Route component={NoPage} />}
-      <h2 className="display-4 m-4">
-        {currentCategory && currentCategory.name}
-      </h2>
+      <div className="top-margin-sm d-none d-sm-block"></div>
+      <div className="top-margin-xs d-block d-sm-none"></div>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {(currentCategory &&
           currentCategory.id === newsCategory &&

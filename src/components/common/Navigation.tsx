@@ -7,8 +7,8 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ categories }) => {
   return (
-    <div className="bg-dark p-2 fixed-top">
-      <nav className="nav nav-pills nav-fill">
+    <div className="bg-secondary p-2 fixed-top">
+      <nav className="nav nav-pills nav-fill font-weight-bold">
         <NavLink className="nav-item nav-link" to="/movies" exact>
           Newly added
         </NavLink>
