@@ -25,6 +25,7 @@ import {
   faMinusCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import Checkout from "./Checkout";
 
 library.add(
   faShoppingCart,
@@ -122,15 +123,27 @@ const App = () => {
       <Navigation categories={categories} />
       <Switch>
         <Route path="/movies/:slug">
-          <MoviesPage categories={categories} addToCart={addToCart} />
+          <MoviesPage
+            categories={categories}
+            cart={cart}
+            addToCart={addToCart}
+            updateCart={updateCart}
+            toggleCart={toggleCart}
+          />
         </Route>
         <Redirect from="/" exact to="/movies" />
         <Route path="/movies">
-          <MoviesPage categories={categories} addToCart={addToCart} />
+          <MoviesPage
+            categories={categories}
+            cart={cart}
+            addToCart={addToCart}
+            updateCart={updateCart}
+            toggleCart={toggleCart}
+          />
         </Route>
+        <Route path="/checkout" component={Checkout} />
         <Route component={NoPage} />
       </Switch>
-      <Cart cart={cart} updateCart={updateCart} toggleCart={toggleCart} />
     </div>
   );
 };

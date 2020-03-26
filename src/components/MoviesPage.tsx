@@ -3,15 +3,27 @@ import React, { useState, useEffect } from "react";
 // API
 import * as API from "../api";
 import { useParams, Route } from "react-router-dom";
+
+//components
 import MovieCard from "./MovieCard";
+import Cart from "./Cart";
 import NoPage from "./NoPage";
 
 interface MoviesPageProps {
   categories: MovieCategory[];
+  cart: Cart;
   addToCart: AddToCart;
+  updateCart: UpdateCart;
+  toggleCart: () => void;
 }
 
-const MoviesPage: React.FC<MoviesPageProps> = ({ categories, addToCart }) => {
+const MoviesPage: React.FC<MoviesPageProps> = ({
+  categories,
+  cart,
+  addToCart,
+  updateCart,
+  toggleCart
+}) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const { slug } = useParams();
 
@@ -68,6 +80,7 @@ const MoviesPage: React.FC<MoviesPageProps> = ({ categories, addToCart }) => {
               />
             )))}
       </div>
+      <Cart cart={cart} updateCart={updateCart} toggleCart={toggleCart} />
     </>
   );
 };

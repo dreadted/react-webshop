@@ -38,9 +38,11 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
     const result = [];
     for (let [movie, quantity] of cart.items.entries()) {
       result.push(
-        <div className="py-1 py-0-sm">
-          <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
-          <span className="label">{quantity}</span>
+        <div key={movie.id} className="py-1 py-0-sm d-flex align-items-center">
+          <div>
+            <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
+          </div>
+          <div className="label">{quantity}</div>
         </div>
       );
     }
