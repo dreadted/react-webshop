@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 //components
 import CartItem from "./CartItem";
@@ -7,16 +8,7 @@ import CartItem from "./CartItem";
 import { getCurrencyFormat } from "../utils";
 
 // icons
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faShoppingCart,
-  faAngleUp,
-  faPlusCircle,
-  faMinusCircle
-} from "@fortawesome/free-solid-svg-icons";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-library.add(faShoppingCart, faAngleUp, faPlusCircle, faMinusCircle, faTrashAlt);
 
 interface CartProps {
   cart: Cart;
@@ -118,9 +110,10 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
             <div>{getCurrencyFormat(cart.subTotal)}</div>
           </div>
           <div className="text-right">
-            <a href="#" className="btn btn-primary">
-              Check out
-            </a>
+            <Link to="/checkout" className="btn btn-primary">
+              Check out{" "}
+              <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
+            </Link>
           </div>
         </li>
       );
