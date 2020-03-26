@@ -19,7 +19,7 @@ const CartItem: React.FC<CartItemProps> = ({
     <li
       className={`cart-item list-group-item d-flex align-items-center justify-content-between ${openClass}`}
     >
-      <div className="w-25 d-flex align-items-center">
+      <div className="w-50 d-flex align-items-center">
         <div className="mr-1">
           <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
         </div>
@@ -57,7 +57,7 @@ const CartItem: React.FC<CartItemProps> = ({
         {getCurrencyFormat(movie.price * quantity)}
       </div>
       <div
-        className="update text-right p-2"
+        className="update w-25 text-right p-2"
         onClick={() => updateCart(movie, 0)}
       >
         <FontAwesomeIcon icon={["far", "trash-alt"]} />

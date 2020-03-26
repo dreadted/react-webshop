@@ -1,5 +1,5 @@
 $body-bg: #121212;
-$primary: #661111;
+$primary: #8a323a;
 $secondary: #c3c2c2;
 $info: #363333;
 $dark: #1e1e1e;
@@ -67,7 +67,6 @@ body {
   ul {
     border: none;
     min-width: 20rem;
-    max-height: 90vh;
     user-select: none;
 
     li {
@@ -83,7 +82,7 @@ body {
       }
 
       &.blink {
-        background: $warning;
+        background: $success;
       }
     }
   }

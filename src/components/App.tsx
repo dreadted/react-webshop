@@ -41,7 +41,8 @@ const App = () => {
       items: newCartItems,
       subTotal,
       articles,
-      blink: !cart.open
+      open: false,
+      blink: true
     });
   };
 
@@ -80,7 +81,7 @@ const App = () => {
   }, [cart]);
 
   const toggleCart = () => {
-    setCart({ ...cart, open: !cart.open });
+    if (cart.articles) setCart({ ...cart, open: !cart.open });
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
 //components
 import CartItem from "./CartItem";
@@ -25,12 +25,34 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
+  const pageBottomRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (cart.open && pageBottomRef && pageBottomRef.current)
+      pageBottomRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(scrollToBottom, [cart.open]);
+
   const getOpenClass = () => {
-    return cart.open && cart.articles ? "open" : "";
+    return cart.open ? "open" : "";
   };
 
   const getBlinkClass = () => {
     return cart.blink ? "blink" : "";
+  };
+
+  const getThumbnails = () => {
+    const result = [];
+    for (let [movie, quantity] of cart.items.entries()) {
+      result.push(
+        <div className="py-1 py-0-sm">
+          <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
+          <span className="label">{quantity}</span>
+        </div>
+      );
+    }
+    return <div className="d-flex flex-wrap">{result}</div>;
   };
 
   const getHeader = () => {
@@ -46,7 +68,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
           </div>
           <div className="ml-2 font-weight-bold">Shopping cart</div>
         </div>
-        <div className="ml-4"></div>
+        <div className="ml-4">{getThumbnails()}</div>
         <div className="ml-auto">
           <FontAwesomeIcon icon="angle-up" size="lg" />
         </div>
@@ -96,7 +118,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
             <div>{getCurrencyFormat(cart.subTotal)}</div>
           </div>
           <div className="text-right">
-            <a href="#" className="btn btn-success">
+            <a href="#" className="btn btn-primary">
               Check out
             </a>
           </div>
@@ -105,13 +127,14 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
   };
 
   return (
-    <div className="cart fixed-bottom" id="cart">
-      <ul className="list-group m-3">
+    <div className={`cart ${cart.open ? "" : "fixed-bottom"}`} id="cart">
+      <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
         {getHeader()}
-        {getCaptions()}
+        {/* {getCaptions()} */}
         {getItems()}
         {getFooter()}
       </ul>
+      <div ref={pageBottomRef}></div>
     </div>
   );
 };
