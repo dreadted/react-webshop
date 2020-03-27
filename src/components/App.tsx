@@ -45,28 +45,6 @@ library.add(
   faCcAmex
 );
 
-// icons
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faShoppingCart,
-  faAngleUp,
-  faAngleLeft,
-  faAngleRight,
-  faPlusCircle,
-  faMinusCircle
-} from "@fortawesome/free-solid-svg-icons";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-
-library.add(
-  faShoppingCart,
-  faAngleUp,
-  faAngleLeft,
-  faAngleRight,
-  faPlusCircle,
-  faMinusCircle,
-  faTrashAlt
-);
-
 const emptyCart: Cart = {
   items: new Map(),
   articles: 0,

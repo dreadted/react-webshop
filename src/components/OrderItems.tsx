@@ -9,7 +9,7 @@ interface OrderItemsProps {
 const OrderItems: React.FC<OrderItemsProps> = ({ order, movies }) => {
   return (
     <>
-      <li className="cart-item cart-header list-group-item d-flex justify-content-between font-italic open">
+      <li className="cart-item list-group-item d-flex justify-content-between font-italic open">
         <div className="w-50">product</div>
         <div className="w-25 text-center">quantity</div>
         <div className="w-25 text-right">price</div>

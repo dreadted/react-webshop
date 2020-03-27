@@ -50,6 +50,8 @@ const Checkout: React.FC<CheckoutProps> = ({
       const v = value as string;
       values[k] = v;
     }
+
+    delete order.id; // important!
     const newOrder = { ...order, ...values, totalPrice: cart.subTotal };
     submitOrder(newOrder);
   };
@@ -75,10 +77,20 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
 
   const submitOrder = async (newOrder: Order) => {
-    console.log("newOrder:", newOrder);
     const savedOrder: Order = await save<Order>(newOrder, "orders");
-    console.log("savedOrder:", savedOrder);
-    setOrder({ ...savedOrder, orderRows: getOrderRows(savedOrder) });
+    const updatedOrder: Order = {
+      ...savedOrder,
+      orderRows: getOrderRows(savedOrder)
+    };
+    const response = await save<Order>(updatedOrder, "orders", updatedOrder.id);
+    console.log(
+      "updatedOrder:",
+      updatedOrder,
+      JSON.stringify(updatedOrder),
+      "response:",
+      response
+    );
+    setOrder({ ...updatedOrder });
     history.push("/confirmation");
   };
 

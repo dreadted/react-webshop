@@ -33,7 +33,6 @@ const Confirmation: React.FC<ConfirmationProps> = ({
 
     if (!error) {
       resetCart();
-      delete order.id;
       return "";
     } else return <div className="alert alert-danger mt-4">{error}</div>;
   };

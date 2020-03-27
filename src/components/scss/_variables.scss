@@ -3,5 +3,9 @@ $body-bg: #121212;
 $primary: #8a123a;
 $secondary: #c3c2c2;
 $success: #9fa838;
-$info: #363333;
+$info: #2b2828;
 $dark: #1e1e1e;
+
+// font
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato&display=swap");
+$font-family-sans-serif: "Lato", sans-serif;

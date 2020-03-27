@@ -1,3 +1,7 @@
+# Movie Webshop
+
+## JAS19 - Javascript 3 - Inlämingsuppgift 1
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

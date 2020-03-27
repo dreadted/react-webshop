@@ -20,11 +20,21 @@ export const get = async <T extends {}>(slug: string) => {
   }
 };
 
-export const save = async <T extends {}>(input: T, slug: string) => {
+export const save = async <T extends {}>(
+  input: T,
+  slug: string,
+  id?: number
+) => {
   try {
-    const response = await apiClient.post<T>(`/${slug}`, input);
-    const data = response.data;
-    return data;
+    if (id) {
+      const response = await apiClient.put<T>(`/${slug}/${id}`, input);
+      const data = response.data;
+      return data;
+    } else {
+      const response = await apiClient.post<T>(`/${slug}`, input);
+      const data = response.data;
+      return data;
+    }
   } catch (err) {
     if (err & err.response) return err.response.data;
     throw err;
