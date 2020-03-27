@@ -36,3 +36,14 @@ export const getMovies = async () => {
     throw err;
   }
 };
+
+export const saveOrder = async (order: Order) => {
+  try {
+    const response = await apiClient.post<Order>("/orders", order);
+    const data = response.data;
+    return data;
+  } catch (err) {
+    if (err & err.response) return err.response.data;
+    throw err;
+  }
+};

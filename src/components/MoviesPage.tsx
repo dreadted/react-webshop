@@ -80,7 +80,12 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
               />
             )))}
       </div>
-      <Cart cart={cart} updateCart={updateCart} toggleCart={toggleCart} />
+      <Cart
+        cart={cart}
+        updateCart={updateCart}
+        toggleCart={toggleCart}
+        atCheckout={false}
+      />
     </>
   );
 };

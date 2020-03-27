@@ -9,14 +9,21 @@ import { getCurrencyFormat } from "../utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CartButton from "./CartButton";
 
 interface CartProps {
   cart: Cart;
   updateCart: UpdateCart;
   toggleCart: () => void;
+  atCheckout: boolean;
 }
 
-const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
+const Cart: React.FC<CartProps> = ({
+  cart,
+  updateCart,
+  toggleCart,
+  atCheckout
+}) => {
   const pageBottomRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -112,10 +119,16 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
             <div>{getCurrencyFormat(cart.subTotal)}</div>
           </div>
           <div className="text-right">
-            <Link to="/checkout" className="btn btn-primary">
-              Check out{" "}
-              <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
-            </Link>
+            {!atCheckout && (
+              <Link to={"/checkout"} className="btn btn-primary">
+                Check Out
+                <FontAwesomeIcon
+                  icon="angle-right"
+                  size="lg"
+                  className="ml-2"
+                />
+              </Link>
+            )}
           </div>
         </li>
       );
@@ -124,7 +137,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
   return (
     <div className={`cart ${cart.open ? "" : "fixed-bottom"}`} id="cart">
       <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
-        {getHeader()}
+        {!atCheckout && getHeader()}
         {/* {getCaptions()} */}
         {getItems()}
         {getFooter()}

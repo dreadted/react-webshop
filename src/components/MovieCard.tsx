@@ -20,12 +20,12 @@ const MovieCard: React.FC<MovieCardProps> = ({
 
     currentCategories.map(c =>
       result.push(
-        <span
+        <div
           key={c.id}
           className={`badge badge-pill mr-2 movie-category-${c.id}`}
         >
           {c.name}
-        </span>
+        </div>
       )
     );
     return result;
@@ -46,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
           </div>
         </div>
         <div className="card-footer">
-          <div className="mb-3">{getCategoryBadges()}</div>
+          <div className="d-flex mb-3">{getCategoryBadges()}</div>
           <div className="d-flex flex-md-wrap align-items-center">
             <div className="h5 font-weight-bold mb-0 mr-auto">
               {getCurrencyFormat(movie.price)}

@@ -25,6 +25,11 @@ import {
   faMinusCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCcVisa,
+  faCcMastercard,
+  faCcAmex
+} from "@fortawesome/free-brands-svg-icons";
 import Checkout from "./Checkout";
 
 library.add(
@@ -34,7 +39,10 @@ library.add(
   faAngleRight,
   faPlusCircle,
   faMinusCircle,
-  faTrashAlt
+  faTrashAlt,
+  faCcVisa,
+  faCcMastercard,
+  faCcAmex
 );
 
 const emptyCart: Cart = {
@@ -141,7 +149,13 @@ const App = () => {
             toggleCart={toggleCart}
           />
         </Route>
-        <Route path="/checkout" component={Checkout} />
+        <Route path="/checkout">
+          <Checkout
+            cart={cart}
+            updateCart={updateCart}
+            toggleCart={toggleCart}
+          />
+        </Route>
         <Route component={NoPage} />
       </Switch>
     </div>
