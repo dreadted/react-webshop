@@ -62,4 +62,4 @@ type OrderErrors = {
 };
 
 type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
-type HandleSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
+type HandleSubmit = (e: FormEvent<HTMLFormElement>) => void;

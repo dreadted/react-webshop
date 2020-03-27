@@ -1,34 +1,18 @@
 import React from "react";
-import TextInput from "./TextInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface CheckoutFormProps {
-  cart: Cart;
-  order: Order;
-  onChange: HandleChange;
   onSubmit: HandleSubmit;
   errors: OrderErrors;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({
-  cart,
-  order,
-  onChange,
-  onSubmit,
-  errors
-}) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, errors }) => {
   return (
     <form onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="companyId">company</label>
         <div className="field">
-          <select
-            id="companyId"
-            name="companyId"
-            onChange={onChange}
-            value={order.companyId || ""}
-            className="form-control"
-          >
+          <select id="companyId" name="companyId" className="form-control">
             <option value="" />
             <option value="1">Telia</option>
             <option value="2">Volvo</option>
@@ -41,13 +25,18 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         )}
       </div>
 
-      <TextInput
-        id="createdBy"
-        label="e-mail"
-        onChange={onChange}
-        value={order.createdBy}
-        error={errors.createdBy}
-      />
+      <label htmlFor="createdBy">e-mail</label>
+      <div className="field">
+        <input
+          id="createdBy"
+          name="createdBy"
+          type="text"
+          className="form-control"
+        />
+      </div>
+      {errors.createdBy && (
+        <div className="alert alert-danger">{errors.createdBy}</div>
+      )}
 
       <div className="my-2">payment method</div>
       <div className="form-check-inline">
@@ -58,7 +47,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             name="paymentMethod"
             id="payVisa"
             value="Visa"
-            onChange={onChange}
           />
           <FontAwesomeIcon icon={["fab", "cc-visa"]} size="lg" />
         </label>
@@ -72,7 +60,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             name="paymentMethod"
             id="payMC"
             value="MasterCard"
-            onChange={onChange}
           />
           <FontAwesomeIcon icon={["fab", "cc-mastercard"]} size="lg" />
         </label>
@@ -86,7 +73,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             name="paymentMethod"
             id="payAMEX"
             value="American Express"
-            onChange={onChange}
           />
           <FontAwesomeIcon icon={["fab", "cc-amex"]} size="lg" />
         </label>

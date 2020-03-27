@@ -9,7 +9,6 @@ import { getCurrencyFormat } from "../utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CartButton from "./CartButton";
 
 interface CartProps {
   cart: Cart;
