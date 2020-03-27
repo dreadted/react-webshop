@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 // components
 import Cart from "./Cart";
@@ -31,6 +32,12 @@ const Checkout: React.FC<CheckoutProps> = ({
     totalPrice: cart.subTotal,
     status: 0
   });
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!cart.subTotal) history.push("/");
+  }, [history, cart]);
 
   const handleSubmit: HandleSubmit = e => {
     e.preventDefault();
