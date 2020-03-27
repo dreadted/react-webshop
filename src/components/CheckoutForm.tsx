@@ -1,23 +1,35 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconName } from "@fortawesome/fontawesome-common-types";
 
 interface CheckoutFormProps {
   onSubmit: HandleSubmit;
+  companies: string[];
   errors: OrderErrors;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, errors }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({
+  onSubmit,
+  companies,
+  errors
+}) => {
+  const payMethods = [
+    { icon: "cc-visa" as IconName, name: "Visa" },
+    { icon: "cc-mastercard" as IconName, name: "MasterCard" },
+    { icon: "cc-amex" as IconName, name: "Amex" }
+  ];
+
   return (
     <form onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="companyId">company</label>
         <div className="field">
           <select id="companyId" name="companyId" className="form-control">
-            <option value="" />
-            <option value="1">Telia</option>
-            <option value="2">Volvo</option>
-            <option value="3">Skanska</option>
-            <option value="4">ABB</option>
+            {companies.map((company, index) => (
+              <option value={index ? index : ""} key={company}>
+                {company}
+              </option>
+            ))}
           </select>
         </div>
         {errors.companyId && (
@@ -39,49 +51,29 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, errors }) => {
       )}
 
       <div className="my-2">payment method</div>
-      <div className="form-check-inline">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            className="form-check-input"
-            name="paymentMethod"
-            id="payVisa"
-            value="Visa"
-          />
-          <FontAwesomeIcon icon={["fab", "cc-visa"]} size="lg" />
-        </label>
-      </div>
-
-      <div className="form-check-inline">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            className="form-check-input"
-            name="paymentMethod"
-            id="payMC"
-            value="MasterCard"
-          />
-          <FontAwesomeIcon icon={["fab", "cc-mastercard"]} size="lg" />
-        </label>
-      </div>
-
-      <div className="form-check-inline">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            className="form-check-input"
-            name="paymentMethod"
-            id="payAMEX"
-            value="American Express"
-          />
-          <FontAwesomeIcon icon={["fab", "cc-amex"]} size="lg" />
-        </label>
-      </div>
+      {payMethods.map(method => (
+        <div className="form-check-inline" key={method.icon}>
+          <label className="form-check-label">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="paymentMethod"
+              id={method.icon}
+              value={method.name}
+            />
+            <FontAwesomeIcon
+              icon={["fab", method.icon]}
+              size="lg"
+              key={method.icon}
+            />
+          </label>
+        </div>
+      ))}
 
       {errors.paymentMethod && (
         <div className="alert alert-danger">{errors.paymentMethod}</div>
       )}
-      <div className="mt-4">
+      <div className="mt-4 text-right">
         <input type="submit" value="Place Order" className="btn btn-primary" />
       </div>
     </form>

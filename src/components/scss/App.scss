@@ -1,16 +1,12 @@
-$body-bg: #121212;
-$primary: #8a323a;
-$secondary: #c3c2c2;
-$success: #9fa838;
-$info: #363333;
-$dark: #1e1e1e;
-
+@import "./variables";
 @import "~bootstrap/scss/bootstrap.scss";
 
 body {
   overflow-y: scroll;
 }
 
+/* spacing
+-----------------------------------------------------------------------------*/
 .top-margin-sm {
   margin-top: 3em;
 }
@@ -19,6 +15,12 @@ body {
   margin-top: 4em;
 }
 
+.bottom-margin {
+  margin-bottom: 4em;
+}
+
+/* movie cards
+-----------------------------------------------------------------------------*/
 .card {
   border: none;
 }
@@ -68,7 +70,7 @@ body {
 
 /* cart
 -----------------------------------------------------------------------------*/
-#cart {
+.cart {
   ul {
     border: none;
     min-width: 20rem;

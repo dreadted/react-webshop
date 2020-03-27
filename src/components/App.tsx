@@ -6,13 +6,12 @@ import slugify from "slugify";
 import * as API from "../api";
 
 // css
-import "./App.scss";
+import "./scss/App.scss";
 
 // components
-import Navigation from "./common/Navigation";
+import Navigation from "./Navigation";
 import MoviesPage from "./MoviesPage";
 import NoPage from "./NoPage";
-import Cart from "./Cart";
 
 // icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -31,6 +30,7 @@ import {
   faCcAmex
 } from "@fortawesome/free-brands-svg-icons";
 import Checkout from "./Checkout";
+import Confirmation from "./Confirmation";
 
 library.add(
   faShoppingCart,
@@ -53,12 +53,52 @@ const emptyCart: Cart = {
   open: false
 };
 
+const emptyOrder: Order = {
+  companyId: 0,
+  created: "",
+  createdBy: "",
+  paymentMethod: "",
+  totalPrice: 0,
+  status: 0
+};
+
 const MIN_QTY = 1;
 const MAX_QTY = 99;
 
+const companies = ["", "Telia", "Volvo", "Skanska", "ABB"];
+
 const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
   const [cart, setCart] = useState<Cart>(emptyCart);
+  const [order, setOrder] = useState<Order>(emptyOrder);
+
+  useEffect(() => {
+    const setCategoriesAsync = async () => {
+      const c: MovieCategory[] = await API.get<MovieCategory>("categories");
+      c.map(
+        category => (category.slug = slugify(category.name, { lower: true }))
+      );
+      setCategories(c);
+    };
+    setCategoriesAsync();
+  }, []);
+
+  useEffect(() => {
+    async function setMoviesAsync() {
+      const _movies: Movie[] = await API.get<Movie>("products");
+      _movies.sort((x, y) => (x.name > y.name ? 1 : -1));
+      setMovies(_movies);
+    }
+    setMoviesAsync();
+  }, []);
+
+  useEffect(() => {
+    if (cart.blink) {
+      setTimeout(() => setCart({ ...cart, blink: false }), 500);
+    }
+  }, [cart]);
 
   const addToCart: AddToCart = (movie, quantity) => {
     const newCartItems = new Map(cart.items);
@@ -105,60 +145,63 @@ const App = () => {
     return [subTotal, articles];
   };
 
-  useEffect(() => {
-    if (cart.blink) {
-      setTimeout(() => setCart({ ...cart, blink: false }), 500);
-    }
-  }, [cart]);
-
   const toggleCart = () => {
     if (cart.articles) setCart({ ...cart, open: !cart.open });
   };
 
-  useEffect(() => {
-    const setCategoriesAsync = async () => {
-      const c: MovieCategory[] = await API.getMovieCategories();
-      c.map(
-        category => (category.slug = slugify(category.name, { lower: true }))
-      );
-      setCategories(c);
-    };
-    setCategoriesAsync();
-  }, []);
-
   return (
-    <div className="container-fluid text-light p-4">
-      <Navigation categories={categories} />
-      <Switch>
-        <Route path="/movies/:slug">
-          <MoviesPage
-            categories={categories}
-            cart={cart}
-            addToCart={addToCart}
-            updateCart={updateCart}
-            toggleCart={toggleCart}
-          />
-        </Route>
-        <Redirect from="/" exact to="/movies" />
-        <Route path="/movies">
-          <MoviesPage
-            categories={categories}
-            cart={cart}
-            addToCart={addToCart}
-            updateCart={updateCart}
-            toggleCart={toggleCart}
-          />
-        </Route>
-        <Route path="/checkout">
-          <Checkout
-            cart={cart}
-            updateCart={updateCart}
-            toggleCart={toggleCart}
-          />
-        </Route>
-        <Route component={NoPage} />
-      </Switch>
-    </div>
+    <>
+      <div className="container-fluid text-light p-4">
+        <Navigation categories={categories} />
+        <Switch>
+          <Route path="/movies/:slug">
+            <MoviesPage
+              categories={categories}
+              movies={movies}
+              cart={cart}
+              addToCart={addToCart}
+              updateCart={updateCart}
+              toggleCart={toggleCart}
+            />
+          </Route>
+          <Redirect from="/" exact to="/movies" />
+          <Route path="/movies">
+            <MoviesPage
+              categories={categories}
+              movies={movies}
+              cart={cart}
+              addToCart={addToCart}
+              updateCart={updateCart}
+              toggleCart={toggleCart}
+            />
+          </Route>
+          <Route path="/checkout">
+            <Checkout
+              cart={cart}
+              order={order}
+              companies={companies}
+              setOrder={setOrder}
+              updateCart={updateCart}
+              toggleCart={toggleCart}
+            />
+          </Route>
+          <Route path="/confirmation">
+            <Confirmation
+              cart={cart}
+              order={order}
+              companies={companies}
+              movies={movies}
+            />
+          </Route>
+          <Route component={NoPage} />
+        </Switch>
+      </div>
+      <div className="bottom-margin p-4">
+        <p>
+          <small className="text-info">&copy; 2020 Christofer Laurin</small>
+        </p>
+      </div>
+    </>
   );
 };
 

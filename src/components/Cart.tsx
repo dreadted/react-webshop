@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 //components
-import CartItem from "./CartItem";
+import CartItems from "./CartItems";
 
 // lib
 import { getCurrencyFormat } from "../utils";
@@ -76,36 +76,6 @@ const Cart: React.FC<CartProps> = ({
     );
   };
 
-  const getCaptions = () => {
-    if (cart.articles)
-      return (
-        <li
-          className={`cart-item cart-header list-group-item d-flex justify-content-between font-italic ${getOpenClass()}`}
-        >
-          <div className="w-25">product</div>
-          <div className="w-25 text-center">quantity</div>
-          <div className="w-25 text-right">price</div>
-          <div className="px-3"></div>
-        </li>
-      );
-  };
-
-  const getItems = () => {
-    const result = [];
-    for (let [movie, quantity] of cart.items.entries()) {
-      result.push(
-        <CartItem
-          key={movie.id}
-          movie={movie}
-          quantity={quantity}
-          updateCart={updateCart}
-          openClass={getOpenClass()}
-        />
-      );
-    }
-    return result;
-  };
-
   const getFooter = () => {
     if (cart.articles)
       return (
@@ -137,8 +107,11 @@ const Cart: React.FC<CartProps> = ({
     <div className={`cart ${cart.open ? "" : "fixed-bottom"}`} id="cart">
       <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
         {!atCheckout && getHeader()}
-        {/* {getCaptions()} */}
-        {getItems()}
+        <CartItems
+          cart={cart}
+          updateCart={updateCart}
+          openClass={getOpenClass()}
+        />
         {getFooter()}
       </ul>
       <div ref={pageBottomRef}></div>

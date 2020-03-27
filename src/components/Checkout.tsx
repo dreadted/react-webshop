@@ -4,17 +4,22 @@ import { useHistory } from "react-router-dom";
 // components
 import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
-import { saveOrder } from "../api";
-import Confirmation from "./Confirmation";
+import { save } from "../api";
 
 interface CheckoutProps {
   cart: Cart;
+  order: Order;
+  companies: string[];
+  setOrder: React.Dispatch<React.SetStateAction<Order>>;
   updateCart: UpdateCart;
   toggleCart: () => void;
 }
 
 const Checkout: React.FC<CheckoutProps> = ({
   cart,
+  order,
+  companies,
+  setOrder,
   updateCart,
   toggleCart
 }) => {
@@ -22,15 +27,6 @@ const Checkout: React.FC<CheckoutProps> = ({
     companyId: "",
     createdBy: "",
     paymentMethod: ""
-  });
-
-  const [order, setOrder] = useState<Order>({
-    companyId: 0,
-    created: new Date().toISOString(),
-    createdBy: "",
-    paymentMethod: "",
-    totalPrice: cart.subTotal,
-    status: 0
   });
 
   const history = useHistory();
@@ -43,33 +39,19 @@ const Checkout: React.FC<CheckoutProps> = ({
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    if (!formIsValid(formData)) {
-      return;
-    }
+    if (!formIsValid(formData)) return;
 
-    const values: { [key: string]: string } = {};
+    const values: { [key: string]: string } = {
+      created: new Date().toISOString()
+    };
+
     for (let [key, value] of formData.entries()) {
-      console.log("key:", key, "value:", value, "type:", typeof value);
-
       const k = key as string;
       const v = value as string;
       values[k] = v;
     }
-
-    console.log("values:", values);
-    console.log("order:", { ...order, ...values, totalPrice: cart.subTotal });
-
     const newOrder = { ...order, ...values, totalPrice: cart.subTotal };
     submitOrder(newOrder);
-
-    // setOrder(newOrder);
-    // console.log("response:", saveOrder(newOrder));
-    // console.log("order rows:", getOrderRows());
-
-    // setOrder({ ...order, totalPrice: cart.subTotal });
-    // console.log("färdig order:", order, getOrderRows());
-    // console.log("response:", saveOrder(order));
-    // history.push("/");
   };
 
   const formIsValid = (formData: FormData) => {
@@ -88,20 +70,26 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
 
   const emailIsValid = (input: string) => {
-    const format = /^\w+([.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const format = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return input.match(format);
   };
 
   const submitOrder = async (newOrder: Order) => {
-    const savedOrder: Order = await saveOrder(newOrder);
-    console.log("newOrder:", newOrder, "savedOrder:", savedOrder);
-    setOrder(savedOrder);
+    console.log("newOrder:", newOrder);
+    const savedOrder: Order = await save<Order>(newOrder, "orders");
+    console.log("savedOrder:", savedOrder);
+    setOrder({ ...savedOrder, orderRows: getOrderRows(savedOrder) });
+    history.push("/confirmation");
   };
 
-  const getOrderRows = () => {
+  const getOrderRows = (_order: Order) => {
     const result = [];
     for (let [movie, quantity] of cart.items.entries()) {
-      const orderRow: OrderRow = { productId: movie.id, amount: quantity };
+      const orderRow: OrderRow = {
+        productId: movie.id,
+        orderId: _order.id,
+        amount: quantity
+      };
       result.push(orderRow);
     }
     return result;
@@ -110,11 +98,8 @@ const Checkout: React.FC<CheckoutProps> = ({
     <>
       <div className="top-margin-sm d-none d-sm-block"></div>
       <div className="top-margin-xs d-block d-sm-none"></div>
-      <div className="row">
-        <div className="col">
-          <CheckoutForm onSubmit={handleSubmit} errors={errors} />
-        </div>
-        <div className="col">
+      <div className="row row-cols-1 row-cols-md-2">
+        <div className="col my-4">
           <Cart
             cart={cart}
             updateCart={updateCart}
@@ -122,10 +107,12 @@ const Checkout: React.FC<CheckoutProps> = ({
             atCheckout={true}
           />
         </div>
-      </div>
-      <div className="row">
-        <div className="col mt-4">
-          <Confirmation order={order} />
+        <div className="col">
+          <CheckoutForm
+            onSubmit={handleSubmit}
+            errors={errors}
+            companies={companies}
+          />
         </div>
       </div>
     </>
