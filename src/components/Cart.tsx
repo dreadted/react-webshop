@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 //components
-import CartItem from "./CartItem";
+import CartItems from "./CartItems";
 
 // lib
 import { getCurrencyFormat } from "../utils";
@@ -14,9 +14,15 @@ interface CartProps {
   cart: Cart;
   updateCart: UpdateCart;
   toggleCart: () => void;
+  atCheckout: boolean;
 }
 
-const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
+const Cart: React.FC<CartProps> = ({
+  cart,
+  updateCart,
+  toggleCart,
+  atCheckout
+}) => {
   const pageBottomRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -38,9 +44,11 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
     const result = [];
     for (let [movie, quantity] of cart.items.entries()) {
       result.push(
-        <div className="py-1 py-0-sm">
-          <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
-          <span className="label">{quantity}</span>
+        <div key={movie.id} className="py-1 py-0-sm d-flex align-items-center">
+          <div>
+            <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
+          </div>
+          <div className="label">{quantity}</div>
         </div>
       );
     }
@@ -68,36 +76,6 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
     );
   };
 
-  const getCaptions = () => {
-    if (cart.articles)
-      return (
-        <li
-          className={`cart-item cart-header list-group-item d-flex justify-content-between font-italic ${getOpenClass()}`}
-        >
-          <div className="w-25">product</div>
-          <div className="w-25 text-center">quantity</div>
-          <div className="w-25 text-right">price</div>
-          <div className="px-3"></div>
-        </li>
-      );
-  };
-
-  const getItems = () => {
-    const result = [];
-    for (let [movie, quantity] of cart.items.entries()) {
-      result.push(
-        <CartItem
-          key={movie.id}
-          movie={movie}
-          quantity={quantity}
-          updateCart={updateCart}
-          openClass={getOpenClass()}
-        />
-      );
-    }
-    return result;
-  };
-
   const getFooter = () => {
     if (cart.articles)
       return (
@@ -110,10 +88,16 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
             <div>{getCurrencyFormat(cart.subTotal)}</div>
           </div>
           <div className="text-right">
-            <Link to="/checkout" className="btn btn-primary">
-              Check out{" "}
-              <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
-            </Link>
+            {!atCheckout && (
+              <Link to={"/checkout"} className="btn btn-primary">
+                Check Out
+                <FontAwesomeIcon
+                  icon="angle-right"
+                  size="lg"
+                  className="ml-2"
+                />
+              </Link>
+            )}
           </div>
         </li>
       );
@@ -122,9 +106,12 @@ const Cart: React.FC<CartProps> = ({ cart, updateCart, toggleCart }) => {
   return (
     <div className={`cart ${cart.open ? "" : "fixed-bottom"}`} id="cart">
       <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
-        {getHeader()}
-        {/* {getCaptions()} */}
-        {getItems()}
+        {!atCheckout && getHeader()}
+        <CartItems
+          cart={cart}
+          updateCart={updateCart}
+          openClass={getOpenClass()}
+        />
         {getFooter()}
       </ul>
       <div ref={pageBottomRef}></div>

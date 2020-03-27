@@ -6,33 +6,27 @@ const apiClient: AxiosInstance = axios.create({
   headers: { "Content-Type": "application/json" }
 });
 
-export const getMovieCategories = async () => {
+export const get = async <T extends {}>(slug: string) => {
   try {
-    const response = await apiClient.get<MovieCategory[]>("/categories");
-    const categories = response.data;
-    if (categories && categories.length)
-      localStorage.setItem("categories", JSON.stringify(categories));
-    return categories;
+    const response = await apiClient.get<T[]>(`/${slug}`);
+    const data = response.data;
+    if (data && data.length) localStorage.setItem(slug, JSON.stringify(data));
+    return data;
   } catch (err) {
-    const categories = localStorage.getItem("categories");
-    if (categories && categories.length)
-      return JSON.parse(categories) as MovieCategory[];
+    const data = localStorage.getItem(slug);
+    if (data && data.length) return JSON.parse(data) as T[];
     if (err && err.response) return err.response.data;
     throw err;
   }
 };
 
-export const getMovies = async () => {
+export const save = async <T extends {}>(input: T, slug: string) => {
   try {
-    const response = await apiClient.get<Movie[]>("/products");
-    const movies = response.data;
-    if (movies && movies.length)
-      localStorage.setItem("movies", JSON.stringify(movies));
-    return movies;
+    const response = await apiClient.post<T>(`/${slug}`, input);
+    const data = response.data;
+    return data;
   } catch (err) {
-    const movies = localStorage.getItem("movies");
-    if (movies && movies.length) return JSON.parse(movies) as Movie[];
-    if (err && err.response) return err.response.data;
+    if (err & err.response) return err.response.data;
     throw err;
   }
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { getCurrencyFormat } from "../utils";
+import CategoryBadges from "./CategoryBadges";
 
 interface MovieCardProps {
   movie: Movie;
@@ -12,25 +13,6 @@ const MovieCard: React.FC<MovieCardProps> = ({
   categories,
   addToCart
 }) => {
-  const getCategoryBadges = () => {
-    let result: React.ReactNodeArray = [];
-    const currentCategories = categories.filter(category =>
-      movie.productCategory.find(pc => pc.categoryId === category.id)
-    );
-
-    currentCategories.map(c =>
-      result.push(
-        <span
-          key={c.id}
-          className={`badge badge-pill mr-2 movie-category-${c.id}`}
-        >
-          {c.name}
-        </span>
-      )
-    );
-    return result;
-  };
-
   return (
     <div className="col-mb-4 d-flex">
       <div className="card m-3 bg-dark shadow-sm">
@@ -46,7 +28,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
           </div>
         </div>
         <div className="card-footer">
-          <div className="mb-3">{getCategoryBadges()}</div>
+          <div className="d-flex mb-3">
+            <CategoryBadges movie={movie} categories={categories} />
+          </div>
           <div className="d-flex flex-md-wrap align-items-center">
             <div className="h5 font-weight-bold mb-0 mr-auto">
               {getCurrencyFormat(movie.price)}
