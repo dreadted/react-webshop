@@ -58,12 +58,18 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
             />
           ))}
       </div>
-      <Cart
-        cart={cart}
-        updateCart={updateCart}
-        toggleCart={toggleCart}
-        atCheckout={false}
-      />
+      <div className={`${cart.open ? "" : "fixed-bottom"}`}>
+        <div className="row justify-content-end">
+          <div className="col col-sm-8 col-lg-6">
+            <Cart
+              cart={cart}
+              updateCart={updateCart}
+              toggleCart={toggleCart}
+              atCheckout={false}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

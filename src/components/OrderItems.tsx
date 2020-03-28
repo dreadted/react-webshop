@@ -19,10 +19,10 @@ const OrderItems: React.FC<OrderItemsProps> = ({ order, movies }) => {
         return (
           <li
             key={movie?.id}
-            className="cart-item list-group-item d-flex align-items-center justify-content-between open"
+            className="cart-item list-group-item d-flex align-items-center justify-content-between open h5 m-0"
           >
             <div className="w-50 d-flex align-items-center">
-              <div className="mr-1">
+              <div className="mr-3">
                 <img
                   className="thumbnail"
                   src={movie?.imageUrl}

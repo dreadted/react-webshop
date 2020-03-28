@@ -20,11 +20,15 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   ];
 
   return (
-    <form onSubmit={onSubmit}>
+    <form className="h5 m-0" onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="companyId">company</label>
         <div className="field">
-          <select id="companyId" name="companyId" className="form-control">
+          <select
+            id="companyId"
+            name="companyId"
+            className="form-control form-control-lg"
+          >
             {companies.map((company, index) => (
               <option value={index ? index : ""} key={company}>
                 {company}
@@ -43,7 +47,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           id="createdBy"
           name="createdBy"
           type="text"
-          className="form-control"
+          className="form-control form-control-lg"
         />
       </div>
       {errors.createdBy && (
@@ -63,8 +67,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             />
             <FontAwesomeIcon
               icon={["fab", method.icon]}
-              size="lg"
+              size="2x"
               key={method.icon}
+              className="pt-1"
             />
           </label>
         </div>
@@ -74,7 +79,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         <div className="alert alert-danger">{errors.paymentMethod}</div>
       )}
       <div className="mt-4 text-right">
-        <input type="submit" value="Place Order" className="btn btn-primary" />
+        <button type="submit" className="btn btn-primary">
+          Place Order
+          <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
+        </button>
       </div>
     </form>
   );

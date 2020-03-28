@@ -26,7 +26,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       for (let [movie, quantity] of cart.items.entries()) {
         const orderRow = order.orderRows[counter];
         if (!(movie.id === orderRow.productId && quantity === orderRow.amount))
-          error = `Order contains wrong quantity of "${movie.name}"`;
+          error = `Order contains wrong quantity of "${movie.name}": ${orderRow.amount} should be ${quantity}!`;
         counter++;
       }
     } else error = "Order is empty!";
@@ -49,7 +49,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       <div className="top-margin-sm d-none d-sm-block"></div>
       <div className="top-margin-xs d-block d-sm-none"></div>
       <div className="row">
-        <h1 className="m-4 text-secondary">Order confirmation</h1>
+        <h1 className="m-4 text-secondary display-4">Order confirmation</h1>
       </div>
       <div className="row">
         <div className="col mb-4">
@@ -57,7 +57,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
             <ul className="list-group open">
               <OrderItems order={order} movies={movies} />
               <li className="cart-item cart-footer list-group-item d-flex justify-content-end open">
-                <div className="font-weight-bold d-flex">
+                <div className="font-weight-bold d-flex h5 m-0">
                   <div className="mr-3">Total:</div>
                   <div>{getCurrencyFormat(order.totalPrice)}</div>
                 </div>
@@ -68,7 +68,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         </div>
         <div className="col">
           <div className="cart open">
-            <ul className="list-group open">
+            <ul className="list-group open h5 m-0">
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div>order #</div>
                 <div>{order.id}</div>

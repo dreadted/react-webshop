@@ -32,11 +32,11 @@ const Cart: React.FC<CartProps> = ({
 
   useEffect(scrollToBottom, [cart.open]);
 
-  const getOpenClass = () => {
+  const classOpen = () => {
     return cart.open ? "open" : "";
   };
 
-  const getBlinkClass = () => {
+  const classBlink = () => {
     return cart.blink ? "blink" : "";
   };
 
@@ -48,7 +48,7 @@ const Cart: React.FC<CartProps> = ({
           <div>
             <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
           </div>
-          <div className="label">{quantity}</div>
+          <div className={`label badge badge-pill`}>{quantity}</div>
         </div>
       );
     }
@@ -59,17 +59,24 @@ const Cart: React.FC<CartProps> = ({
     return (
       <li
         onClick={toggleCart}
-        className={`toggle list-group-item d-flex align-items-center
-          ${getOpenClass()} ${getBlinkClass()}`}
+        className={`toggle p-0 list-group-item d-flex align-items-center
+          ${classOpen()} ${classBlink()}`}
       >
-        <div className="d-flex py-1 align-items-center flex-nowrap">
+        <div className="d-flex m-3 py-1 align-items-center flex-nowrap h5">
           <div>
             <FontAwesomeIcon icon="shopping-cart" />
           </div>
-          <div className="ml-2 font-weight-bold">Shopping cart</div>
+          <div
+            className={`ml-2 font-weight-bold
+            ${!cart.open && cart.items.size ? " d-none d-sm-none" : ""} 
+            ${!cart.open && cart.items.size > 2 ? " d-md-none" : " d-md-block"}
+            `}
+          >
+            Shopping cart
+          </div>
         </div>
         <div className="ml-4">{getThumbnails()}</div>
-        <div className="ml-auto">
+        <div className="ml-auto mr-4">
           <FontAwesomeIcon icon="angle-up" size="lg" />
         </div>
       </li>
@@ -81,9 +88,9 @@ const Cart: React.FC<CartProps> = ({
       return (
         <li
           className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap
-        ${getOpenClass()}`}
+        ${classOpen()}`}
         >
-          <div className="font-weight-bold d-flex">
+          <div className="font-weight-bold d-flex h5 m-0">
             <div className="mr-3">Total:</div>
             <div>{getCurrencyFormat(cart.subTotal)}</div>
           </div>
@@ -104,13 +111,13 @@ const Cart: React.FC<CartProps> = ({
   };
 
   return (
-    <div className={`cart ${cart.open ? "" : "fixed-bottom"}`} id="cart">
+    <div className="cart" id="cart">
       <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
         {!atCheckout && getHeader()}
         <CartItems
           cart={cart}
           updateCart={updateCart}
-          openClass={getOpenClass()}
+          openClass={classOpen()}
         />
         {getFooter()}
       </ul>

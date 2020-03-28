@@ -16,50 +16,50 @@ const CartItem: React.FC<CartItemProps> = ({
   openClass
 }) => {
   return (
-    <li className={`cart-item list-group-item d-flex flex-column ${openClass}`}>
-      <div className="d-flex align-items-center">
-        <div className="mr-1">
-          <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
-        </div>
-        <div>{movie.name}</div>
+    <li className={`cart-item list-group-item d-flex px-3 pb-2 ${openClass}`}>
+      <div className="mr-3">
+        <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
       </div>
-      <div className="d-flex align-items-center justify-content-between mt-2">
-        <div>
-          <div className="d-flex align-items-center justify-content-start">
-            <div
-              className="update p-2"
-              onClick={() => updateCart(movie, quantity - 1)}
-            >
-              <FontAwesomeIcon icon="minus-circle" />
-            </div>
-            <div className="font-weight-bold">
-              <input
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  updateCart(movie, parseInt(e.target.value))
-                }
-                inputMode="numeric"
-                pattern="[0-9]*"
-                type="text"
-                name="quantity"
-                value={quantity}
-              />
-            </div>
-            <div
-              className="update p-2"
-              onClick={() => updateCart(movie, quantity + 1)}
-            >
-              <FontAwesomeIcon icon="plus-circle" />
+      <div className="flex-grow-1 d-flex flex-column h5">
+        <div>{movie.name}</div>
+        <div className="d-flex align-items-center justify-content-between mt-2">
+          <div>
+            <div className="d-flex align-items-center justify-content-start">
+              <div
+                className="update p-2"
+                onClick={() => updateCart(movie, quantity - 1)}
+              >
+                <FontAwesomeIcon icon="minus-circle" />
+              </div>
+              <div className="font-weight-bold">
+                <input
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    updateCart(movie, parseInt(e.target.value))
+                  }
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  type="text"
+                  name="quantity"
+                  value={quantity}
+                />
+              </div>
+              <div
+                className="update p-2"
+                onClick={() => updateCart(movie, quantity + 1)}
+              >
+                <FontAwesomeIcon icon="plus-circle" />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="w-25 text-right">
-          {getCurrencyFormat(movie.price * quantity)}
-        </div>
-        <div
-          className="update w-25 text-right p-2"
-          onClick={() => updateCart(movie, 0)}
-        >
-          <FontAwesomeIcon icon={["far", "trash-alt"]} />
+          <div className="w-25 text-right">
+            {getCurrencyFormat(movie.price * quantity)}
+          </div>
+          <div
+            className="update w-25 text-right p-2"
+            onClick={() => updateCart(movie, 0)}
+          >
+            <FontAwesomeIcon icon={["far", "trash-alt"]} />
+          </div>
         </div>
       </div>
     </li>
