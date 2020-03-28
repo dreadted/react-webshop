@@ -79,7 +79,9 @@ const Confirmation: React.FC<ConfirmationProps> = ({
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div>order created</div>
-                <div>{new Date(order.created).toLocaleString("en-gb")}</div>
+                <div className="text-nowrap">
+                  {new Date(order.created).toLocaleString("en-gb")}
+                </div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div>e-mail</div>
