@@ -17,7 +17,7 @@ const CategoryBadges: React.FC<CategoryBadges> = ({ movie, categories }) => {
       <Link
         key={c.id}
         className={`badge badge-pill mr-2 text-secondary movie-category-${c.id}`}
-        to={`/movies/${c.slug}`}
+        to={`/${c.slug}`}
       >
         {c.name}
       </Link>

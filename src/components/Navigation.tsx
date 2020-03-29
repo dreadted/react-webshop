@@ -13,7 +13,7 @@ const Navigation: React.FC<NavigationProps> = ({ categories }) => {
           return (
             <NavLink
               className="nav-item nav-link"
-              to={`/movies/${category.slug}`}
+              to={`/${category.slug}`}
               key={category.id}
             >
               {category.name}

@@ -45,9 +45,7 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
   return (
     <>
       {!currentCategory && <Route component={NoPage} />}
-      {!slug && currentCategory && (
-        <Redirect to={`/movies/${currentCategory.slug}`} />
-      )}
+      {!slug && currentCategory && <Redirect to={`/${currentCategory.slug}`} />}
       <TopMargin />
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {currentCategory &&
