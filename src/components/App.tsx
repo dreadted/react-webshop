@@ -250,8 +250,10 @@ const App = () => {
         </Switch>
       </div>
       <div className="bottom-margin p-4">
-        <p>
-          <small className="text-info">&copy; 2020 Christofer Laurin</small>
+        <p className="text-right">
+          <small className="text-info">
+            &copy; 2020 Christofer Laurin {process.env.NODE_ENV}
+          </small>
         </p>
       </div>
     </>
