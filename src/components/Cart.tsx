@@ -23,14 +23,14 @@ const Cart: React.FC<CartProps> = ({
   toggleCart,
   atCheckout
 }) => {
-  const pageBottomRef = useRef<HTMLDivElement>(null);
+  const cartRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    if (cart.open && !atCheckout && pageBottomRef && pageBottomRef.current)
-      pageBottomRef.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToCart = () => {
+    if (cart.open && cartRef && cartRef.current)
+      cartRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(scrollToBottom, [cart.open]);
+  useEffect(scrollToCart, [cart.open]);
 
   const classOpen = () => {
     return cart.open ? "open" : "";
@@ -38,6 +38,16 @@ const Cart: React.FC<CartProps> = ({
 
   const classBlink = () => {
     return cart.blink ? "blink" : "";
+  };
+
+  const classHeader = () => {
+    return (
+      !cart.open &&
+      (cart.items.size ? " d-none d-sm-none" : "") +
+        (cart.items.size > 2 ? " d-md-none" : " d-md-block") +
+        (cart.items.size > 5 ? " d-lg-none" : " d-lg-block") +
+        (cart.items.size > 7 ? " d-xl-none" : " d-xl-block")
+    );
   };
 
   const Thumbnails: React.FC = () => {
@@ -68,12 +78,7 @@ const Cart: React.FC<CartProps> = ({
               <div>
                 <FontAwesomeIcon icon="shopping-cart" />
               </div>
-              <div
-                className={`ml-2 font-weight-bold
-            ${!cart.open && cart.items.size ? " d-none d-sm-none" : ""} 
-            ${!cart.open && cart.items.size > 2 ? " d-md-none" : " d-md-block"}
-            `}
-              >
+              <div className={`ml-2 font-weight-bold${classHeader()}`}>
                 Shopping cart
               </div>
             </div>
@@ -122,8 +127,7 @@ const Cart: React.FC<CartProps> = ({
   };
 
   return (
-    <div className="cart" id="cart">
-      <div ref={pageBottomRef}></div>
+    <div className="cart" id="cart" ref={cartRef}>
       <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
         <Header />
         <CartItems

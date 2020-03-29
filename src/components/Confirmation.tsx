@@ -49,10 +49,12 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       <div className="top-margin-sm d-none d-sm-block"></div>
       <div className="top-margin-xs d-block d-sm-none"></div>
       <div className="row">
-        <h1 className="m-4 text-secondary display-4">Order confirmation</h1>
+        <h1 className="m-4 text-secondary font-weight-light">
+          Order confirmation
+        </h1>
       </div>
       <div className="row">
-        <div className="col mb-4">
+        <div className="col col-12 col-lg-6">
           <div className="cart open">
             <ul className="list-group open">
               <OrderItems order={order} movies={movies} />

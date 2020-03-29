@@ -58,19 +58,21 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       {payMethods.map(method => (
         <div className="form-check-inline" key={method.icon}>
           <label className="form-check-label">
-            <input
-              type="radio"
-              className="form-check-input"
-              name="paymentMethod"
-              id={method.icon}
-              value={method.name}
-            />
-            <FontAwesomeIcon
-              icon={["fab", method.icon]}
-              size="2x"
-              key={method.icon}
-              className="pt-1"
-            />
+            <span>
+              <input
+                type="radio"
+                className="form-check-input"
+                name="paymentMethod"
+                id={method.icon}
+                value={method.name}
+              />
+              <FontAwesomeIcon
+                icon={["fab", method.icon]}
+                size="2x"
+                key={method.icon}
+                className="pt-1"
+              />
+            </span>
           </label>
         </div>
       ))}
