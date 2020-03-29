@@ -77,12 +77,23 @@ const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
 
-  const [cart, setCart] = useState<Cart>(emptyCart);
+  const initialCart = () => {
+    const cartData = localStorage.getItem("cart");
+    const itemsData = localStorage.getItem("items");
+    console.log(cartData, itemsData);
+    if (cartData && cartData.length && itemsData && itemsData.length) {
+      const _cart = JSON.parse(cartData);
+      _cart.items = new Map(Array.from(JSON.parse(itemsData)));
+      return _cart as Cart;
+    }
+    return emptyCart;
+  };
+
+  const [cart, setCart] = useState<Cart>(initialCart());
   const [order, setOrder] = useState<Order>(emptyOrder);
 
   useEffect(() => {
     setLoading(!(categories.length && movies.length));
-    console.log("loading:", loading);
   }, [loading, categories, movies]);
 
   useEffect(() => {
@@ -94,7 +105,7 @@ const App = () => {
       );
       setCategories(c);
     };
-    setTimeout(() => setCategoriesAsync(), 5000);
+    setCategoriesAsync();
   }, []);
 
   useEffect(() => {
@@ -104,13 +115,15 @@ const App = () => {
       _movies.sort((x, y) => (x.name > y.name ? 1 : -1));
       setMovies(_movies);
     }
-    setTimeout(() => setMoviesAsync(), 5000);
+    setMoviesAsync();
   }, []);
 
   useEffect(() => {
     if (cart.blink) {
       setTimeout(() => setCart({ ...cart, blink: false }), 500);
     }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("items", JSON.stringify(Array.from(cart.items)));
   }, [cart]);
 
   const populateNewsCategory = (_movies: Movie[]) => {
