@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Route, Redirect } from "react-router-dom";
 
 //components
@@ -30,6 +30,11 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
   const currentCategory: MovieCategory | undefined = slug
     ? categories.find(category => category.slug === slug)
     : categories.find(category => category.id === NEWS_CATEGORY);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (cart.open) toggleCart();
+  }, [slug]);
 
   const getMoviesFromCategory = (category: MovieCategory) => {
     return movies.filter(movie => {

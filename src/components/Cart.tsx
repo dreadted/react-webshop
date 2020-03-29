@@ -68,28 +68,20 @@ const Cart: React.FC<CartProps> = ({
   const Header: React.FC = () => {
     return (
       <>
-        {!atCheckout && (
-          <li
-            onClick={toggleCart}
-            className={`toggle p-0 list-group-item d-flex align-items-center
-          ${classOpen()} ${classBlink()}`}
-          >
-            <div className="d-flex m-3 py-1 align-items-center flex-nowrap h5">
-              <div>
-                <FontAwesomeIcon icon="shopping-cart" />
-              </div>
-              <div className={`ml-2 font-weight-bold${classHeader()}`}>
-                Shopping cart
-              </div>
-            </div>
-            <div className="ml-4">
-              <Thumbnails />
-            </div>
-            <div className="ml-auto mr-4">
-              <FontAwesomeIcon icon="angle-up" size="lg" />
-            </div>
-          </li>
-        )}
+        <div className="d-flex m-3 py-1 align-items-center flex-nowrap h5">
+          <div>
+            <FontAwesomeIcon icon="shopping-cart" />
+          </div>
+          <div className={`ml-2 font-weight-bold${classHeader()}`}>
+            Shopping cart
+          </div>
+        </div>
+        <div className="ml-4">
+          <Thumbnails />
+        </div>
+        <div className="ml-auto mr-4">
+          <FontAwesomeIcon icon="angle-up" size="lg" />
+        </div>
       </>
     );
   };
@@ -127,17 +119,28 @@ const Cart: React.FC<CartProps> = ({
   };
 
   return (
-    <div className="cart" id="cart" ref={cartRef}>
-      <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
-        <Header />
-        <CartItems
-          cart={cart}
-          updateCart={updateCart}
-          openClass={classOpen()}
-        />
-        <Footer />
-      </ul>
-    </div>
+    <>
+      <div className="cart-offset" ref={cartRef}></div>
+      <div className="cart" id="cart">
+        <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
+          {!atCheckout && (
+            <li
+              onClick={toggleCart}
+              className={`toggle p-0 list-group-item d-flex align-items-center
+          ${classOpen()} ${classBlink()}`}
+            >
+              <Header />
+            </li>
+          )}
+          <CartItems
+            cart={cart}
+            updateCart={updateCart}
+            openClass={classOpen()}
+          />
+          <Footer />
+        </ul>
+      </div>
+    </>
   );
 };
 
