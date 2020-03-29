@@ -131,7 +131,8 @@ const Cart: React.FC<CartProps> = ({
             >
               <Header />
             </li>
-          )}
+          ) // om jag lägger <li> i <Header /> funkar inte .toggle { transition:... }
+          }
           <CartItems
             cart={cart}
             updateCart={updateCart}
