@@ -49,6 +49,8 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     cart.articles = 0;
     cart.subTotal = 0;
     cart.open = false;
+    localStorage.removeItem("cart");
+    localStorage.removeItem("items");
   };
 
   return (
