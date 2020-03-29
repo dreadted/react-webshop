@@ -21,7 +21,8 @@ import {
   faAngleLeft,
   faAngleRight,
   faPlusCircle,
-  faMinusCircle
+  faMinusCircle,
+  faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -31,6 +32,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
+import Loading from "./Loading";
 
 library.add(
   faShoppingCart,
@@ -39,6 +41,7 @@ library.add(
   faAngleRight,
   faPlusCircle,
   faMinusCircle,
+  faSpinner,
   faTrashAlt,
   faCcVisa,
   faCcMastercard,
@@ -70,11 +73,17 @@ const NUMBER_OF_ITEMS_IN_NEWS = 4;
 const companies = ["", "Telia", "Volvo", "Skanska", "ABB"];
 
 const App = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<MovieCategory[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
 
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [order, setOrder] = useState<Order>(emptyOrder);
+
+  useEffect(() => {
+    setLoading(!(categories.length && movies.length));
+    console.log("loading:", loading);
+  }, [loading, categories, movies]);
 
   useEffect(() => {
     const setCategoriesAsync = async () => {
@@ -85,7 +94,7 @@ const App = () => {
       );
       setCategories(c);
     };
-    setCategoriesAsync();
+    setTimeout(() => setCategoriesAsync(), 5000);
   }, []);
 
   useEffect(() => {
@@ -95,7 +104,7 @@ const App = () => {
       _movies.sort((x, y) => (x.name > y.name ? 1 : -1));
       setMovies(_movies);
     }
-    setMoviesAsync();
+    setTimeout(() => setMoviesAsync(), 5000);
   }, []);
 
   useEffect(() => {
@@ -160,7 +169,9 @@ const App = () => {
     if (cart.articles) setCart({ ...cart, open: !cart.open });
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <div className="container-fluid text-light p-4">
         <Navigation categories={categories} />
