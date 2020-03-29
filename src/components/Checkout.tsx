@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+// api
+import { save } from "../api";
+
 // components
 import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
-import { save } from "../api";
+import TopMargin from "./TopMargin";
 
 interface CheckoutProps {
   cart: Cart;
@@ -28,6 +31,11 @@ const Checkout: React.FC<CheckoutProps> = ({
     createdBy: "",
     paymentMethod: ""
   });
+
+  useEffect(() => {
+    if (cart.open) toggleCart();
+    window.scrollTo(0, 0);
+  }, [cart.open, toggleCart]);
 
   const history = useHistory();
 
@@ -108,10 +116,9 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
   return (
     <>
-      <div className="top-margin-sm d-none d-sm-block"></div>
-      <div className="top-margin-xs d-block d-sm-none"></div>
+      <TopMargin />
       <div className="row row-cols-1 row-cols-md-2">
-        <div className="col my-4">
+        <div className="col mt-2 p-0">
           <Cart
             cart={cart}
             updateCart={updateCart}

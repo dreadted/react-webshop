@@ -5,6 +5,7 @@ import { useParams, Route, Redirect } from "react-router-dom";
 import MovieCard from "./MovieCard";
 import Cart from "./Cart";
 import NoPage from "./NoPage";
+import TopMargin from "./TopMargin";
 
 interface MoviesPageProps {
   categories: MovieCategory[];
@@ -42,8 +43,7 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
       {!slug && currentCategory && (
         <Redirect to={`/movies/${currentCategory.slug}`} />
       )}
-      <div className="top-margin-sm d-none d-sm-block"></div>
-      <div className="top-margin-xs d-block d-sm-none"></div>
+      <TopMargin />
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {currentCategory &&
           getMoviesFromCategory(currentCategory).map(movie => (

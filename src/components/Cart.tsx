@@ -33,7 +33,7 @@ const Cart: React.FC<CartProps> = ({
   useEffect(scrollToCart, [cart.open]);
 
   const classOpen = () => {
-    return cart.open ? "open" : "";
+    return cart.open || atCheckout ? "open" : "";
   };
 
   const classBlink = () => {

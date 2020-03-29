@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getCurrencyFormat } from "../utils";
+
+// components
 import OrderItems from "./OrderItems";
+import TopMargin from "./TopMargin";
 
 interface ConfirmationProps {
   cart: Cart;
@@ -16,6 +19,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   companies
 }) => {
   console.log("order:", order);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const validateOrder = () => {
     let error = "";
@@ -34,7 +41,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     if (!error) {
       resetCart();
       return "";
-    } else return <div className="alert alert-danger mt-4">{error}</div>;
+    } else return <div className="alert alert-danger mt-4 mb-0">{error}</div>;
   };
 
   const resetCart = () => {
@@ -46,15 +53,14 @@ const Confirmation: React.FC<ConfirmationProps> = ({
 
   return (
     <>
-      <div className="top-margin-sm d-none d-sm-block"></div>
-      <div className="top-margin-xs d-block d-sm-none"></div>
+      <TopMargin />
       <div className="row">
-        <h1 className="m-4 text-secondary font-weight-light">
+        <h1 className="m-4 text-secondary h2 font-weight-light">
           Order confirmation
         </h1>
       </div>
       <div className="row">
-        <div className="col col-12 col-lg-6">
+        <div className="col col-12 col-lg-6 mb-4">
           <div className="cart open">
             <ul className="list-group open">
               <OrderItems order={order} movies={movies} />
