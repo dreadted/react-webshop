@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Route } from "react-router-dom";
+import { useParams, Route, Redirect } from "react-router-dom";
 
 //components
 import MovieCard from "./MovieCard";
@@ -15,6 +15,8 @@ interface MoviesPageProps {
   toggleCart: () => void;
 }
 
+const NEWS_CATEGORY = -1;
+
 const MoviesPage: React.FC<MoviesPageProps> = ({
   categories,
   movies,
@@ -24,17 +26,9 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
   toggleCart
 }) => {
   const { slug } = useParams();
-  const NEWS_CATEGORY = -1;
-  const NUMBER_OF_ITEMS_IN_NEWS = 4;
   const currentCategory: MovieCategory | undefined = slug
     ? categories.find(category => category.slug === slug)
-    : { id: NEWS_CATEGORY, name: "Newly added" };
-
-  const _movies: Movie[] = Array.from(movies);
-  _movies.sort((x, y) => (x.added < y.added ? 1 : -1));
-  _movies
-    .slice(0, NUMBER_OF_ITEMS_IN_NEWS)
-    .map(movie => movie.productCategory.push({ categoryId: NEWS_CATEGORY }));
+    : categories.find(category => category.id === NEWS_CATEGORY);
 
   const getMoviesFromCategory = (category: MovieCategory) => {
     return movies.filter(movie => {
@@ -45,6 +39,9 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
   return (
     <>
       {!currentCategory && <Route component={NoPage} />}
+      {!slug && currentCategory && (
+        <Redirect to={`/movies/${currentCategory.slug}`} />
+      )}
       <div className="top-margin-sm d-none d-sm-block"></div>
       <div className="top-margin-xs d-block d-sm-none"></div>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

@@ -64,6 +64,8 @@ const emptyOrder: Order = {
 
 const MIN_QTY = 1;
 const MAX_QTY = 99;
+const NEWS_CATEGORY = -1;
+const NUMBER_OF_ITEMS_IN_NEWS = 4;
 
 const companies = ["", "Telia", "Volvo", "Skanska", "ABB"];
 
@@ -77,6 +79,7 @@ const App = () => {
   useEffect(() => {
     const setCategoriesAsync = async () => {
       const c: MovieCategory[] = await API.get<MovieCategory>("categories");
+      c.unshift({ id: NEWS_CATEGORY, name: "Newly added" });
       c.map(
         category => (category.slug = slugify(category.name, { lower: true }))
       );
@@ -88,6 +91,7 @@ const App = () => {
   useEffect(() => {
     async function setMoviesAsync() {
       const _movies: Movie[] = await API.get<Movie>("products");
+      populateNewsCategory(_movies);
       _movies.sort((x, y) => (x.name > y.name ? 1 : -1));
       setMovies(_movies);
     }
@@ -99,6 +103,13 @@ const App = () => {
       setTimeout(() => setCart({ ...cart, blink: false }), 500);
     }
   }, [cart]);
+
+  const populateNewsCategory = (_movies: Movie[]) => {
+    _movies.sort((x, y) => (x.added < y.added ? 1 : -1));
+    _movies
+      .slice(0, NUMBER_OF_ITEMS_IN_NEWS)
+      .map(movie => movie.productCategory.push({ categoryId: NEWS_CATEGORY }));
+  };
 
   const addToCart: AddToCart = (movie, quantity) => {
     const newCartItems = new Map(cart.items);
