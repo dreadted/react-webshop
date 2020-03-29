@@ -165,6 +165,24 @@ const App = () => {
       <div className="container-fluid text-light p-4">
         <Navigation categories={categories} />
         <Switch>
+          <Route path="/movies/checkout">
+            <Checkout
+              cart={cart}
+              order={order}
+              companies={companies}
+              setOrder={setOrder}
+              updateCart={updateCart}
+              toggleCart={toggleCart}
+            />
+          </Route>
+          <Route path="/movies/confirmation">
+            <Confirmation
+              cart={cart}
+              order={order}
+              companies={companies}
+              movies={movies}
+            />
+          </Route>
           <Route path="/movies/:slug">
             <MoviesPage
               categories={categories}
@@ -186,24 +204,7 @@ const App = () => {
               toggleCart={toggleCart}
             />
           </Route>
-          <Route path="/checkout">
-            <Checkout
-              cart={cart}
-              order={order}
-              companies={companies}
-              setOrder={setOrder}
-              updateCart={updateCart}
-              toggleCart={toggleCart}
-            />
-          </Route>
-          <Route path="/confirmation">
-            <Confirmation
-              cart={cart}
-              order={order}
-              companies={companies}
-              movies={movies}
-            />
-          </Route>
+
           <Route component={NoPage} />
         </Switch>
       </div>

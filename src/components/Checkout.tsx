@@ -99,7 +99,7 @@ const Checkout: React.FC<CheckoutProps> = ({
       response
     );
     setOrder({ ...updatedOrder });
-    history.push("/confirmation");
+    history.push("/movies/confirmation");
   };
 
   const getOrderRows = (_order: Order) => {

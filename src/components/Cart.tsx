@@ -100,7 +100,7 @@ const Cart: React.FC<CartProps> = ({
             </div>
             <div className="text-right">
               {!atCheckout && (
-                <Link to={"/checkout"} className="btn btn-primary">
+                <Link to={"/movies/checkout"} className="btn btn-primary">
                   Check Out
                   <FontAwesomeIcon
                     icon="angle-right"

@@ -37,7 +37,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           </select>
         </div>
         {errors.companyId && (
-          <div className="alert alert-danger">{errors.companyId}</div>
+          <div className="alert alert-danger mt-3">{errors.companyId}</div>
         )}
       </div>
 
@@ -51,7 +51,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         />
       </div>
       {errors.createdBy && (
-        <div className="alert alert-danger">{errors.createdBy}</div>
+        <div className="alert alert-danger mt-3">{errors.createdBy}</div>
       )}
 
       <div className="my-2">payment method</div>
@@ -78,7 +78,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       ))}
 
       {errors.paymentMethod && (
-        <div className="alert alert-danger">{errors.paymentMethod}</div>
+        <div className="alert alert-danger mt-3">{errors.paymentMethod}</div>
       )}
       <div className="mt-4 text-right">
         <button type="submit" className="btn btn-primary">
