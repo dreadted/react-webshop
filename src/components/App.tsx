@@ -77,19 +77,7 @@ const App = () => {
   const [categories, setCategories] = useState<MovieCategory[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
 
-  const initialCart = () => {
-    const cartData = localStorage.getItem("cart");
-    const itemsData = localStorage.getItem("items");
-    console.log(cartData, itemsData);
-    if (cartData && cartData.length && itemsData && itemsData.length) {
-      const _cart = JSON.parse(cartData);
-      _cart.items = new Map(Array.from(JSON.parse(itemsData)));
-      return _cart as Cart;
-    }
-    return emptyCart;
-  };
-
-  const [cart, setCart] = useState<Cart>(initialCart());
+  const [cart, setCart] = useState<Cart>(emptyCart);
   const [order, setOrder] = useState<Order>(emptyOrder);
 
   useEffect(() => {
@@ -122,9 +110,38 @@ const App = () => {
     if (cart.blink) {
       setTimeout(() => setCart({ ...cart, blink: false }), 500);
     }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    localStorage.setItem("items", JSON.stringify(Array.from(cart.items)));
+    if (cart.items.size) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      const items: number[][] = [];
+      cart.items.forEach((quantity, movie) => items.push([movie.id, quantity]));
+      localStorage.setItem("items", JSON.stringify(items));
+    }
   }, [cart]);
+
+  useEffect(() => {
+    const initialCart: () => Cart = () => {
+      const cartString = localStorage.getItem("cart");
+      const itemsString = localStorage.getItem("items");
+      if (
+        cartString &&
+        cartString.length &&
+        itemsString &&
+        itemsString.length
+      ) {
+        const _cart: Cart = JSON.parse(cartString);
+        const itemsArray = JSON.parse(itemsString).map((values: number[]) => {
+          const [movieId, quantity] = values;
+          const movie = movies.find(m => m.id === movieId);
+          return [movie, quantity];
+        });
+        _cart.items = new Map<Movie, number>(itemsArray);
+        // console.log("initial cart:", _cart);
+        return _cart;
+      }
+      return emptyCart;
+    };
+    if (movies && movies.length) setCart(initialCart());
+  }, [movies]);
 
   const populateNewsCategory = (_movies: Movie[]) => {
     _movies.sort((x, y) => (x.added < y.added ? 1 : -1));
