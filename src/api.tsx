@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: "http://medieinstitutet-wie-products.azurewebsites.net/api",
+  baseURL: "https://medieinstitutet-wie-products.azurewebsites.net/api",
   responseType: "json",
   headers: { "Content-Type": "application/json" }
 });
