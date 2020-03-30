@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getCurrencyFormat } from "../utils";
+import { getCurrencyFormat } from "../lib/utils";
 
 // components
 import OrderItems from "./OrderItems";

@@ -1,5 +1,7 @@
 import React from "react";
-import { getCurrencyFormat } from "../utils";
+import { getCurrencyFormat } from "../lib/utils";
+
+// components
 import CategoryBadges from "./CategoryBadges";
 
 interface MovieCardProps {

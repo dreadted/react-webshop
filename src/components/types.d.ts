@@ -63,6 +63,3 @@ type OrderErrors = {
 
 type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
 type HandleSubmit = (e: FormEvent<HTMLFormElement>) => void;
-
-/** 404 video */
-declare module "*.mkv";

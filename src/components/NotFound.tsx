@@ -7,7 +7,12 @@ import video from "./media/404.mkv";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const NotFound: React.FC = () => {
+interface NotFoundProps {
+  hasButton: boolean;
+  caption: string;
+}
+
+const NotFound: React.FC<NotFoundProps> = ({ hasButton, caption }) => {
   const history = useHistory();
   return (
     <div className="video">
@@ -17,14 +22,16 @@ const NotFound: React.FC = () => {
           <source src={video} type="video/mp4" />
         </video>
         <div className="description d-flex justify-content-around">
-          <div className="align-self-center text-nowrap">
-            <button className="btn" onClick={history.goBack}>
-              <FontAwesomeIcon icon="angle-left" size="sm" className="mr-2" />
-              back
-            </button>
-          </div>
+          {hasButton && (
+            <div className="align-self-center text-nowrap">
+              <button className="btn" onClick={history.goBack}>
+                <FontAwesomeIcon icon="angle-left" size="sm" className="mr-2" />
+                back
+              </button>
+            </div>
+          )}
           <div>
-            <h1>404</h1>
+            <h1>{caption}</h1>
           </div>
         </div>
       </div>

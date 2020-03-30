@@ -11,7 +11,7 @@ const CategoryBadges: React.FC<CategoryBadges> = ({ movie, categories }) => {
   const currentCategories = categories.filter(
     category =>
       category.id > 0 &&
-      movie.productCategory.find(pc => pc.categoryId === category.id)
+      movie.productCategory?.find(pc => pc.categoryId === category.id)
   );
 
   currentCategories.map(c =>

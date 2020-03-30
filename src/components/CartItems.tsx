@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { getCurrencyFormat } from "../utils";
+import { getCurrencyFormat } from "../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface CartItemProps {

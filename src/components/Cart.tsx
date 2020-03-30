@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CartItems from "./CartItems";
 
 // lib
-import { getCurrencyFormat } from "../utils";
+import { getCurrencyFormat } from "../lib/utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // api
-import { save } from "../api";
+import { save } from "../lib/api";
 
 // components
 import Cart from "./Cart";

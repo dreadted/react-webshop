@@ -3,50 +3,22 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import slugify from "slugify";
 
 // API
-import * as API from "../api";
+import * as API from "../lib/api";
 
 // css
 import "./scss/App.scss";
+
+// icons
+import "../lib/FontAwesome";
 
 // components
 import Navigation from "./Navigation";
 import MoviesPage from "./MoviesPage";
 import NotFound from "./NotFound";
-
-// icons
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faShoppingCart,
-  faAngleUp,
-  faAngleLeft,
-  faAngleRight,
-  faPlusCircle,
-  faMinusCircle,
-  faSpinner
-} from "@fortawesome/free-solid-svg-icons";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import {
-  faCcVisa,
-  faCcMastercard,
-  faCcAmex
-} from "@fortawesome/free-brands-svg-icons";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
 import Loading from "./Loading";
-
-library.add(
-  faShoppingCart,
-  faAngleUp,
-  faAngleLeft,
-  faAngleRight,
-  faPlusCircle,
-  faMinusCircle,
-  faSpinner,
-  faTrashAlt,
-  faCcVisa,
-  faCcMastercard,
-  faCcAmex
-);
+import MovieSearch from "./MovieSearch";
 
 const emptyCart: Cart = {
   items: new Map(),
@@ -97,12 +69,12 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    async function setMoviesAsync() {
+    const setMoviesAsync = async () => {
       const _movies: Movie[] = await API.get<Movie>("products");
       populateNewsCategory(_movies);
       _movies.sort((x, y) => (x.name > y.name ? 1 : -1));
       setMovies(_movies);
-    }
+    };
     setMoviesAsync();
   }, []);
 
@@ -224,7 +196,19 @@ const App = () => {
               movies={movies}
             />
           </Route>
-          <Route path="/not-found" component={NotFound} />
+          <Route path="/not-found">
+            <NotFound hasButton={true} caption="404" />
+          </Route>
+          <Route path="/search/:slug">
+            <MovieSearch
+              categories={categories}
+              movies={movies}
+              cart={cart}
+              addToCart={addToCart}
+              updateCart={updateCart}
+              toggleCart={toggleCart}
+            />
+          </Route>
           <Route path="/:slug">
             <MoviesPage
               categories={categories}
@@ -236,7 +220,9 @@ const App = () => {
             />
           </Route>
           <Redirect from="/" exact to="/newly-added" />
-          <Route component={NotFound} />
+          <Route>
+            <Redirect to="/not-found" />
+          </Route>
         </Switch>
       </div>
       <div className="bottom-margin p-4">
