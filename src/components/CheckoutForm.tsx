@@ -20,7 +20,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   ];
 
   return (
-    <form className="h5 m-0" onSubmit={onSubmit}>
+    <form className="h5 mt-4" onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="companyId">company</label>
         <div className="field">

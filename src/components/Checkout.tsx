@@ -59,7 +59,12 @@ const Checkout: React.FC<CheckoutProps> = ({
     }
 
     delete order.id; // important!
-    const newOrder = { ...order, ...values, totalPrice: cart.subTotal };
+    const newOrder = {
+      ...order,
+      ...values,
+      totalPrice: cart.subTotal,
+      orderRows: getOrderRows(order)
+    };
     submitOrder(newOrder);
   };
 
@@ -83,21 +88,16 @@ const Checkout: React.FC<CheckoutProps> = ({
     return input.match(format);
   };
 
-  const submitOrder = async (newOrder: Order) => {
-    const savedOrder: Order = await save<Order>(newOrder, "orders");
-    const updatedOrder: Order = {
-      ...savedOrder,
-      orderRows: getOrderRows(savedOrder)
-    };
-    const response = await save<Order>(updatedOrder, "orders", updatedOrder.id);
-    console.log(
-      "updatedOrder:",
-      updatedOrder,
-      JSON.stringify(updatedOrder),
-      "response:",
-      response
-    );
-    setOrder({ ...updatedOrder });
+  const submitOrder = async (createdOrder: Order) => {
+    console.log("createdOrder:", JSON.stringify(createdOrder));
+    const savedOrder: Order = await save<Order>(createdOrder, "orders");
+    // const updatedOrder: Order = {
+    //   ...savedOrder,
+    //   orderRows: getOrderRows(savedOrder)
+    // };
+    // const response = await save<Order>(updatedOrder, "orders", updatedOrder.id);
+    console.log("savedOrder:", JSON.stringify(savedOrder));
+    setOrder({ ...savedOrder });
     history.push("/confirmation");
   };
 
@@ -106,13 +106,14 @@ const Checkout: React.FC<CheckoutProps> = ({
     for (let [movie, quantity] of cart.items.entries()) {
       const orderRow: OrderRow = {
         productId: movie.id,
-        orderId: _order.id,
+        orderId: _order?.id,
         amount: quantity
       };
       result.push(orderRow);
     }
     return result;
   };
+
   return (
     <>
       <div className="top-margin"></div>
