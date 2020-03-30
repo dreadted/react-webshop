@@ -1,13 +1,24 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useRef, useEffect, Dispatch } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface NavigationProps {
   categories: MovieCategory[];
+  clearSearch: boolean;
+  setClearSearch: Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ categories }) => {
+const Navigation: React.FC<NavigationProps> = ({
+  categories,
+  clearSearch,
+  setClearSearch
+}) => {
   const history = useHistory();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (clearSearch && inputRef.current) inputRef.current.value = "";
+    setClearSearch(false);
+  }, [clearSearch]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input: string = encodeURIComponent(e.target.value);
@@ -15,39 +26,31 @@ const Navigation: React.FC<NavigationProps> = ({ categories }) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-md bg-secondary p-2 fixed-top">
-      <div className="navbar-collapse justify-content-between">
-        <div className="navbar-nav nav-pills nav-fill flex-grow-1">
-          {categories.map(category => {
-            return (
-              <NavLink
-                className="nav-item nav-link"
-                to={`/${category.slug}`}
-                key={category.id}
-              >
-                {category.name}
-              </NavLink>
-            );
-          })}
+    <div className="bg-secondary p-2 fixed-top">
+      <nav className="nav nav-pills nav-fill">
+        {categories.map(category => {
+          return (
+            <NavLink
+              className="nav-item nav-link"
+              to={`/${category.slug}`}
+              key={category.id}
+            >
+              {category.name}
+            </NavLink>
+          );
+        })}
+        <div className="mx-4 my-2 align-self-center">
+          <input
+            ref={inputRef}
+            className="form-control w-100"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            onChange={handleChange}
+          />
         </div>
-        <form className="form my-2 my-lg-0">
-          <div className="input-group">
-            <input
-              className="form-control"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={handleChange}
-            />
-            <div className="input-group-append">
-              <button className="btn btn-primary" type="submit">
-                <FontAwesomeIcon icon="search" />
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 export default Navigation;

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 // video
 import video from "./media/404.mkv";
+import poster from "./media/404.jpg";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +19,14 @@ const NotFound: React.FC<NotFoundProps> = ({ hasButton, caption }) => {
     <div className="video">
       <div className="top-margin"></div>
       <div className="overlay">
-        <video className="videoTag" autoPlay loop muted>
+        <video
+          className="videoTag"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={poster}
+        >
           <source src={video} type="video/mp4" />
         </video>
         <div className="description d-flex justify-content-around">

@@ -18,7 +18,7 @@ import NotFound from "./NotFound";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
 import Loading from "./Loading";
-import MovieSearch from "./MovieSearch";
+import SearchHits from "./SearchHits";
 
 const emptyCart: Cart = {
   items: new Map(),
@@ -51,6 +51,8 @@ const App = () => {
 
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [order, setOrder] = useState<Order>(emptyOrder);
+
+  const [clearSearch, setClearSearch] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(!(categories.length && movies.length));
@@ -176,7 +178,11 @@ const App = () => {
   ) : (
     <>
       <div className="container-fluid text-light p-4">
-        <Navigation categories={categories} />
+        <Navigation
+          categories={categories}
+          clearSearch={clearSearch}
+          setClearSearch={setClearSearch}
+        />
         <Switch>
           <Route path="/checkout">
             <Checkout
@@ -200,13 +206,14 @@ const App = () => {
             <NotFound hasButton={true} caption="404" />
           </Route>
           <Route path="/search/:slug">
-            <MovieSearch
+            <SearchHits
               categories={categories}
               movies={movies}
               cart={cart}
               addToCart={addToCart}
               updateCart={updateCart}
               toggleCart={toggleCart}
+              setClearSearch={setClearSearch}
             />
           </Route>
           <Route path="/:slug">

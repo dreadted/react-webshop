@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 // API
@@ -22,22 +22,24 @@ const NO_MOVIES: Movie[] = [
   }
 ];
 
-interface MovieSearchProps {
+interface SearchHitsProps {
   categories: MovieCategory[];
   movies: Movie[];
   cart: Cart;
   addToCart: AddToCart;
   updateCart: UpdateCart;
   toggleCart: () => void;
+  setClearSearch: Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MovieSearch: React.FC<MovieSearchProps> = ({
+const SearchHits: React.FC<SearchHitsProps> = ({
   categories,
   movies,
   cart,
   addToCart,
   updateCart,
-  toggleCart
+  toggleCart,
+  setClearSearch
 }) => {
   const { slug } = useParams();
   const [_movies, _setMovies] = useState<Movie[]>([]);
@@ -47,9 +49,6 @@ const MovieSearch: React.FC<MovieSearchProps> = ({
     if (slug) {
       const setMoviesAsync = async () => {
         const hits: Movie[] = await get<Movie>(`search/?searchText=${slug}`);
-        // hits.sort((x, y) => (x.name > y.name ? 1 : -1));
-        // const hitsId: number[] = hits.map(hit => hit.id);
-
         const result: Movie[] =
           hits && hits.length
             ? movies.filter(movie => hits.map(hit => hit.id).includes(movie.id))
@@ -61,11 +60,19 @@ const MovieSearch: React.FC<MovieSearchProps> = ({
     }
   }, [slug, movies]);
 
+  useEffect(() => {
+    return () => {
+      setClearSearch(true);
+    };
+  }, []);
+
   return (
     <>
       {!slug && <Redirect to="/" />}
       {((!_movies || !_movies.length || _movies === NO_MOVIES) && (
-        <NotFound hasButton={false} caption="Nope" />
+        <div className="mb-3">
+          <NotFound hasButton={false} caption="Nope" />
+        </div>
       )) || (
         <>
           <div className="top-margin"></div>
@@ -97,4 +104,4 @@ const MovieSearch: React.FC<MovieSearchProps> = ({
   );
 };
 
-export default MovieSearch;
+export default SearchHits;
