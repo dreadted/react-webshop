@@ -8,8 +8,10 @@ interface CategoryBadges {
 
 const CategoryBadges: React.FC<CategoryBadges> = ({ movie, categories }) => {
   let result: React.ReactNodeArray = [];
-  const currentCategories = categories.filter(category =>
-    movie.productCategory.find(pc => pc.categoryId === category.id)
+  const currentCategories = categories.filter(
+    category =>
+      category.id > 0 &&
+      movie.productCategory.find(pc => pc.categoryId === category.id)
   );
 
   currentCategories.map(c =>
