@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { useParams, Route, Redirect } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 
 //components
 import MovieCard from "./MovieCard";
 import Cart from "./Cart";
-import NotFound from "./NotFound";
 
 interface MoviesPageProps {
   categories: MovieCategory[];

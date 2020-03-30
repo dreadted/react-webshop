@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // video
 import video from "./media/404.mkv";
@@ -13,26 +13,14 @@ const NotFound: React.FC = () => {
     <div className="video">
       <div className="top-margin"></div>
       <div className="overlay">
-        <video
-          className="videoTag"
-          autoPlay
-          loop
-          muted
-          style={{
-            padding: 0,
-            marginLeft: -40,
-            // marginTop: -40,
-            width: "100vw",
-            height: "100%"
-          }}
-        >
+        <video className="videoTag" autoPlay loop muted>
           <source src={video} type="video/mp4" />
         </video>
         <div className="description d-flex justify-content-around">
-          <div className="align-self-center">
+          <div className="align-self-center text-nowrap">
             <button className="btn" onClick={history.goBack}>
-              <FontAwesomeIcon icon="angle-left" size="lg" className="mr-2" />
-              go back
+              <FontAwesomeIcon icon="angle-left" size="sm" className="mr-2" />
+              back
             </button>
           </div>
           <div>
