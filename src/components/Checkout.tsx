@@ -7,7 +7,6 @@ import { save } from "../api";
 // components
 import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
-import TopMargin from "./TopMargin";
 
 interface CheckoutProps {
   cart: Cart;
@@ -116,7 +115,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
   return (
     <>
-      <TopMargin />
+      <div className="top-margin"></div>
       <div className="row row-cols-1 row-cols-md-2">
         <div className="col mt-2 p-0">
           <Cart

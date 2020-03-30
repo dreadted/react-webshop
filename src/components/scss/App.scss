@@ -16,12 +16,24 @@ body {
 
 /* spacing
 -----------------------------------------------------------------------------*/
-.top-margin-sm {
-  margin-top: 4em;
+.top-margin {
+  height: 3rem;
+}
+@media only screen and (max-width: 38.9rem) {
+  .top-margin {
+    height: 6.7rem;
+  }
 }
 
-.top-margin-xs {
-  margin-top: 6em;
+@media only screen and (max-width: 22rem) {
+  .top-margin {
+    height: 10.3rem;
+  }
+}
+@media only screen and (max-width: 16rem) {
+  .top-margin {
+    height: 13.9rem;
+  }
 }
 
 .bottom-margin {
@@ -189,4 +201,41 @@ nav {
   position: relative;
   top: 0.15em;
   left: 0.15em;
+}
+
+/* 404
+------------------*/
+.video {
+  .overlay {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .description {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 2em;
+
+    h1 {
+      display: block;
+      width: 100%;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: calc(30vw);
+      color: transparentize($light, 0.6);
+      margin: 0;
+      padding: 0;
+      text-align: right;
+    }
+
+    button {
+      font-size: calc(1rem + 2vw);
+      color: $light;
+    }
+  }
 }

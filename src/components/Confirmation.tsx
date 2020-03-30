@@ -3,7 +3,6 @@ import { getCurrencyFormat } from "../utils";
 
 // components
 import OrderItems from "./OrderItems";
-import TopMargin from "./TopMargin";
 
 interface ConfirmationProps {
   cart: Cart;
@@ -55,7 +54,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
 
   return (
     <>
-      <TopMargin />
+      <div className="top-margin"></div>
       <div className="row">
         <h1 className="m-4 text-secondary h2 font-weight-light">
           Order confirmation

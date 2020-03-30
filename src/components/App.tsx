@@ -11,7 +11,7 @@ import "./scss/App.scss";
 // components
 import Navigation from "./Navigation";
 import MoviesPage from "./MoviesPage";
-import NoPage from "./NoPage";
+import NotFound from "./NotFound";
 
 // icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -224,6 +224,7 @@ const App = () => {
               movies={movies}
             />
           </Route>
+          <Route path="/not-found" component={NotFound} />
           <Route path="/:slug">
             <MoviesPage
               categories={categories}
@@ -235,7 +236,7 @@ const App = () => {
             />
           </Route>
           <Redirect from="/" exact to="/newly-added" />
-          <Route component={NoPage} />
+          <Route component={NotFound} />
         </Switch>
       </div>
       <div className="bottom-margin p-4">

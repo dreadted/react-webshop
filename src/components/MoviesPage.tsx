@@ -4,8 +4,7 @@ import { useParams, Route, Redirect } from "react-router-dom";
 //components
 import MovieCard from "./MovieCard";
 import Cart from "./Cart";
-import NoPage from "./NoPage";
-import TopMargin from "./TopMargin";
+import NotFound from "./NotFound";
 
 interface MoviesPageProps {
   categories: MovieCategory[];
@@ -44,9 +43,9 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
 
   return (
     <>
-      {!currentCategory && <Route component={NoPage} />}
+      {!currentCategory && <Redirect to="/not-found" />}
       {!slug && currentCategory && <Redirect to={`/${currentCategory.slug}`} />}
-      <TopMargin />
+      <div className="top-margin"></div>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {currentCategory &&
           getMoviesFromCategory(currentCategory).map(movie => (
