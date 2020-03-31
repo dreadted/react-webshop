@@ -2,8 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 // video
-import video from "./media/404.mkv";
-import poster from "./media/404.jpg";
+import video from "../media/404.mkv";
+import poster from "../media/404.jpg";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +16,7 @@ interface NotFoundProps {
 const NotFound: React.FC<NotFoundProps> = ({ hasButton, caption }) => {
   const history = useHistory();
   return (
-    <div className="video">
+    <div className="video mt-3">
       <div className="overlay">
         <video
           className="videoTag"

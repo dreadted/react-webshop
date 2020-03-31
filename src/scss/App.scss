@@ -229,7 +229,7 @@ nav {
   left: 0.15em;
 }
 
-/* 404
+/* 404 not found
 ------------------*/
 .video {
   .overlay {
@@ -262,8 +262,7 @@ nav {
     h1 {
       display: block;
       width: 100%;
-
-      font-size: calc(32vw);
+      font-size: calc(32vw - 2rem);
       color: transparentize($light, 0.7);
       margin: 0;
       padding: 0;

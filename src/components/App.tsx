@@ -6,7 +6,7 @@ import slugify from "slugify";
 import * as API from "../lib/api";
 
 // css
-import "./scss/App.scss";
+import "../scss/App.scss";
 
 // icons
 import "../lib/FontAwesome";
