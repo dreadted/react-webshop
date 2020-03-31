@@ -122,7 +122,7 @@ const Cart: React.FC<CartProps> = ({
     <>
       <div className="cart-offset" ref={cartRef}></div>
       <div className="cart" id="cart">
-        <ul className={`list-group ${cart.open ? "" : "m-4"}`}>
+        <ul className={`list-group ${cart.open ? "" : "m-3"}`}>
           {!atCheckout && (
             <li
               onClick={toggleCart}
