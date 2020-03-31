@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/react-webshop/static/css/main.10d06ddb.chunk.css",
+    "main.js": "/react-webshop/static/js/main.de92c9da.chunk.js",
+    "main.js.map": "/react-webshop/static/js/main.de92c9da.chunk.js.map",
+    "runtime-main.js": "/react-webshop/static/js/runtime-main.684b0842.js",
+    "runtime-main.js.map": "/react-webshop/static/js/runtime-main.684b0842.js.map",
+    "static/js/2.c918ebd9.chunk.js": "/react-webshop/static/js/2.c918ebd9.chunk.js",
+    "static/js/2.c918ebd9.chunk.js.map": "/react-webshop/static/js/2.c918ebd9.chunk.js.map",
+    "index.html": "/react-webshop/index.html",
+    "precache-manifest.ec48f8879a3903176efb08d4c3dfe82d.js": "/react-webshop/precache-manifest.ec48f8879a3903176efb08d4c3dfe82d.js",
+    "service-worker.js": "/react-webshop/service-worker.js",
+    "static/css/main.10d06ddb.chunk.css.map": "/react-webshop/static/css/main.10d06ddb.chunk.css.map",
+    "static/js/2.c918ebd9.chunk.js.LICENSE.txt": "/react-webshop/static/js/2.c918ebd9.chunk.js.LICENSE.txt",
+    "static/media/404.jpg": "/react-webshop/static/media/404.6d0d39ed.jpg",
+    "static/media/404.mkv": "/react-webshop/static/media/404.9a16ef39.mkv"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.684b0842.js",
+    "static/js/2.c918ebd9.chunk.js",
+    "static/css/main.10d06ddb.chunk.css",
+    "static/js/main.de92c9da.chunk.js"
+  ]
+}
