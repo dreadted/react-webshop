@@ -19,6 +19,7 @@ import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
 import Loading from "./Loading";
 import SearchHits from "./SearchHits";
+import Footer from "./Footer";
 
 const emptyCart: Cart = {
   items: new Map(),
@@ -176,13 +177,13 @@ const App = () => {
   return loading ? (
     <Loading />
   ) : (
-    <>
-      <div className="container-fluid text-light p-4">
-        <Navigation
-          categories={categories}
-          clearSearch={clearSearch}
-          setClearSearch={setClearSearch}
-        />
+    <div id="content">
+      <Navigation
+        categories={categories}
+        clearSearch={clearSearch}
+        setClearSearch={setClearSearch}
+      />
+      <main className="container-fluid text-light px-3">
         <Switch>
           <Route path="/checkout">
             <Checkout
@@ -231,15 +232,9 @@ const App = () => {
             <Redirect to="/not-found" />
           </Route>
         </Switch>
-      </div>
-      <div className="bottom-margin p-4">
-        <p className="text-right">
-          <small className="text-info">
-            &copy; 2020 Christofer Laurin {process.env.NODE_ENV}
-          </small>
-        </p>
-      </div>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 };
 

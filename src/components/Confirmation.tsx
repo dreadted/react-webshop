@@ -54,7 +54,6 @@ const Confirmation: React.FC<ConfirmationProps> = ({
 
   return (
     <>
-      <div className="top-margin"></div>
       <div className="row">
         <h1 className="m-4 text-secondary h2 font-weight-light">
           Order confirmation

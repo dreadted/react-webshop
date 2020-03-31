@@ -20,34 +20,56 @@ h1 {
 
 /* spacing
 -----------------------------------------------------------------------------*/
-.top-margin {
-  height: 3rem;
-}
-@media only screen and (max-width: 54rem) {
-  .top-margin {
-    height: 6.35rem;
-  }
+#root {
+  position: relative;
+  min-height: 100vh;
 }
 
-@media only screen and (max-width: 29rem) {
-  .top-margin {
-    height: 10.25rem;
-  }
-}
-@media only screen and (max-width: 22rem) {
-  .top-margin {
-    height: 13.9rem;
-  }
+#content {
+  padding-bottom: 2.5rem;
 }
 
-.bottom-margin {
-  margin-top: 4em;
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
 }
 
 /* navigation
 -----------------------------------------------------------------------------*/
-nav a {
-  font: 2em "Bebas Neue", sans-serif;
+nav {
+  a {
+    font-family: "Bebas Neue", sans-serif;
+  }
+
+  .search {
+    transition-duration: 500ms;
+  }
+
+  #search-toggle,
+  .search-open {
+    display: none;
+  }
+
+  @media only screen and (max-width: 49rem) {
+    .search {
+      display: none;
+    }
+
+    .search-open {
+      display: inline-block;
+    }
+
+    #search-toggle:checked {
+      & + .search {
+        display: block;
+        & + .search-open {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 /* movie cards
@@ -218,9 +240,8 @@ nav a {
 
     video {
       padding: 0;
-      width: 100vw;
+      width: 100%;
       height: 100%;
-      margin-left: -1.5rem;
 
       &::-internal-media-controls-overlay-cast-button {
         display: none;

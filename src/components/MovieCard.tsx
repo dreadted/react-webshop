@@ -16,7 +16,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   addToCart
 }) => {
   return (
-    <div className="col-mb-4 d-flex">
+    <div className="d-flex">
       <div className="card m-3 bg-dark shadow-sm">
         <div className="overlay">
           <img

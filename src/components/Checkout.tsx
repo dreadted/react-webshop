@@ -116,7 +116,6 @@ const Checkout: React.FC<CheckoutProps> = ({
 
   return (
     <>
-      <div className="top-margin"></div>
       <div className="row row-cols-1 row-cols-md-2">
         <div className="col mt-2 p-0">
           <Cart

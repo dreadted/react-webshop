@@ -17,7 +17,6 @@ const NotFound: React.FC<NotFoundProps> = ({ hasButton, caption }) => {
   const history = useHistory();
   return (
     <div className="video">
-      <div className="top-margin"></div>
       <div className="overlay">
         <video
           className="videoTag"
