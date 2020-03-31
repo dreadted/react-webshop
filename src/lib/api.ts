@@ -6,11 +6,12 @@ const apiClient: AxiosInstance = axios.create({
   headers: { "Content-Type": "application/json" }
 });
 
-export const get = async <T extends {}>(slug: string) => {
+export const get = async <T extends {}>(slug: string, cache?: boolean) => {
   try {
     const response = await apiClient.get<T[]>(`/${slug}`);
     const data = response.data;
-    if (data && data.length) localStorage.setItem(slug, JSON.stringify(data));
+    if (data && data.length && cache)
+      localStorage.setItem(slug, JSON.stringify(data));
     return data;
   } catch (err) {
     const data = localStorage.getItem(slug);

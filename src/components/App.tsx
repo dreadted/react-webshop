@@ -61,7 +61,10 @@ const App = () => {
 
   useEffect(() => {
     const setCategoriesAsync = async () => {
-      const c: ProductCategory[] = await API.get<ProductCategory>("categories");
+      const c: ProductCategory[] = await API.get<ProductCategory>(
+        "categories",
+        false
+      );
       c.unshift({ id: NEWS_CATEGORY, name: "Newly added" });
       c.map(
         category => (category.slug = slugify(category.name, { lower: true }))
@@ -73,7 +76,7 @@ const App = () => {
 
   useEffect(() => {
     const setProductsAsync = async () => {
-      const _products: Product[] = await API.get<Product>("products");
+      const _products: Product[] = await API.get<Product>("products", false);
       populateNewsCategory(_products);
       _products.sort((x, y) => (x.name > y.name ? 1 : -1));
       setProducts(_products);
