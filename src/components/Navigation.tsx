@@ -41,7 +41,7 @@ const Navigation: React.FC<NavigationProps> = ({
   };
 
   return (
-    <div className="bg-secondary sticky-top p-1">
+    <div className="bg-secondary sticky-top px-2 py-1">
       <nav className="nav nav-pills nav-fill align-items-center">
         {categories.map(category => {
           return (
