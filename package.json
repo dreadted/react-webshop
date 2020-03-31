@@ -1,7 +1,7 @@
 {
-  "name": "movies",
+  "name": "webshop",
   "version": "0.1.0",
-  "homepage": "https://dreadnallen.github.io/movies",
+  "homepage": "https://dreadnallen.github.io/react-webshop",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",

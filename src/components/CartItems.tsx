@@ -3,14 +3,14 @@ import { getCurrencyFormat } from "../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface CartItemProps {
-  movie: Movie;
+  product: Product;
   quantity: number;
   updateCart: UpdateCart;
   openClass: string;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
-  movie,
+  product,
   quantity,
   updateCart,
   openClass
@@ -18,23 +18,23 @@ const CartItem: React.FC<CartItemProps> = ({
   return (
     <li className={`cart-item list-group-item d-flex px-3 pb-2 ${openClass}`}>
       <div className="mr-3">
-        <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
+        <img className="thumbnail" src={product.imageUrl} alt={product.name} />
       </div>
       <div className="flex-grow-1 d-flex flex-column h5">
-        <div>{movie.name}</div>
+        <div>{product.name}</div>
         <div className="d-flex align-items-center justify-content-between mt-2">
           <div>
             <div className="d-flex align-items-center justify-content-start">
               <div
                 className="update p-2"
-                onClick={() => updateCart(movie, quantity - 1)}
+                onClick={() => updateCart(product, quantity - 1)}
               >
                 <FontAwesomeIcon icon="minus-circle" />
               </div>
               <div className="font-weight-bold">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateCart(movie, parseInt(e.target.value))
+                    updateCart(product, parseInt(e.target.value))
                   }
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -45,18 +45,18 @@ const CartItem: React.FC<CartItemProps> = ({
               </div>
               <div
                 className="update p-2"
-                onClick={() => updateCart(movie, quantity + 1)}
+                onClick={() => updateCart(product, quantity + 1)}
               >
                 <FontAwesomeIcon icon="plus-circle" />
               </div>
             </div>
           </div>
           <div className="w-25 text-right">
-            {getCurrencyFormat(movie.price * quantity)}
+            {getCurrencyFormat(product.price * quantity)}
           </div>
           <div
             className="update w-25 text-right p-2"
-            onClick={() => updateCart(movie, 0)}
+            onClick={() => updateCart(product, 0)}
           >
             <FontAwesomeIcon icon={["far", "trash-alt"]} />
           </div>
@@ -78,11 +78,11 @@ const CartItems: React.FC<CartItemsProps> = ({
   openClass
 }) => {
   const result = [];
-  for (let [movie, quantity] of cart.items.entries()) {
+  for (let [product, quantity] of cart.items.entries()) {
     result.push(
       <CartItem
-        key={movie.id}
-        movie={movie}
+        key={product.id}
+        product={product}
         quantity={quantity}
         updateCart={updateCart}
         openClass={openClass}

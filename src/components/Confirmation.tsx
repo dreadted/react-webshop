@@ -7,14 +7,14 @@ import OrderItems from "./OrderItems";
 interface ConfirmationProps {
   cart: Cart;
   order: Order;
-  movies: Movie[];
+  products: Product[];
   companies: string[];
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({
   cart,
   order,
-  movies,
+  products,
   companies
 }) => {
   console.log("order:", order);
@@ -29,10 +29,12 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       if (order.orderRows?.length !== cart.items.size)
         error = "Order contains wrong number of items.";
       let counter = 0;
-      for (let [movie, quantity] of cart.items.entries()) {
+      for (let [product, quantity] of cart.items.entries()) {
         const orderRow = order.orderRows[counter];
-        if (!(movie.id === orderRow.productId && quantity === orderRow.amount))
-          error = `Order contains wrong quantity of "${movie.name}": ${orderRow.amount} should be ${quantity}!`;
+        if (
+          !(product.id === orderRow.productId && quantity === orderRow.amount)
+        )
+          error = `Order contains wrong quantity of "${product.name}": ${orderRow.amount} should be ${quantity}!`;
         counter++;
       }
     } else error = "Order is empty!";
@@ -63,7 +65,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         <div className="col col-12 col-lg-6 mb-4">
           <div className="cart open">
             <ul className="list-group open">
-              <OrderItems order={order} movies={movies} />
+              <OrderItems order={order} products={products} />
               <li className="cart-item cart-footer list-group-item d-flex justify-content-end open">
                 <div className="font-weight-bold d-flex h5 m-0">
                   <div className="mr-3">Total:</div>

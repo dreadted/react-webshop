@@ -4,14 +4,14 @@ import { getCurrencyFormat } from "../lib/utils";
 // components
 import CategoryBadges from "./CategoryBadges";
 
-interface MovieCardProps {
-  movie: Movie;
-  categories: MovieCategory[];
+interface ProductCardProps {
+  product: Product;
+  categories: ProductCategory[];
   addToCart: AddToCart;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({
-  movie,
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
   categories,
   addToCart
 }) => {
@@ -21,25 +21,25 @@ const MovieCard: React.FC<MovieCardProps> = ({
         <div className="overlay">
           <img
             className="card-img-top img-fluid"
-            alt={movie.name}
-            src={movie.imageUrl}
+            alt={product.name}
+            src={product.imageUrl}
           />
           <div className="card-description">
-            <h4>{movie.name}</h4>
-            <p>{movie.description}</p>
+            <h4>{product.name}</h4>
+            <p>{product.description}</p>
           </div>
         </div>
         <div className="card-footer">
           <div className="d-flex mb-3">
-            <CategoryBadges movie={movie} categories={categories} />
+            <CategoryBadges product={product} categories={categories} />
           </div>
           <div className="d-flex flex-md-wrap align-items-center">
             <div className="h5 font-weight-bold mb-0 mr-auto">
-              {getCurrencyFormat(movie.price)}
+              {getCurrencyFormat(product.price)}
             </div>
             <button
               className="btn btn-primary"
-              onClick={() => addToCart(movie, 1)}
+              onClick={() => addToCart(product, 1)}
             >
               Add to cart
             </button>
@@ -50,4 +50,4 @@ const MovieCard: React.FC<MovieCardProps> = ({
   );
 };
 
-export default MovieCard;
+export default ProductCard;

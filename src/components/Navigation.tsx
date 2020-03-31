@@ -3,7 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface NavigationProps {
-  categories: MovieCategory[];
+  categories: ProductCategory[];
   clearSearch: boolean;
   setClearSearch: Dispatch<React.SetStateAction<boolean>>;
 }

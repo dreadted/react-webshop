@@ -103,9 +103,9 @@ const Checkout: React.FC<CheckoutProps> = ({
 
   const getOrderRows = (_order: Order) => {
     const result = [];
-    for (let [movie, quantity] of cart.items.entries()) {
+    for (let [product, quantity] of cart.items.entries()) {
       const orderRow: OrderRow = {
-        productId: movie.id,
+        productId: product.id,
         orderId: _order?.id,
         amount: quantity
       };

@@ -1,11 +1,11 @@
-/** Movie types */
-type MovieCategory = {
+/** Product types */
+type ProductCategory = {
   id: number;
   name: string;
   slug?: string;
 };
 
-type Movie = {
+type Product = {
   id: number;
   name: string;
   description: string;
@@ -13,16 +13,16 @@ type Movie = {
   imageUrl: string;
   year: number;
   added: Date;
-  productCategory: ProductCategory[];
+  productCategory: APIProductCategory[];
 };
 
-type ProductCategory = {
+type APIProductCategory = {
   categoryId: number;
 };
 
 /** Cart types */
 type Cart = {
-  items: Map<Movie, number>;
+  items: Map<Product, number>;
   articles: number;
   subTotal: number;
   blink: boolean;
@@ -30,12 +30,12 @@ type Cart = {
 };
 
 type CartItem = {
-  movie: Movie;
+  product: Product;
   quantity: number;
 };
 
-type AddToCart = (movie: Movie, quantity: number) => void;
-type UpdateCart = (movie: Movie, quantity: number) => void;
+type AddToCart = (product: Product, quantity: number) => void;
+type UpdateCart = (product: Product, quantity: number) => void;
 
 /** Order types */
 type Order = {

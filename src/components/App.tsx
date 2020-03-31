@@ -13,7 +13,7 @@ import "../lib/FontAwesome";
 
 // components
 import Navigation from "./Navigation";
-import MoviesPage from "./MoviesPage";
+import ProductsPage from "./ProductsPage";
 import NotFound from "./NotFound";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
@@ -47,8 +47,8 @@ const companies = ["", "Telia", "Volvo", "Skanska", "ABB"];
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [categories, setCategories] = useState<MovieCategory[]>([]);
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [order, setOrder] = useState<Order>(emptyOrder);
@@ -56,12 +56,12 @@ const App = () => {
   const [clearSearch, setClearSearch] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoading(!(categories.length && movies.length));
-  }, [loading, categories, movies]);
+    setLoading(!(categories.length && products.length));
+  }, [loading, categories, products]);
 
   useEffect(() => {
     const setCategoriesAsync = async () => {
-      const c: MovieCategory[] = await API.get<MovieCategory>("categories");
+      const c: ProductCategory[] = await API.get<ProductCategory>("categories");
       c.unshift({ id: NEWS_CATEGORY, name: "Newly added" });
       c.map(
         category => (category.slug = slugify(category.name, { lower: true }))
@@ -72,13 +72,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const setMoviesAsync = async () => {
-      const _movies: Movie[] = await API.get<Movie>("products");
-      populateNewsCategory(_movies);
-      _movies.sort((x, y) => (x.name > y.name ? 1 : -1));
-      setMovies(_movies);
+    const setProductsAsync = async () => {
+      const _products: Product[] = await API.get<Product>("products");
+      populateNewsCategory(_products);
+      _products.sort((x, y) => (x.name > y.name ? 1 : -1));
+      setProducts(_products);
     };
-    setMoviesAsync();
+    setProductsAsync();
   }, []);
 
   useEffect(() => {
@@ -88,7 +88,9 @@ const App = () => {
     if (cart.items.size) {
       localStorage.setItem("cart", JSON.stringify(cart));
       const items: number[][] = [];
-      cart.items.forEach((quantity, movie) => items.push([movie.id, quantity]));
+      cart.items.forEach((quantity, product) =>
+        items.push([product.id, quantity])
+      );
       localStorage.setItem("items", JSON.stringify(items));
     }
   }, [cart]);
@@ -105,32 +107,33 @@ const App = () => {
       ) {
         const _cart: Cart = JSON.parse(cartString);
         const itemsArray = JSON.parse(itemsString).map((values: number[]) => {
-          const [movieId, quantity] = values;
-          const movie = movies.find(m => m.id === movieId);
-          return [movie, quantity];
+          const [productId, quantity] = values;
+          const product = products.find(m => m.id === productId);
+          return [product, quantity];
         });
-        _cart.items = new Map<Movie, number>(itemsArray);
-        // console.log("initial cart:", _cart);
+        _cart.items = new Map<Product, number>(itemsArray);
         return _cart;
       }
       return emptyCart;
     };
-    if (movies && movies.length) setCart(initialCart());
-  }, [movies]);
+    if (products && products.length) setCart(initialCart());
+  }, [products]);
 
-  const populateNewsCategory = (_movies: Movie[]) => {
-    _movies.sort((x, y) => (x.added < y.added ? 1 : -1));
-    _movies
+  const populateNewsCategory = (_products: Product[]) => {
+    _products.sort((x, y) => (x.added < y.added ? 1 : -1));
+    _products
       .slice(0, NUMBER_OF_ITEMS_IN_NEWS)
-      .map(movie => movie.productCategory.push({ categoryId: NEWS_CATEGORY }));
+      .map(product =>
+        product.productCategory.push({ categoryId: NEWS_CATEGORY })
+      );
   };
 
-  const addToCart: AddToCart = (movie, quantity) => {
+  const addToCart: AddToCart = (product, quantity) => {
     const newCartItems = new Map(cart.items);
-    if (newCartItems.has(movie)) {
-      const currentQty = newCartItems.get(movie);
-      if (currentQty) newCartItems.set(movie, currentQty + quantity);
-    } else newCartItems.set(movie, quantity);
+    if (newCartItems.has(product)) {
+      const currentQty = newCartItems.get(product);
+      if (currentQty) newCartItems.set(product, currentQty + quantity);
+    } else newCartItems.set(product, quantity);
     const [subTotal, articles] = getTotals(newCartItems);
     setCart({
       ...cart,
@@ -142,12 +145,12 @@ const App = () => {
     });
   };
 
-  const updateCart: UpdateCart = (movie, quantity) => {
+  const updateCart: UpdateCart = (product, quantity) => {
     const newCartItems = new Map(cart.items);
-    if (movie && quantity === 0) {
-      newCartItems.delete(movie);
+    if (product && quantity === 0) {
+      newCartItems.delete(product);
     } else if (quantity >= MIN_QTY && quantity <= MAX_QTY) {
-      newCartItems.set(movie, quantity);
+      newCartItems.set(product, quantity);
     }
     const [subTotal, articles] = getTotals(newCartItems);
     setCart({
@@ -159,11 +162,11 @@ const App = () => {
     });
   };
 
-  const getTotals = (items: Map<Movie, number>) => {
+  const getTotals = (items: Map<Product, number>) => {
     let subTotal = 0;
     let articles = 0;
-    for (let [movie, quantity] of items.entries()) {
-      const price = movie.price * quantity;
+    for (let [product, quantity] of items.entries()) {
+      const price = product.price * quantity;
       subTotal += price;
       articles += quantity;
     }
@@ -200,7 +203,7 @@ const App = () => {
               cart={cart}
               order={order}
               companies={companies}
-              movies={movies}
+              products={products}
             />
           </Route>
           <Route path="/not-found">
@@ -209,7 +212,7 @@ const App = () => {
           <Route path="/search/:slug">
             <SearchHits
               categories={categories}
-              movies={movies}
+              products={products}
               cart={cart}
               addToCart={addToCart}
               updateCart={updateCart}
@@ -218,9 +221,9 @@ const App = () => {
             />
           </Route>
           <Route path="/:slug">
-            <MoviesPage
+            <ProductsPage
               categories={categories}
-              movies={movies}
+              products={products}
               cart={cart}
               addToCart={addToCart}
               updateCart={updateCart}

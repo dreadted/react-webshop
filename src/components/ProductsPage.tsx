@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 //components
-import MovieCard from "./MovieCard";
+import ProductCard from "./ProductCard";
 import Cart from "./Cart";
 
-interface MoviesPageProps {
-  categories: MovieCategory[];
-  movies: Movie[];
+interface ProductsPageProps {
+  categories: ProductCategory[];
+  products: Product[];
   cart: Cart;
   addToCart: AddToCart;
   updateCart: UpdateCart;
@@ -16,16 +16,16 @@ interface MoviesPageProps {
 
 const NEWS_CATEGORY = -1;
 
-const MoviesPage: React.FC<MoviesPageProps> = ({
+const ProductsPage: React.FC<ProductsPageProps> = ({
   categories,
-  movies,
+  products,
   cart,
   addToCart,
   updateCart,
   toggleCart
 }) => {
   const { slug } = useParams();
-  const currentCategory: MovieCategory | undefined = slug
+  const currentCategory: ProductCategory | undefined = slug
     ? categories.find(category => category.slug === slug)
     : categories.find(category => category.id === NEWS_CATEGORY);
 
@@ -34,9 +34,11 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
     if (cart.open) toggleCart();
   }, [slug]);
 
-  const getMoviesFromCategory = (category: MovieCategory) => {
-    return movies.filter(movie => {
-      return movie.productCategory.find(cat => cat.categoryId === category.id);
+  const getProductsFromCategory = (category: ProductCategory) => {
+    return products.filter(product => {
+      return product.productCategory.find(
+        cat => cat.categoryId === category.id
+      );
     });
   };
 
@@ -46,10 +48,10 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
       {!slug && currentCategory && <Redirect to={`/${currentCategory.slug}`} />}
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {currentCategory &&
-          getMoviesFromCategory(currentCategory).map(movie => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
+          getProductsFromCategory(currentCategory).map(product => (
+            <ProductCard
+              key={product.id}
+              product={product}
               categories={categories}
               addToCart={addToCart}
             />
@@ -71,4 +73,4 @@ const MoviesPage: React.FC<MoviesPageProps> = ({
   );
 };
 
-export default MoviesPage;
+export default ProductsPage;

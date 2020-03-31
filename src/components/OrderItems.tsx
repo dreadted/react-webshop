@@ -3,10 +3,10 @@ import { getCurrencyFormat } from "../lib/utils";
 
 interface OrderItemsProps {
   order: Order;
-  movies: Movie[];
+  products: Product[];
 }
 
-const OrderItems: React.FC<OrderItemsProps> = ({ order, movies }) => {
+const OrderItems: React.FC<OrderItemsProps> = ({ order, products }) => {
   return (
     <>
       <li className="cart-item list-group-item d-flex justify-content-between font-italic open">
@@ -15,25 +15,25 @@ const OrderItems: React.FC<OrderItemsProps> = ({ order, movies }) => {
         <div className="w-25 text-right">price</div>
       </li>
       {order.orderRows?.map(item => {
-        const movie = movies.find(movie => movie.id === item.productId);
+        const product = products.find(product => product.id === item.productId);
         return (
           <li
-            key={movie?.id}
+            key={product?.id}
             className="cart-item list-group-item d-flex align-items-center justify-content-between open h5 m-0"
           >
             <div className="w-50 d-flex align-items-center">
               <div className="mr-3">
                 <img
                   className="thumbnail"
-                  src={movie?.imageUrl}
-                  alt={movie?.name}
+                  src={product?.imageUrl}
+                  alt={product?.name}
                 />
               </div>
-              <div>{movie?.name}</div>
+              <div>{product?.name}</div>
             </div>
             <div className="w-25 text-center">{item.amount}</div>
             <div className="w-25 text-right">
-              {getCurrencyFormat(movie ? movie.price * item.amount : 0)}
+              {getCurrencyFormat(product ? product.price * item.amount : 0)}
             </div>
           </li>
         );

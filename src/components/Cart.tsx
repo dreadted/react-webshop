@@ -52,11 +52,18 @@ const Cart: React.FC<CartProps> = ({
 
   const Thumbnails: React.FC = () => {
     const result = [];
-    for (let [movie, quantity] of cart.items.entries()) {
+    for (let [product, quantity] of cart.items.entries()) {
       result.push(
-        <div key={movie.id} className="py-1 py-0-sm d-flex align-items-center">
+        <div
+          key={product.id}
+          className="py-1 py-0-sm d-flex align-items-center"
+        >
           <div>
-            <img className="thumbnail" src={movie.imageUrl} alt={movie.name} />
+            <img
+              className="thumbnail"
+              src={product.imageUrl}
+              alt={product.name}
+            />
           </div>
           <div className={`label badge badge-pill`}>{quantity}</div>
         </div>

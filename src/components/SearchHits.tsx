@@ -5,14 +5,14 @@ import { useParams, Redirect } from "react-router-dom";
 import { get } from "../lib/api";
 
 // components
-import MovieCard from "./MovieCard";
+import ProductCard from "./ProductCard";
 import Cart from "./Cart";
 import NotFound from "./NotFound";
 
-const NO_MOVIES: Movie[] = [
+const NO_MOVIES: Product[] = [
   {
     id: -1,
-    name: "No movies",
+    name: "No products",
     description: "",
     price: 0,
     imageUrl: "",
@@ -23,8 +23,8 @@ const NO_MOVIES: Movie[] = [
 ];
 
 interface SearchHitsProps {
-  categories: MovieCategory[];
-  movies: Movie[];
+  categories: ProductCategory[];
+  products: Product[];
   cart: Cart;
   addToCart: AddToCart;
   updateCart: UpdateCart;
@@ -34,7 +34,7 @@ interface SearchHitsProps {
 
 const SearchHits: React.FC<SearchHitsProps> = ({
   categories,
-  movies,
+  products,
   cart,
   addToCart,
   updateCart,
@@ -42,23 +42,27 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   setClearSearch
 }) => {
   const { slug } = useParams();
-  const [_movies, _setMovies] = useState<Movie[]>([]);
+  const [_products, _setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (slug) {
-      const setMoviesAsync = async () => {
-        const hits: Movie[] = await get<Movie>(`search/?searchText=${slug}`);
-        const result: Movie[] =
+      const setProductsAsync = async () => {
+        const hits: Product[] = await get<Product>(
+          `search/?searchText=${slug}`
+        );
+        const result: Product[] =
           hits && hits.length
-            ? movies.filter(movie => hits.map(hit => hit.id).includes(movie.id))
+            ? products.filter(product =>
+                hits.map(hit => hit.id).includes(product.id)
+              )
             : NO_MOVIES;
-        _setMovies(result);
+        _setProducts(result);
       };
 
-      setMoviesAsync();
+      setProductsAsync();
     }
-  }, [slug, movies]);
+  }, [slug, products]);
 
   useEffect(() => {
     return () => {
@@ -69,15 +73,15 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   return (
     <>
       {!slug && <Redirect to="/" />}
-      {((!_movies || !_movies.length || _movies === NO_MOVIES) && (
+      {((!_products || !_products.length || _products === NO_MOVIES) && (
         <NotFound hasButton={false} caption="Nope" />
       )) || (
         <>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {_movies.map(movie => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
+            {_products.map(product => (
+              <ProductCard
+                key={product.id}
+                product={product}
                 categories={categories}
                 addToCart={addToCart}
               />
