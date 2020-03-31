@@ -26,14 +26,16 @@ h1 {
 }
 
 #content {
-  padding-bottom: 2.5rem;
+  padding-bottom: 10rem;
 }
 
 footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;
+  height: 10rem;
+  text-align: right;
+  padding-top: 7rem;
 }
 
 /* navigation
@@ -76,49 +78,50 @@ nav {
 -----------------------------------------------------------------------------*/
 .card {
   border: none;
-}
-.card-img-top {
-  width: 100%;
-  height: 50vh;
-  object-fit: cover;
-}
 
-.card-description {
-  background: #000000aa;
-  position: absolute;
-  display: none;
-  height: 100%;
-  top: 0;
-  left: 0;
-  padding: 1em;
-}
+  .card-img-top {
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+  }
 
-.card:hover .card-description {
-  display: block;
-}
+  .card-description {
+    background: #000000aa;
+    position: absolute;
+    display: none;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 1em;
+  }
 
-.card .overlay {
-  position: relative;
-  display: inline-block;
-}
+  &:hover .card-description {
+    display: block;
+  }
 
-.movie-category-5 {
-  background: $dark;
-  border: 1px solid #5f2871;
-}
+  .overlay {
+    position: relative;
+    display: inline-block;
+  }
 
-.movie-category-6 {
-  background: $dark;
-  border: 1px solid #aa7239;
-}
-.movie-category-7 {
-  background: $dark;
-  border: 1px solid #265b6a;
-}
+  .movie-category-5 {
+    background: $dark;
+    border: 1px solid #5f2871;
+  }
 
-.movie-category-8 {
-  background: $dark;
-  border: 1px solid #9fa838;
+  .movie-category-6 {
+    background: $dark;
+    border: 1px solid #aa7239;
+  }
+  .movie-category-7 {
+    background: $dark;
+    border: 1px solid #265b6a;
+  }
+
+  .movie-category-8 {
+    background: $dark;
+    border: 1px solid #9fa838;
+  }
 }
 
 /* cart
@@ -138,7 +141,7 @@ nav {
       }
 
       &.toggle {
-        background-color: transparentize($primary, 0.1);
+        background-color: $primary;
         transition-duration: 500ms;
       }
 
