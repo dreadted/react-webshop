@@ -2,7 +2,7 @@ import React, { useEffect, useState, Dispatch } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 // API
-import { get } from "../lib/api";
+// import { get } from "../lib/api";
 
 // components
 import ProductCard from "./ProductCard";
@@ -54,21 +54,21 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     if (slug) {
-      const setProductsAsync = async () => {
-        console.time("hits");
-        const hits: Product[] = await get<Product>(
-          `search/?searchText=${slug}`
-        );
-        const result: Product[] =
-          hits && hits.length
-            ? products.filter(product =>
-                hits.map(hit => hit.id).includes(product.id)
-              )
-            : NO_MOVIES;
-        console.timeEnd("hits");
+      // const setProductsAsync = async () => {
+      //   console.time("hits");
+      //   const hits: Product[] = await get<Product>(
+      //     `search/?searchText=${slug}`
+      //   );
+      //   const result: Product[] =
+      //     hits && hits.length
+      //       ? products.filter(product =>
+      //           hits.map(hit => hit.id).includes(product.id)
+      //         )
+      //       : NO_MOVIES;
+      //   console.timeEnd("hits");
 
-        setFoundProducts(result);
-      };
+      //   setFoundProducts(result);
+      // };
 
       const setProducts = () => {
         console.time("hits");
