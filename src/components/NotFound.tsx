@@ -18,7 +18,14 @@ const NotFound: React.FC<NotFoundProps> = ({ hasButton, caption }) => {
   return (
     <div className="video shadow-sm mt-3">
       <div className="overlay w-100">
-        <video autoPlay loop muted playsInline poster={poster}>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={poster}
+          style={{ backgroundImage: `url(${poster})` }}
+        >
           <source src={video} type="video/mp4" />
         </video>
         <div className="description d-flex justify-content-around">

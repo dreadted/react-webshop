@@ -74,9 +74,7 @@ const Checkout: React.FC<CheckoutProps> = ({
 
     if (!emailIsValid(email))
       err.createdBy = "Please provide correct e-mail address!";
-
     if (!formData.get("companyId")) err.companyId = "Please select company!";
-
     if (!formData.get("paymentMethod"))
       err.paymentMethod = "Please select payment method!";
     setErrors(err);
@@ -91,11 +89,6 @@ const Checkout: React.FC<CheckoutProps> = ({
   const submitOrder = async (createdOrder: Order) => {
     console.log("createdOrder:", JSON.stringify(createdOrder));
     const savedOrder: Order = await save<Order>(createdOrder, "orders");
-    // const updatedOrder: Order = {
-    //   ...savedOrder,
-    //   orderRows: getOrderRows(savedOrder)
-    // };
-    // const response = await save<Order>(updatedOrder, "orders", updatedOrder.id);
     console.log("savedOrder:", JSON.stringify(savedOrder));
     setOrder({ ...savedOrder });
     history.push("/confirmation");

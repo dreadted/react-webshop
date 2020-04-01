@@ -7,6 +7,7 @@ import OrderItems from "./OrderItems";
 
 interface ConfirmationProps {
   cart: Cart;
+  resetCart: () => void;
   order: Order;
   products: Product[];
   companies: string[];
@@ -14,6 +15,7 @@ interface ConfirmationProps {
 
 const Confirmation: React.FC<ConfirmationProps> = ({
   cart,
+  resetCart,
   order,
   products,
   companies
@@ -44,15 +46,6 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       resetCart();
       return "";
     } else return <div className="alert alert-danger mt-4 mb-0">{error}</div>;
-  };
-
-  const resetCart = () => {
-    cart.items.clear();
-    cart.articles = 0;
-    cart.subTotal = 0;
-    cart.open = false;
-    localStorage.removeItem(`${APP_INFO.name}.cart`);
-    localStorage.removeItem(`${APP_INFO.name}.items`);
   };
 
   return (

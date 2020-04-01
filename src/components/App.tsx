@@ -101,9 +101,6 @@ const App = () => {
         items.push([product.id, quantity])
       );
       localStorage.setItem(`${APP_INFO.name}.items`, JSON.stringify(items));
-    } else {
-      localStorage.removeItem(`${APP_INFO.name}.cart`);
-      localStorage.removeItem(`${APP_INFO.name}.items`);
     }
   }, [cart]);
 
@@ -148,12 +145,11 @@ const App = () => {
     } else newCartItems.set(product, quantity);
     const [subTotal, articles] = getTotals(newCartItems);
     setCart({
-      ...cart,
       items: newCartItems,
-      subTotal,
       articles,
-      open: false,
-      blink: true
+      subTotal,
+      blink: true,
+      open: false
     });
   };
 
@@ -166,12 +162,23 @@ const App = () => {
     }
     const [subTotal, articles] = getTotals(newCartItems);
     setCart({
-      ...cart,
       items: newCartItems,
-      subTotal,
       articles,
-      blink: !cart.open
+      subTotal,
+      blink: !cart.open,
+      open: cart.open
     });
+    console.log("newCartItems:", newCartItems);
+    if (!newCartItems.size) resetCart();
+  };
+
+  const resetCart = () => {
+    cart.items.clear();
+    cart.articles = 0;
+    cart.subTotal = 0;
+    cart.open = false;
+    localStorage.removeItem(`${APP_INFO.name}.cart`);
+    localStorage.removeItem(`${APP_INFO.name}.items`);
   };
 
   const getTotals = (items: Map<Product, number>) => {
@@ -213,6 +220,7 @@ const App = () => {
           <Route path="/confirmation">
             <Confirmation
               cart={cart}
+              resetCart={resetCart}
               order={order}
               companies={companies}
               products={products}
