@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { getCurrencyFormat } from "../lib/utils";
-import { APP_INFO } from "../components/App";
 
 // components
 import OrderItems from "./OrderItems";
