@@ -11,7 +11,7 @@ import CheckoutForm from "./CheckoutForm";
 interface CheckoutProps {
   cart: Cart;
   order: Order;
-  companies: string[];
+  companies: Company[];
   setOrder: React.Dispatch<React.SetStateAction<Order>>;
   updateCart: UpdateCart;
   toggleCart: () => void;

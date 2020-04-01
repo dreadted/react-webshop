@@ -61,5 +61,10 @@ type OrderErrors = {
   paymentMethod?: string;
 };
 
+type Company = {
+  id: number;
+  name: string;
+};
+
 type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
 type HandleSubmit = (e: FormEvent<HTMLFormElement>) => void;

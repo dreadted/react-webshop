@@ -9,7 +9,7 @@ interface ConfirmationProps {
   resetCart: () => void;
   order: Order;
   products: Product[];
-  companies: string[];
+  companies: Company[];
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({

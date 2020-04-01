@@ -1,10 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-common-types";
+import SelectCompany from "./SelectCompany";
 
 interface CheckoutFormProps {
   onSubmit: HandleSubmit;
-  companies: string[];
+  companies: Company[];
   errors: OrderErrors;
 }
 
@@ -23,19 +24,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     <form className="h5 mt-4" onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="companyId">company</label>
-        <div className="field">
-          <select
-            id="companyId"
-            name="companyId"
-            className="form-control form-control-lg"
-          >
-            {companies.map((company, index) => (
-              <option value={index ? index : ""} key={company}>
-                {company}
-              </option>
-            ))}
-          </select>
-        </div>
+        <SelectCompany companies={companies} />
         {errors.companyId && (
           <div className="alert alert-danger mt-3">{errors.companyId}</div>
         )}

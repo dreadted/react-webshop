@@ -22,34 +22,22 @@ import Loading from "./Loading";
 import SearchHits from "./SearchHits";
 import Footer from "./Footer";
 
-const emptyCart: Cart = {
-  items: new Map(),
-  articles: 0,
-  subTotal: 0,
-  blink: false,
-  open: false
-};
-
-const emptyOrder: Order = {
-  companyId: 0,
-  created: "",
-  createdBy: "",
-  paymentMethod: "",
-  totalPrice: 0,
-  status: 0
-};
+// init
+import {
+  emptyCart,
+  emptyOrder,
+  companies,
+  orderStatus,
+  MIN_QTY,
+  MAX_QTY,
+  NEWS_CATEGORY,
+  NUMBER_OF_ITEMS_IN_NEWS
+} from "../lib/init";
 
 export const APP_INFO = {
   name: packageJSON.name,
   version: packageJSON.version
 };
-
-const MIN_QTY = 1;
-const MAX_QTY = 99;
-const NEWS_CATEGORY: ProductCategory = { id: -1, name: "Newly added" };
-const NUMBER_OF_ITEMS_IN_NEWS = 4;
-
-const companies = ["", "Telia", "Volvo", "Skanska", "ABB"];
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(true);
