@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import slugify from "slugify";
+import packageJSON from "../../package.json";
 
 // API
 import * as API from "../lib/api";
@@ -36,6 +37,11 @@ const emptyOrder: Order = {
   paymentMethod: "",
   totalPrice: 0,
   status: 0
+};
+
+export const APP_INFO = {
+  name: packageJSON.name,
+  version: packageJSON.version
 };
 
 const MIN_QTY = 1;
@@ -89,19 +95,22 @@ const App = () => {
       setTimeout(() => setCart({ ...cart, blink: false }), 500);
     }
     if (cart.items.size) {
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem(`${APP_INFO.name}.cart`, JSON.stringify(cart));
       const items: number[][] = [];
       cart.items.forEach((quantity, product) =>
         items.push([product.id, quantity])
       );
-      localStorage.setItem("items", JSON.stringify(items));
+      localStorage.setItem(`${APP_INFO.name}.items`, JSON.stringify(items));
+    } else {
+      localStorage.removeItem(`${APP_INFO.name}.cart`);
+      localStorage.removeItem(`${APP_INFO.name}.items`);
     }
   }, [cart]);
 
   useEffect(() => {
     const initialCart: () => Cart = () => {
-      const cartString = localStorage.getItem("cart");
-      const itemsString = localStorage.getItem("items");
+      const cartString = localStorage.getItem(`${APP_INFO.name}.cart`);
+      const itemsString = localStorage.getItem(`${APP_INFO.name}.items`);
       if (
         cartString &&
         cartString.length &&

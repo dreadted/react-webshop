@@ -50,7 +50,7 @@ const Navigation: React.FC<NavigationProps> = ({
         {categories.map(category => {
           return (
             <NavLink
-              className="nav-item nav-link h3 my-1"
+              className="nav-item nav-link h3 py-1 my-1"
               to={`/${category.slug}`}
               key={category.id}
             >

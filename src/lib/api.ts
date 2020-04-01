@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import { APP_INFO } from "../components/App";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "https://medieinstitutet-wie-products.azurewebsites.net/api",
@@ -14,10 +15,10 @@ export const get = async <T extends {}>(
     const response = await apiClient.get<T[]>(`/${slug}`);
     const data = response.data;
     if (data && data.length && cache)
-      localStorage.setItem(slug, JSON.stringify(data));
+      localStorage.setItem(`${APP_INFO.name}.${slug}`, JSON.stringify(data));
     return data;
   } catch (err) {
-    const data = localStorage.getItem(slug);
+    const data = localStorage.getItem(`${APP_INFO.name}.${slug}`);
     if (data && data.length) return JSON.parse(data) as T[];
     if (err && err.response) return err.response.data;
     throw err;

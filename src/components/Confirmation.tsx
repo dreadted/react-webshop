@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { getCurrencyFormat } from "../lib/utils";
+import { APP_INFO } from "../components/App";
 
 // components
 import OrderItems from "./OrderItems";
@@ -50,8 +51,8 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     cart.articles = 0;
     cart.subTotal = 0;
     cart.open = false;
-    localStorage.removeItem("cart");
-    localStorage.removeItem("items");
+    localStorage.removeItem(`${APP_INFO.name}.cart`);
+    localStorage.removeItem(`${APP_INFO.name}.items`);
   };
 
   return (
