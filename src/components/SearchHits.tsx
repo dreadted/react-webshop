@@ -9,6 +9,7 @@ import ProductCard from "./ProductCard";
 import Cart from "./Cart";
 import NotFound from "./NotFound";
 import Loading from "./Loading";
+import slugify from "slugify";
 
 const NO_MOVIES: Product[] = [
   {
@@ -54,6 +55,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
     window.scrollTo(0, 0);
     if (slug) {
       const setProductsAsync = async () => {
+        console.time("hits");
         const hits: Product[] = await get<Product>(
           `search/?searchText=${slug}`
         );
@@ -63,10 +65,28 @@ const SearchHits: React.FC<SearchHitsProps> = ({
                 hits.map(hit => hit.id).includes(product.id)
               )
             : NO_MOVIES;
+        console.timeEnd("hits");
+
         setFoundProducts(result);
       };
 
-      setProductsAsync();
+      const setProducts = () => {
+        console.time("hits");
+        const slugslug = slugify(slug, { lower: true });
+        const result: Product[] = Array.from(
+          new Set(
+            products.filter(
+              product =>
+                slugify(product.name, { lower: true }).indexOf(slugslug) >= 0
+            )
+          )
+        );
+        console.timeEnd("hits");
+
+        setFoundProducts(result);
+      };
+
+      setProducts();
     }
   }, [slug, products]);
 
