@@ -83,7 +83,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
         );
         console.timeEnd("hits");
 
-        setFoundProducts(result);
+        setFoundProducts(result?.length ? result : NO_MOVIES);
       };
 
       setProducts();
