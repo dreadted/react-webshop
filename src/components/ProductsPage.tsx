@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 //components
@@ -29,10 +29,14 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     ? categories.find(category => category.slug === slug)
     : categories.find(category => category.id === NEWS_CATEGORY);
 
+  const closeCart = useCallback(() => {
+    if (cart.open) toggleCart();
+  }, [cart.open, toggleCart]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (cart.open) toggleCart();
-  }, [slug]);
+    closeCart();
+  }, [slug, closeCart]);
 
   const getProductsFromCategory = (category: ProductCategory) => {
     return products.filter(product => {

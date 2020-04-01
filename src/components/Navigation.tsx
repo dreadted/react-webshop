@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useRef, useEffect, Dispatch } from "react";
+import React, {
+  ChangeEvent,
+  useRef,
+  useEffect,
+  Dispatch,
+  useCallback
+} from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,27 +23,30 @@ const Navigation: React.FC<NavigationProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const toggleRef = useRef<HTMLInputElement>(null);
 
+  const hideSearch = useCallback(
+    (noDelay?: boolean) => {
+      if (!noDelay) setTimeout(() => hideSearch(true), 2000);
+      else
+        !(inputRef && inputRef.current && inputRef.current.value) &&
+          toggleRef &&
+          toggleRef.current &&
+          (toggleRef.current.checked = false);
+    },
+    [inputRef, toggleRef]
+  );
+
   useEffect(() => {
     if (clearSearch && inputRef.current) {
       inputRef.current.value = "";
       hideSearch();
     }
     setClearSearch(false);
-  }, [clearSearch]);
+  }, [clearSearch, hideSearch, setClearSearch]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input: string = encodeURIComponent(e.target.value);
     if (!input) hideSearch();
     else input.length > 1 && history.push(`/search/${input}`);
-  };
-
-  const hideSearch = (noDelay?: boolean) => {
-    if (!noDelay) setTimeout(() => hideSearch(true), 2000);
-    else
-      !(inputRef && inputRef.current && inputRef.current.value) &&
-        toggleRef &&
-        toggleRef.current &&
-        (toggleRef.current.checked = false);
   };
 
   const focusSearch = () => {

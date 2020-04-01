@@ -74,7 +74,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
     return () => {
       setClearSearch(true);
     };
-  }, []);
+  }, [setClearSearch]);
 
   return (
     <>
