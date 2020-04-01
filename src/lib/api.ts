@@ -6,7 +6,10 @@ const apiClient: AxiosInstance = axios.create({
   headers: { "Content-Type": "application/json" }
 });
 
-export const get = async <T extends {}>(slug: string, cache?: boolean) => {
+export const get = async <T extends {}>(
+  slug: string,
+  cache: boolean = false
+) => {
   try {
     const response = await apiClient.get<T[]>(`/${slug}`);
     const data = response.data;

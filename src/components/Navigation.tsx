@@ -40,6 +40,10 @@ const Navigation: React.FC<NavigationProps> = ({
         (toggleRef.current.checked = false);
   };
 
+  const focusSearch = () => {
+    if (toggleRef.current?.checked) inputRef.current?.focus();
+  };
+
   return (
     <div className="bg-secondary sticky-top px-2 py-1">
       <nav className="nav nav-pills nav-fill align-items-center">
@@ -55,7 +59,12 @@ const Navigation: React.FC<NavigationProps> = ({
           );
         })}
         <div className="nav-item">
-          <input ref={toggleRef} type="checkbox" id="search-toggle" />
+          <input
+            ref={toggleRef}
+            type="checkbox"
+            id="search-toggle"
+            onChange={focusSearch}
+          />
           <div className="search mx-4 my-0 align-self-center">
             <div className="d-flex">
               <input

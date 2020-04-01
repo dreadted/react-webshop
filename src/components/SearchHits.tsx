@@ -8,6 +8,7 @@ import { get } from "../lib/api";
 import ProductCard from "./ProductCard";
 import Cart from "./Cart";
 import NotFound from "./NotFound";
+import Loading from "./Loading";
 
 const NO_MOVIES: Product[] = [
   {
@@ -42,7 +43,12 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   setClearSearch
 }) => {
   const { slug } = useParams();
-  const [_products, _setProducts] = useState<Product[]>([]);
+  const [foundProducts, setFoundProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setLoading(!foundProducts.length);
+  }, [loading, foundProducts]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,7 +63,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
                 hits.map(hit => hit.id).includes(product.id)
               )
             : NO_MOVIES;
-        _setProducts(result);
+        setFoundProducts(result);
       };
 
       setProductsAsync();
@@ -73,22 +79,23 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   return (
     <>
       {!slug && <Redirect to="/" />}
-      {((!_products || !_products.length || _products === NO_MOVIES) && (
-        <NotFound hasButton={false} caption="Nope" />
-      )) || (
-        <>
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {_products.map(product => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                categories={categories}
-                addToCart={addToCart}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      {((!foundProducts || !foundProducts.length) && <Loading />) ||
+        (foundProducts === NO_MOVIES && (
+          <NotFound hasButton={false} caption="Nope" />
+        )) || (
+          <>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+              {foundProducts.map(product => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  categories={categories}
+                  addToCart={addToCart}
+                />
+              ))}
+            </div>
+          </>
+        )}
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
         <div className="row">
           <div className="col col-sm-8 col-lg-6">

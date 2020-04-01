@@ -40,7 +40,7 @@ const emptyOrder: Order = {
 
 const MIN_QTY = 1;
 const MAX_QTY = 99;
-const NEWS_CATEGORY = -1;
+const NEWS_CATEGORY: ProductCategory = { id: -1, name: "Newly added" };
 const NUMBER_OF_ITEMS_IN_NEWS = 4;
 
 const companies = ["", "Telia", "Volvo", "Skanska", "ABB"];
@@ -63,9 +63,9 @@ const App = () => {
     const setCategoriesAsync = async () => {
       const c: ProductCategory[] = await API.get<ProductCategory>(
         "categories",
-        false
+        true
       );
-      c.unshift({ id: NEWS_CATEGORY, name: "Newly added" });
+      c.unshift(NEWS_CATEGORY);
       c.map(
         category => (category.slug = slugify(category.name, { lower: true }))
       );
@@ -76,7 +76,7 @@ const App = () => {
 
   useEffect(() => {
     const setProductsAsync = async () => {
-      const _products: Product[] = await API.get<Product>("products", false);
+      const _products: Product[] = await API.get<Product>("products", true);
       populateNewsCategory(_products);
       _products.sort((x, y) => (x.name > y.name ? 1 : -1));
       setProducts(_products);
@@ -127,7 +127,7 @@ const App = () => {
     _products
       .slice(0, NUMBER_OF_ITEMS_IN_NEWS)
       .map(product =>
-        product.productCategory.push({ categoryId: NEWS_CATEGORY })
+        product.productCategory.push({ categoryId: NEWS_CATEGORY.id })
       );
   };
 
