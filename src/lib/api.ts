@@ -37,9 +37,23 @@ export const save = async <T extends {}>(
       return data;
     } else {
       const response = await apiClient.post<T>(`/${slug}`, input);
-      const data = response.data;
-      return data;
+      return response.data;
     }
+  } catch (err) {
+    if (err & err.response) return err.response.data;
+    throw err;
+  }
+};
+
+export const prefetch = async (url: string) => {
+  const client: AxiosInstance = axios.create({
+    responseType: "blob",
+    headers: { "Content-Type": "video/x-matroska" }
+  });
+
+  try {
+    const response = await client.get(url);
+    return response.data;
   } catch (err) {
     if (err & err.response) return err.response.data;
     throw err;

@@ -63,3 +63,5 @@ type OrderErrors = {
 
 type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
 type HandleSubmit = (e: FormEvent<HTMLFormElement>) => void;
+
+type Video = { url: string; poster: string };

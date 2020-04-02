@@ -32,6 +32,7 @@ interface SearchHitsProps {
   updateCart: UpdateCart;
   toggleCart: () => void;
   setClearSearch: Dispatch<React.SetStateAction<boolean>>;
+  video: Video;
 }
 
 const SearchHits: React.FC<SearchHitsProps> = ({
@@ -41,7 +42,8 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   addToCart,
   updateCart,
   toggleCart,
-  setClearSearch
+  setClearSearch,
+  video
 }) => {
   const { slug } = useParams();
   const [foundProducts, setFoundProducts] = useState<Product[]>([]);
@@ -101,7 +103,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
       {!slug && <Redirect to="/" />}
       {((!foundProducts || !foundProducts.length) && <Loading />) ||
         (foundProducts === NO_MOVIES && (
-          <NotFound hasButton={false} caption="Nope" />
+          <NotFound video={video} hasButton={false} caption="Nope" />
         )) || (
           <>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
