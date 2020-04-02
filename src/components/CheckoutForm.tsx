@@ -22,13 +22,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 
   return (
     <form className="h5 mt-4" onSubmit={onSubmit}>
-      <div className="form-group">
-        <label htmlFor="companyId">company</label>
-        <SelectCompany companies={companies} />
-        {errors.companyId && (
-          <div className="alert alert-danger mt-3">{errors.companyId}</div>
-        )}
-      </div>
+      <SelectCompany companies={companies} />
+      {errors.companyId && (
+        <div className="alert alert-danger mt-3">{errors.companyId}</div>
+      )}
 
       <label htmlFor="createdBy">e-mail</label>
       <div className="field">

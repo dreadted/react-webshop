@@ -46,13 +46,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({
       return "";
     } else return <div className="alert alert-danger mt-4 mb-0">{error}</div>;
   };
-
   return (
     <>
       <div className="row">
-        <h1 className="m-4 text-secondary h2 font-weight-light">
-          Order confirmation
-        </h1>
+        <h1 className="m-4 text-secondary">Order confirmation</h1>
       </div>
       <div className="row">
         <div className="col col-12 col-lg-6 mb-4">
@@ -78,7 +75,13 @@ const Confirmation: React.FC<ConfirmationProps> = ({
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div>customer</div>
-                <div>{companies[order.companyId]}</div>
+                <div>
+                  {companies.map(company => {
+                    return company.id === order.companyId
+                      ? company.name
+                      : undefined;
+                  })}
+                </div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div>order created</div>

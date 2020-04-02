@@ -10,7 +10,7 @@ import * as API from "../lib/api";
 import "../scss/App.scss";
 
 // icons
-import "../lib/FontAwesome";
+import "../lib/fontAwesome";
 
 // components
 import Navigation from "./Navigation";
@@ -33,6 +33,7 @@ import {
   NEWS_CATEGORY,
   NUMBER_OF_ITEMS_IN_NEWS
 } from "../lib/init";
+import OrderAdmin from "./OrderAdmin";
 
 export const APP_INFO = {
   name: packageJSON.name,
@@ -89,6 +90,12 @@ const App = () => {
       setProducts(_products);
     };
     setProductsAsync();
+  }, []);
+
+  useEffect(() => {
+    companies.map(
+      company => (company.slug = slugify(company.name, { lower: true }))
+    );
   }, []);
 
   useEffect(() => {
@@ -229,6 +236,9 @@ const App = () => {
           </Route>
           <Route path="/not-found">
             <NotFound video={video} hasButton={true} caption="404" />
+          </Route>
+          <Route path="/admin/:slug">
+            <OrderAdmin orderStatus={orderStatus} />
           </Route>
           <Route path="/search/:slug">
             <SearchHits

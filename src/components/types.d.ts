@@ -64,6 +64,7 @@ type OrderErrors = {
 type Company = {
   id: number;
   name: string;
+  slug?: string;
 };
 
 type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
