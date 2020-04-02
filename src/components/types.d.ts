@@ -61,12 +61,15 @@ type OrderErrors = {
   paymentMethod?: string;
 };
 
-type UpdateItem = (
-  items: CartItem[],
-  item: CartItem,
-  order: Order,
-  quantity: number
-) => void;
+type UpdateItemParams = {
+  items?: CartItem[];
+  item?: CartItem;
+  order?: Order;
+  product?: Product;
+  quantity?: number;
+};
+
+type UpdateItem = (params: UpdateItemParams) => void;
 
 type Company = {
   id: number;

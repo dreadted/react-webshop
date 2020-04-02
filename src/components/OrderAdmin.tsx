@@ -50,8 +50,8 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
     history.push(`/admin/${selectedCompany?.slug}`);
   };
 
-  const updateItem: UpdateItem = (items, item, order, quantity) => {
-    if (!item) return;
+  const updateItem: UpdateItem = ({ items, item, order, quantity }) => {
+    if (!items || !item || !order) return;
     if (quantity) {
       item.quantity = quantity;
     } else {
