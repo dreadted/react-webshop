@@ -3,6 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-common-types";
 import SelectCompany from "./SelectCompany";
 
+const PAY_METHODS = [
+  { icon: "cc-visa" as IconName, name: "Visa" },
+  { icon: "cc-mastercard" as IconName, name: "MasterCard" },
+  { icon: "cc-amex" as IconName, name: "Amex" }
+];
+
 interface CheckoutFormProps {
   onSubmit: HandleSubmit;
   companies: Company[];
@@ -14,12 +20,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   companies,
   errors
 }) => {
-  const payMethods = [
-    { icon: "cc-visa" as IconName, name: "Visa" },
-    { icon: "cc-mastercard" as IconName, name: "MasterCard" },
-    { icon: "cc-amex" as IconName, name: "Amex" }
-  ];
-
   return (
     <form className="h5 mt-4" onSubmit={onSubmit}>
       <SelectCompany companies={companies} />
@@ -41,7 +41,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       )}
 
       <div className="my-2">payment method</div>
-      {payMethods.map(method => (
+      {PAY_METHODS.map(method => (
         <div className="form-check-inline" key={method.icon}>
           <label className="form-check-label">
             <span>

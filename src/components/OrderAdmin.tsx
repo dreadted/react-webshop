@@ -10,7 +10,6 @@ import * as API from "../lib/api";
 // components
 import SelectCompany from "./SelectCompany";
 import OrderList from "./OrderList";
-import OrderRows from "./OrderRows";
 
 interface OrderAdminProps {
   orderStatus: string[];
@@ -42,12 +41,22 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
 
   console.log(companyOrders);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeCompany = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedCompanyId = parseInt(e.target.value);
     const selectedCompany = companies.find(
       company => company.id === selectedCompanyId
     );
     history.push(`/admin/${selectedCompany?.slug}`);
+  };
+
+  const changeStatus: HandleChangeStatus = (e, order) => {
+    order.status = parseInt(e.target.value);
+
+    const filteredOrders = companyOrders.filter(o => o !== order);
+    const updatedOrders = filteredOrders
+      .concat([order])
+      .sort((x, y) => (x.created < y.created ? 1 : -1));
+    setCompanyOrders(updatedOrders);
   };
 
   const updateItem: UpdateItem = ({ items, item, order, quantity }) => {
@@ -92,7 +101,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
           <SelectCompany
             companies={companies}
             selected={currentCompanyId}
-            onChange={handleChange}
+            onChange={changeCompany}
           />
         </div>
         <div className="col">
@@ -100,6 +109,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
             orders={companyOrders}
             products={products}
             orderStatus={orderStatus}
+            changeStatus={changeStatus}
             updateItem={updateItem}
           />
         </div>

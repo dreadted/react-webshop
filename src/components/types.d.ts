@@ -79,5 +79,9 @@ type Company = {
 
 type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
 type HandleSubmit = (e: FormEvent<HTMLFormElement>) => void;
+type HandleChangeStatus = (
+  e: ChangeEvent<HTMLSelectElement>,
+  order: Order
+) => void;
 
 type Video = { url: string; poster: string };
