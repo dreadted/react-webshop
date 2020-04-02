@@ -1,8 +1,8 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 // init
-import { companies, emptyOrder, orderStatus } from "../lib/init";
+import { companies, emptyOrder } from "../lib/init";
 
 // api
 import * as API from "../lib/api";
@@ -38,8 +38,6 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
     };
     setOrdersAsync();
   }, [currentCompanyId]);
-
-  console.log(companyOrders);
 
   const changeCompany = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedCompanyId = parseInt(e.target.value);
@@ -77,6 +75,11 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
     setCompanyOrders(updatedOrders);
   };
 
+  const saveOrder = (order: Order) => {
+    API.save<Order>(order, "orders", order.id);
+    console.log("order:", JSON.stringify(order));
+  };
+
   const getTotalPrice = (items: CartItem[]) => {
     let result = 0;
     items.map(item => (result += item.product.price * item.quantity));
@@ -111,6 +114,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
             orderStatus={orderStatus}
             changeStatus={changeStatus}
             updateItem={updateItem}
+            saveOrder={saveOrder}
           />
         </div>
       </div>

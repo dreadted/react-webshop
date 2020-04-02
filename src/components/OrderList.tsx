@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { getCurrencyFormat } from "../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
@@ -19,6 +19,7 @@ interface OrderProps {
   changeStatus: HandleChangeStatus;
   products: Product[];
   updateItem: UpdateItem;
+  saveOrder: (order: Order) => void;
 }
 
 const Order: React.FC<OrderProps> = ({
@@ -26,9 +27,10 @@ const Order: React.FC<OrderProps> = ({
   orderStatus,
   changeStatus,
   products,
-  updateItem
+  updateItem,
+  saveOrder
 }) => {
-  const [openClass, setOpenClass] = useState<string>("open");
+  const [openClass, setOpenClass] = useState<string>("");
 
   const toCartItems = (orderRows: OrderRow[] | undefined) => {
     if (!orderRows) return [];
@@ -49,10 +51,17 @@ const Order: React.FC<OrderProps> = ({
     return undefined;
   };
 
+  const toggleOpen = () => {
+    setOpenClass(openClass === "" ? "open" : "");
+  };
+
   return (
     <li className="list-group-item p-0 mb-4">
       <ul className="list-group">
-        <li className="cart-item list-group-item d-flex align-items-center justify-content-between bg-primary open">
+        <li
+          className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between bg-primary ${openClass}`}
+          onClick={toggleOpen}
+        >
           <div className="">{order.id}</div>
           <div className="w-25 text-center">
             <small>{new Date(order.created).toLocaleDateString("en-gb")}</small>
@@ -74,7 +83,9 @@ const Order: React.FC<OrderProps> = ({
           updateParams={{ order }}
           openClass={openClass}
         />
-        <li className="cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap px-3 py-0 m-0 open">
+        <li
+          className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap px-3 py-0 m-0 ${openClass}`}
+        >
           <div>
             <small>{getPaymentIcon(order.paymentMethod)}</small>
           </div>
@@ -90,7 +101,11 @@ const Order: React.FC<OrderProps> = ({
             />
           </div>
           <div>
-            <button type="button" className="btn btn-primary disabled">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => saveOrder(order)}
+            >
               Save changes
             </button>
           </div>
@@ -106,6 +121,7 @@ interface OrderListProps {
   changeStatus: HandleChangeStatus;
   products: Product[];
   updateItem: UpdateItem;
+  saveOrder: (order: Order) => void;
 }
 
 const OrderList: React.FC<OrderListProps> = ({
@@ -113,7 +129,8 @@ const OrderList: React.FC<OrderListProps> = ({
   orderStatus,
   changeStatus,
   products,
-  updateItem
+  updateItem,
+  saveOrder
 }) => {
   return (
     <div className="cart open">
@@ -126,6 +143,7 @@ const OrderList: React.FC<OrderListProps> = ({
             changeStatus={changeStatus}
             products={products}
             updateItem={updateItem}
+            saveOrder={saveOrder}
           />
         ))}
       </ul>
