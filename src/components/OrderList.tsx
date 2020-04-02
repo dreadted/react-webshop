@@ -48,10 +48,10 @@ const Order: React.FC<OrderProps> = ({
         </div>
       </li>
       <OrderRows
-        order={order}
         items={toCartItems(order.orderRows)}
         editable={true}
         updateItem={updateItem}
+        updateParams={{ order }}
         openClass={openClass}
       />
     </>

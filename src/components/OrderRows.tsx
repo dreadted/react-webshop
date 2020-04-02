@@ -3,20 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCurrencyFormat } from "../lib/utils";
 
 interface OrderRowProps {
-  items: CartItem[];
   item: CartItem;
-  order: Order;
   editable: boolean;
   updateItem: UpdateItem;
+  updateParams: UpdateParams;
   openClass: string;
 }
 
 const OrderRow: React.FC<OrderRowProps> = ({
-  items,
   item,
-  order,
   editable,
   updateItem,
+  updateParams,
   openClass
 }) => {
   return (
@@ -39,9 +37,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
                     className="update p-2"
                     onClick={() =>
                       updateItem({
-                        items,
+                        ...updateParams,
                         item,
-                        order,
                         quantity: item.quantity - 1
                       })
                     }
@@ -53,9 +50,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
                   <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       updateItem({
-                        items,
+                        ...updateParams,
                         item,
-                        order,
                         quantity: parseInt(e.target.value)
                       })
                     }
@@ -72,9 +68,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
                     className="update p-2"
                     onClick={() =>
                       updateItem({
-                        items,
+                        ...updateParams,
                         item,
-                        order,
                         quantity: item.quantity + 1
                       })
                     }
@@ -90,7 +85,9 @@ const OrderRow: React.FC<OrderRowProps> = ({
             {editable && (
               <div
                 className="update w-25 text-right p-2"
-                onClick={() => updateItem({ items, item, order, quantity: 0 })}
+                onClick={() =>
+                  updateItem({ ...updateParams, item, quantity: 0 })
+                }
               >
                 <FontAwesomeIcon icon={["far", "trash-alt"]} />
               </div>
@@ -103,18 +100,18 @@ const OrderRow: React.FC<OrderRowProps> = ({
 };
 
 interface OrderRowsProps {
-  order: Order;
   items: CartItem[];
   editable: boolean;
   updateItem: UpdateItem;
+  updateParams: UpdateParams;
   openClass: string;
 }
 
 const OrderRows: React.FC<OrderRowsProps> = ({
-  order,
   items,
   editable,
   updateItem,
+  updateParams,
   openClass
 }) => {
   return (
@@ -123,11 +120,10 @@ const OrderRows: React.FC<OrderRowsProps> = ({
         return (
           <OrderRow
             key={item.product.id}
-            items={items}
             item={item}
-            order={order}
             editable={editable}
             updateItem={updateItem}
+            updateParams={{ ...updateParams, items }}
             openClass={openClass}
           />
         );

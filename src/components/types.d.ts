@@ -61,7 +61,7 @@ type OrderErrors = {
   paymentMethod?: string;
 };
 
-type UpdateItemParams = {
+type UpdateParams = {
   items?: CartItem[];
   item?: CartItem;
   order?: Order;
@@ -69,7 +69,7 @@ type UpdateItemParams = {
   quantity?: number;
 };
 
-type UpdateItem = (params: UpdateItemParams) => void;
+type UpdateItem = (params: UpdateParams) => void;
 
 type Company = {
   id: number;
