@@ -238,7 +238,7 @@ const App = () => {
             <NotFound video={video} hasButton={true} caption="404" />
           </Route>
           <Route path="/admin/:slug">
-            <OrderAdmin orderStatus={orderStatus} />
+            <OrderAdmin orderStatus={orderStatus} products={products} />
           </Route>
           <Route path="/search/:slug">
             <SearchHits
