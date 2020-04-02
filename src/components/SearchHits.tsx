@@ -2,7 +2,7 @@ import React, { useEffect, useState, Dispatch } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 // API
-import { get } from "../lib/api";
+// import { get } from "../lib/api";
 
 // components
 import ProductCard from "./ProductCard";
@@ -32,6 +32,7 @@ interface SearchHitsProps {
   updateCart: UpdateCart;
   toggleCart: () => void;
   setClearSearch: Dispatch<React.SetStateAction<boolean>>;
+  video: Video;
 }
 
 const SearchHits: React.FC<SearchHitsProps> = ({
@@ -41,7 +42,8 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   addToCart,
   updateCart,
   toggleCart,
-  setClearSearch
+  setClearSearch,
+  video
 }) => {
   const { slug } = useParams();
   const [foundProducts, setFoundProducts] = useState<Product[]>([]);
@@ -54,21 +56,21 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     if (slug) {
-      const setProductsAsync = async () => {
-        console.time("hits");
-        const hits: Product[] = await get<Product>(
-          `search/?searchText=${slug}`
-        );
-        const result: Product[] =
-          hits && hits.length
-            ? products.filter(product =>
-                hits.map(hit => hit.id).includes(product.id)
-              )
-            : NO_MOVIES;
-        console.timeEnd("hits");
+      // const setProductsAsync = async () => {
+      //   console.time("hits");
+      //   const hits: Product[] = await get<Product>(
+      //     `search/?searchText=${slug}`
+      //   );
+      //   const result: Product[] =
+      //     hits && hits.length
+      //       ? products.filter(product =>
+      //           hits.map(hit => hit.id).includes(product.id)
+      //         )
+      //       : NO_MOVIES;
+      //   console.timeEnd("hits");
 
-        setFoundProducts(result);
-      };
+      //   setFoundProducts(result);
+      // };
 
       const setProducts = () => {
         console.time("hits");
@@ -101,7 +103,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
       {!slug && <Redirect to="/" />}
       {((!foundProducts || !foundProducts.length) && <Loading />) ||
         (foundProducts === NO_MOVIES && (
-          <NotFound hasButton={false} caption="Nope" />
+          <NotFound video={video} hasButton={false} caption="Nope" />
         )) || (
           <>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

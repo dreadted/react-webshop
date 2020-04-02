@@ -36,7 +36,9 @@ import {
 
 export const APP_INFO = {
   name: packageJSON.name,
-  version: packageJSON.version
+  version: packageJSON.version,
+  homepage: packageJSON.homepage,
+  root: packageJSON.homepage.slice(packageJSON.homepage.lastIndexOf("/"))
 };
 
 const App = () => {
@@ -48,6 +50,17 @@ const App = () => {
   const [order, setOrder] = useState<Order>(emptyOrder);
 
   const [clearSearch, setClearSearch] = useState<boolean>(false);
+  const [video, setVideo] = useState<Video>({ url: "", poster: "" });
+
+  useEffect(() => {
+    const preloadVideo = async () => {
+      const blob = await API.prefetch(`${APP_INFO.root}/media/404.mkv`);
+      const url = window.URL.createObjectURL(blob);
+      const poster = `${APP_INFO.root}/media/404.jpg`;
+      setVideo({ url, poster });
+    };
+    preloadVideo();
+  }, []);
 
   useEffect(() => {
     setLoading(!(categories.length && products.length));
@@ -215,7 +228,7 @@ const App = () => {
             />
           </Route>
           <Route path="/not-found">
-            <NotFound hasButton={true} caption="404" />
+            <NotFound video={video} hasButton={true} caption="404" />
           </Route>
           <Route path="/search/:slug">
             <SearchHits
@@ -226,6 +239,7 @@ const App = () => {
               updateCart={updateCart}
               toggleCart={toggleCart}
               setClearSearch={setClearSearch}
+              video={video}
             />
           </Route>
           <Route path="/:slug">
