@@ -54,7 +54,7 @@ const App = () => {
 
   useEffect(() => {
     const preloadVideo = async () => {
-      const blob = await API.prefetch(`${APP_INFO.root}/media/404.mkv`);
+      const blob = await API.fetchBLOB(`${APP_INFO.root}/media/404.mkv`);
       const url = window.URL.createObjectURL(blob);
       const poster = `${APP_INFO.root}/media/404.jpg`;
       setVideo({ url, poster });

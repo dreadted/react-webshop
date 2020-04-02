@@ -45,7 +45,7 @@ export const save = async <T extends {}>(
   }
 };
 
-export const prefetch = async (url: string) => {
+export const fetchBLOB = async (url: string) => {
   const client: AxiosInstance = axios.create({
     responseType: "blob",
     headers: { "Content-Type": "video/x-matroska" }
