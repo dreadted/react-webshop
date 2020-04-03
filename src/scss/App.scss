@@ -34,8 +34,6 @@ footer {
   bottom: 0;
   width: 100%;
   height: 8rem;
-  text-align: right;
-  padding-top: 4rem;
 }
 
 /* navigation
@@ -89,6 +87,7 @@ nav {
     top: 0;
     left: 0;
     padding: 1em;
+    overflow: hidden;
   }
 
   &:hover .card-description {
@@ -212,6 +211,10 @@ nav {
 
 /* checkout form
 -----------------------------------------------------------------------------*/
+label {
+  font-weight: lighter;
+}
+
 .form-check-input,
 .form-check-label {
   cursor: pointer;
@@ -219,7 +222,7 @@ nav {
 }
 
 .form-check-input {
-  transform: scale(1.5);
+  transform: scale(1.2);
 }
 
 .form-check-label svg {
@@ -229,7 +232,7 @@ nav {
 }
 
 /* 404 not found
-------------------*/
+-----------------------------------------------------------------------------*/
 .video {
   .overlay {
     position: relative;
@@ -238,8 +241,9 @@ nav {
     padding: 0;
 
     video {
+      margin: 0 -0.9em;
       padding: 0;
-      width: 100%;
+      width: calc(1.8em + 100%);
       height: 100%;
 
       &::-internal-media-controls-overlay-cast-button {
@@ -279,4 +283,15 @@ nav {
       border-radius: 3em;
     }
   }
+}
+
+/* footer
+-----------------------------------------------------------------------------*/
+footer {
+  color: darken($secondary, 40);
+  font-size: 0.7em;
+  font-weight: lighter;
+  text-align: right;
+  vertical-align: bottom;
+  padding: 6em 1.2em 0;
 }

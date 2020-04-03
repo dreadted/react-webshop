@@ -29,16 +29,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <p>{product.description}</p>
           </div>
         </div>
-        <div className="card-footer">
+        <div className="card-footer px-4 px-md-3">
           <div className="d-flex mb-3">
             <CategoryBadges product={product} categories={categories} />
           </div>
           <div className="d-flex flex-md-wrap align-items-center">
-            <div className="h5 font-weight-bold mb-0 mr-auto">
+            <div className="h5 font-weight-bold mb-0 mr-1">
               {getCurrencyFormat(product.price)}
             </div>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary ml-auto"
               onClick={() => addToCart(product, 1)}
             >
               Add to cart

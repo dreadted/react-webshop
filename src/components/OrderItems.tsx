@@ -9,7 +9,7 @@ interface OrderItemsProps {
 const OrderItems: React.FC<OrderItemsProps> = ({ order, products }) => {
   return (
     <>
-      <li className="cart-item list-group-item d-flex justify-content-between font-italic open">
+      <li className="cart-item list-group-item d-flex justify-content-between font-weight-light open">
         <div className="w-50">product</div>
         <div className="w-25 text-center">quantity</div>
         <div className="w-25 text-right">price</div>
@@ -19,7 +19,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ order, products }) => {
         return (
           <li
             key={product?.id}
-            className="cart-item list-group-item d-flex align-items-center justify-content-between open h5 m-0"
+            className="cart-item list-group-item d-flex align-items-center justify-content-between open m-0"
           >
             <div className="w-50 d-flex align-items-center">
               <div className="mr-3">
