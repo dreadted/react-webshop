@@ -10,7 +10,7 @@ import * as API from "../lib/api";
 import "../scss/App.scss";
 
 // icons
-import "../lib/FontAwesome";
+import "../lib/fontAwesome";
 
 // components
 import Navigation from "./Navigation";
