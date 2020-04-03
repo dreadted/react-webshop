@@ -55,7 +55,7 @@ const CartItem: React.FC<CartItemProps> = ({
             {getCurrencyFormat(product.price * quantity)}
           </div>
           <div
-            className="update w-25 text-right p-2"
+            className="update text-right p-2"
             onClick={() => updateCart(product, 0)}
           >
             <FontAwesomeIcon icon={["far", "trash-alt"]} />

@@ -70,7 +70,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
           ))}
       </div>
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
-        <div className="row">
+        <div className="row body-bg">
           <div className="col col-sm-8 col-lg-6">
             <Cart
               cart={cart}

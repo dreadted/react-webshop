@@ -40,43 +40,44 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           <div className="alert alert-danger mt-3">{errors.companyId}</div>
         )}
       </div>
-
-      <label htmlFor="createdBy">e-mail</label>
-      <div className="field">
-        <input
-          id="createdBy"
-          name="createdBy"
-          type="text"
-          className="form-control form-control-lg"
-        />
-      </div>
-      {errors.createdBy && (
-        <div className="alert alert-danger mt-3">{errors.createdBy}</div>
-      )}
-
-      <div className="my-2">payment method</div>
-      {payMethods.map(method => (
-        <div className="form-check-inline" key={method.icon}>
-          <label className="form-check-label">
-            <span>
-              <input
-                type="radio"
-                className="form-check-input"
-                name="paymentMethod"
-                id={method.icon}
-                value={method.name}
-              />
-              <FontAwesomeIcon
-                icon={["fab", method.icon]}
-                size="2x"
-                key={method.icon}
-                className="pt-1"
-              />
-            </span>
-          </label>
+      <div className="form-group">
+        <label htmlFor="createdBy">e-mail</label>
+        <div className="field">
+          <input
+            id="createdBy"
+            name="createdBy"
+            type="text"
+            className="form-control form-control-lg"
+          />
         </div>
-      ))}
-
+        {errors.createdBy && (
+          <div className="alert alert-danger mt-3">{errors.createdBy}</div>
+        )}
+      </div>
+      <fieldset className="form-group pb-4">
+        <div className="font-weight-light">payment method</div>
+        {payMethods.map(method => (
+          <div className="form-check form-check-inline m-0" key={method.icon}>
+            <label className="form-check-label">
+              <span>
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="paymentMethod"
+                  id={method.icon}
+                  value={method.name}
+                />
+                <FontAwesomeIcon
+                  icon={["fab", method.icon]}
+                  size="2x"
+                  key={method.icon}
+                  className="pt-1"
+                />
+              </span>
+            </label>
+          </div>
+        ))}
+      </fieldset>
       {errors.paymentMethod && (
         <div className="alert alert-danger mt-3">{errors.paymentMethod}</div>
       )}

@@ -17,7 +17,7 @@ interface NotFoundProps {
 const NotFound: React.FC<NotFoundProps> = ({ video, hasButton, caption }) => {
   const history = useHistory();
   return (
-    <div className="video shadow-sm my-3">
+    <div className="video">
       <div className="overlay w-100">
         <video autoPlay loop muted playsInline poster={video.poster}>
           <source src={video.url} type="video/mp4" />

@@ -101,9 +101,11 @@ const Cart: React.FC<CartProps> = ({
             className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap
         ${classOpen()}`}
           >
-            <div className="font-weight-bold d-flex h5 m-0">
-              <div className="mr-3">Total:</div>
-              <div>{getCurrencyFormat(cart.subTotal)}</div>
+            <div className="d-flex h5 ml-auto my-0 mr-3">
+              <div className="font-weight-light mr-3">Total:</div>
+              <div className="font-weight-bold">
+                {getCurrencyFormat(cart.subTotal)}
+              </div>
             </div>
             <div className="text-right">
               {!atCheckout && (

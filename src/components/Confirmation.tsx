@@ -50,9 +50,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   return (
     <>
       <div className="row">
-        <h1 className="m-4 text-secondary h2 font-weight-light">
-          Order confirmation
-        </h1>
+        <h1 className="m-4 text-secondary">Order confirmation</h1>
       </div>
       <div className="row">
         <div className="col col-12 col-lg-6 mb-4">
@@ -61,7 +59,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
               <OrderItems order={order} products={products} />
               <li className="cart-item cart-footer list-group-item d-flex justify-content-end open">
                 <div className="font-weight-bold d-flex h5 m-0">
-                  <div className="mr-3">Total:</div>
+                  <div className="font-weight-light mr-3">Total:</div>
                   <div>{getCurrencyFormat(order.totalPrice)}</div>
                 </div>
               </li>
@@ -73,25 +71,25 @@ const Confirmation: React.FC<ConfirmationProps> = ({
           <div className="cart open">
             <ul className="list-group open h5 m-0">
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
-                <div>order #</div>
+                <div className="font-weight-light">order #</div>
                 <div>{order.id}</div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
-                <div>customer</div>
+                <div className="font-weight-light">customer</div>
                 <div>{companies[order.companyId]}</div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
-                <div>order created</div>
+                <div className="font-weight-light">order created</div>
                 <div className="text-nowrap">
                   {new Date(order.created).toLocaleString("en-gb")}
                 </div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
-                <div>e-mail</div>
+                <div className="font-weight-light">e-mail</div>
                 <div>{order.createdBy}</div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
-                <div>payment method</div>
+                <div className="font-weight-light">payment method</div>
                 <div>{order.paymentMethod}</div>
               </li>
             </ul>
