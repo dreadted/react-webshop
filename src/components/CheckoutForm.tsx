@@ -40,7 +40,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         <div className="alert alert-danger mt-3">{errors.createdBy}</div>
       )}
 
-      <div className="my-2">payment method</div>
+      <div className="mt-4">payment method</div>
       {PAY_METHODS.map(method => (
         <div className="form-check-inline" key={method.icon}>
           <label className="form-check-label">
