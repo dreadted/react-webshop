@@ -44,8 +44,7 @@ npm install
 
 ## Contact
 
-Christofer Laurin:
-
-<christofer.laurin@gmail.com>
+email: <christofer.laurin@gmail.com>
+linkedin: <https://www.linkedin.com/in/laurin/>
 
 [screenshot]: https://i.imgur.com/JhR1y2Y.png
