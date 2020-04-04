@@ -4,14 +4,14 @@ interface SelectOrderStatusProps {
   order: Order;
   orderStatus: string[];
   selected?: number;
-  onChange: HandleChangeStatus;
+  onChange: HandleChange;
 }
 
 const SelectOrderStatus: React.FC<SelectOrderStatusProps> = ({
   order,
   orderStatus,
   selected = 0,
-  onChange
+  onChange,
 }) => {
   return (
     <div className="form-group">

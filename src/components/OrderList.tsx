@@ -10,13 +10,13 @@ import SelectOrderStatus from "./SelectOrderStatus";
 const PAY_METHODS = [
   { icon: "cc-visa" as IconName, name: "Visa" },
   { icon: "cc-mastercard" as IconName, name: "MasterCard" },
-  { icon: "cc-amex" as IconName, name: "Amex" }
+  { icon: "cc-amex" as IconName, name: "Amex" },
 ];
 
 interface OrderProps {
   order: Order;
   orderStatus: string[];
-  changeStatus: HandleChangeStatus;
+  changeStatus: HandleChange;
   products: Product[];
   updateItem: UpdateItem;
   saveOrder: (order: Order) => void;
@@ -28,15 +28,15 @@ const Order: React.FC<OrderProps> = ({
   changeStatus,
   products,
   updateItem,
-  saveOrder
+  saveOrder,
 }) => {
   const [openClass, setOpenClass] = useState<string>("");
 
   const toCartItems = (orderRows: OrderRow[] | undefined) => {
     if (!orderRows) return [];
-    return orderRows.map(orderRow => {
+    return orderRows.map((orderRow) => {
       const product: Product | undefined = products.find(
-        product => product.id === orderRow.productId
+        (product) => product.id === orderRow.productId
       );
       return { product, quantity: orderRow.amount } as CartItem;
     });
@@ -44,7 +44,7 @@ const Order: React.FC<OrderProps> = ({
 
   const getPaymentIcon = (name: string) => {
     const icon = PAY_METHODS.find(
-      i => i.name.toLowerCase() === name.toLowerCase()
+      (i) => i.name.toLowerCase() === name.toLowerCase()
     );
     debugger;
     if (icon) return <FontAwesomeIcon icon={["fab", icon.icon]} size="lg" />;
@@ -118,7 +118,7 @@ const Order: React.FC<OrderProps> = ({
 interface OrderListProps {
   orders: Order[];
   orderStatus: string[];
-  changeStatus: HandleChangeStatus;
+  changeStatus: HandleChange;
   products: Product[];
   updateItem: UpdateItem;
   saveOrder: (order: Order) => void;
@@ -130,12 +130,12 @@ const OrderList: React.FC<OrderListProps> = ({
   changeStatus,
   products,
   updateItem,
-  saveOrder
+  saveOrder,
 }) => {
   return (
     <div className="cart open">
       <ul className="list-group h5 m-0 open">
-        {orders.map(order => (
+        {orders.map((order) => (
           <Order
             key={order.created}
             order={order}

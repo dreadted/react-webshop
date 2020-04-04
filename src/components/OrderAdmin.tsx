@@ -23,7 +23,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
   const history = useHistory();
 
   const currentCompany: Company | undefined = companies.find(
-    company => company.slug === slug?.toLowerCase()
+    (company) => company.slug === slug?.toLowerCase()
   );
 
   const currentCompanyId = currentCompany ? currentCompany.id : 0;
@@ -42,15 +42,15 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
   const changeCompany = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedCompanyId = parseInt(e.target.value);
     const selectedCompany = companies.find(
-      company => company.id === selectedCompanyId
+      (company) => company.id === selectedCompanyId
     );
     history.push(`/admin/${selectedCompany?.slug}`);
   };
 
-  const changeStatus: HandleChangeStatus = (e, order) => {
+  const changeStatus: HandleChange = (e, order) => {
     order.status = parseInt(e.target.value);
 
-    const filteredOrders = companyOrders.filter(o => o !== order);
+    const filteredOrders = companyOrders.filter((o) => o !== order);
     const updatedOrders = filteredOrders
       .concat([order])
       .sort((x, y) => (x.created < y.created ? 1 : -1));
@@ -62,12 +62,12 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
     if (quantity) {
       item.quantity = quantity;
     } else {
-      items = items.filter(i => i !== item);
+      items = items.filter((i) => i !== item);
     }
     order.totalPrice = getTotalPrice(items);
     order.orderRows = toOrderRows(items, order.id);
 
-    const filteredOrders = companyOrders.filter(o => o !== order);
+    const filteredOrders = companyOrders.filter((o) => o !== order);
     const updatedOrders = filteredOrders
       .concat([order])
       .sort((x, y) => (x.created < y.created ? 1 : -1));
@@ -82,15 +82,15 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
 
   const getTotalPrice = (items: CartItem[]) => {
     let result = 0;
-    items.map(item => (result += item.product.price * item.quantity));
+    items.map((item) => (result += item.product.price * item.quantity));
     return result;
   };
 
   const toOrderRows = (items: CartItem[], orderId: number | undefined) => {
-    return items.map(item => ({
+    return items.map((item) => ({
       productId: item.product.id,
       orderId,
-      amount: item.quantity
+      amount: item.quantity,
     })) as OrderRow[];
   };
 

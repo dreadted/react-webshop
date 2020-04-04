@@ -77,11 +77,8 @@ type Company = {
   slug?: string;
 };
 
-type HandleChange = (e: ChangeEvent<HTMLInputElement>) => void;
+type HandleChange = (e: ChangeEvent<HTMLInputElement>, param?: any) => void;
 type HandleSubmit = (e: FormEvent<HTMLFormElement>) => void;
-type HandleChangeStatus = (
-  e: ChangeEvent<HTMLSelectElement>,
-  order: Order
-) => void;
+type HandleClick = (e: MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 
 type Video = { url: string; poster: string };
