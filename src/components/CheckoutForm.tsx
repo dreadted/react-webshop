@@ -22,10 +22,12 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 }) => {
   return (
     <form className="h5 mt-4" onSubmit={onSubmit}>
-      <SelectCompany companies={companies} />
-      {errors.companyId && (
-        <div className="alert alert-danger mt-3">{errors.companyId}</div>
-      )}
+      <div className="form-group">
+        <SelectCompany companies={companies} />
+        {errors.companyId && (
+          <div className="alert alert-danger mt-3">{errors.companyId}</div>
+        )}
+      </div>
       <div className="form-group">
         <label htmlFor="createdBy">e-mail</label>
         <div className="field">
@@ -35,10 +37,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             type="text"
             className="form-control form-control-lg"
           />
+          {errors.createdBy && (
+            <div className="alert alert-danger mt-3">{errors.createdBy}</div>
+          )}
         </div>
-        {errors.createdBy && (
-          <div className="alert alert-danger mt-3">{errors.createdBy}</div>
-        )}
       </div>
       <fieldset className="form-group pb-4">
         <div className="font-weight-light">payment method</div>
@@ -63,10 +65,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             </label>
           </div>
         ))}
+        {errors.paymentMethod && (
+          <div className="alert alert-danger mt-3">{errors.paymentMethod}</div>
+        )}
       </fieldset>
-      {errors.paymentMethod && (
-        <div className="alert alert-danger mt-3">{errors.paymentMethod}</div>
-      )}
       <div className="mt-4 text-right">
         <button type="submit" className="btn btn-primary">
           Place Order
