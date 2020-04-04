@@ -1,4 +1,6 @@
-@import "./variables";
+@import "./colors";
+@import "./fonts";
+@import "./sizes";
 @import "~bootstrap/scss/bootstrap.scss";
 
 body {
@@ -207,6 +209,19 @@ nav {
 .cart-offset {
   position: relative;
   top: -6rem;
+}
+
+.badge {
+  select,
+  select:focus {
+    background: $dark;
+    color: $secondary;
+    font-weight: bold;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    padding: 0.4em;
+  }
 }
 
 /* checkout form
