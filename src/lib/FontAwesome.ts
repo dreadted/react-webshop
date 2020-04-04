@@ -9,7 +9,8 @@ import {
   faMinusCircle,
   faSpinner,
   faSearch,
-  faTimes
+  faTimes,
+  faCheck
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -31,5 +32,6 @@ library.add(
   faTrashAlt,
   faCcVisa,
   faCcMastercard,
-  faCcAmex
+  faCcAmex,
+  faCheck
 );

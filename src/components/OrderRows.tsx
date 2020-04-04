@@ -5,7 +5,7 @@ import { getCurrencyFormat } from "../lib/utils";
 interface OrderRowProps {
   item: CartItem;
   editable: boolean;
-  updateItem: UpdateItem;
+  onChange: HandleChange;
   updateParams: UpdateParams;
   openClass: string;
 }
@@ -13,7 +13,7 @@ interface OrderRowProps {
 const OrderRow: React.FC<OrderRowProps> = ({
   item,
   editable,
-  updateItem,
+  onChange,
   updateParams,
   openClass
 }) => {
@@ -35,8 +35,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
                 {editable && (
                   <div
                     className="update p-2"
-                    onClick={() =>
-                      updateItem({
+                    onClick={e =>
+                      onChange(e, {
                         ...updateParams,
                         item,
                         quantity: item.quantity - 1
@@ -49,7 +49,7 @@ const OrderRow: React.FC<OrderRowProps> = ({
                 <div className="font-weight-bold">
                   <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      updateItem({
+                      onChange(e, {
                         ...updateParams,
                         item,
                         quantity: parseInt(e.target.value)
@@ -66,8 +66,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
                 {editable && (
                   <div
                     className="update p-2"
-                    onClick={() =>
-                      updateItem({
+                    onClick={e =>
+                      onChange(e, {
                         ...updateParams,
                         item,
                         quantity: item.quantity + 1
@@ -85,8 +85,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
             {editable && (
               <div
                 className="update w-25 text-right p-2"
-                onClick={() =>
-                  updateItem({ ...updateParams, item, quantity: 0 })
+                onClick={e =>
+                  onChange(e, { ...updateParams, item, quantity: 0 })
                 }
               >
                 <FontAwesomeIcon icon={["far", "trash-alt"]} />
@@ -102,7 +102,7 @@ const OrderRow: React.FC<OrderRowProps> = ({
 interface OrderRowsProps {
   items: CartItem[];
   editable: boolean;
-  updateItem: UpdateItem;
+  onChange: HandleChange;
   updateParams: UpdateParams;
   openClass: string;
 }
@@ -110,7 +110,7 @@ interface OrderRowsProps {
 const OrderRows: React.FC<OrderRowsProps> = ({
   items,
   editable,
-  updateItem,
+  onChange,
   updateParams,
   openClass
 }) => {
@@ -122,7 +122,7 @@ const OrderRows: React.FC<OrderRowsProps> = ({
             key={item.product.id}
             item={item}
             editable={editable}
-            updateItem={updateItem}
+            onChange={onChange}
             updateParams={{ ...updateParams, items }}
             openClass={openClass}
           />

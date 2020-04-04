@@ -12,16 +12,6 @@ import "../scss/App.scss";
 // icons
 import "../lib/fontAwesome";
 
-// components
-import Navigation from "./Navigation";
-import ProductsPage from "./ProductsPage";
-import NotFound from "./NotFound";
-import Checkout from "./Checkout";
-import Confirmation from "./Confirmation";
-import Loading from "./Loading";
-import SearchHits from "./SearchHits";
-import Footer from "./Footer";
-
 // init
 import {
   emptyCart,
@@ -33,7 +23,18 @@ import {
   NEWS_CATEGORY,
   NUMBER_OF_ITEMS_IN_NEWS
 } from "../lib/init";
+
+// components
+import Navigation from "./Navigation";
+import ProductsPage from "./ProductsPage";
+import NotFound from "./NotFound";
+import Checkout from "./Checkout";
+import Confirmation from "./Confirmation";
+import Loading from "./Loading";
+import SearchHits from "./SearchHits";
+import Footer from "./Footer";
 import OrderAdmin from "./OrderAdmin";
+import Test from "./Test";
 
 export const APP_INFO = {
   name: packageJSON.name,
@@ -215,6 +216,7 @@ const App = () => {
       />
       <main className="container-fluid text-light px-3">
         <Switch>
+          <Route path="/test" component={Test} />
           <Route path="/checkout">
             <Checkout
               cart={cart}

@@ -33,14 +33,23 @@ export const save = async <T extends {}>(
   try {
     if (id) {
       const response = await apiClient.put<T>(`/${slug}/${id}`, input);
-      const data = response.data;
-      return data;
+      return response;
     } else {
       const response = await apiClient.post<T>(`/${slug}`, input);
-      return response.data;
+      return response;
     }
   } catch (err) {
-    if (err & err.response) return err.response.data;
+    if (err && err.response) return err.response;
+    throw err;
+  }
+};
+
+export const del = async <T extends {}>(slug: string, id: number) => {
+  try {
+    const response = await apiClient.delete(`/${slug}/${id}`);
+    return response;
+  } catch (err) {
+    if (err && err.response) return err.response;
     throw err;
   }
 };
@@ -55,7 +64,7 @@ export const fetchBLOB = async (url: string) => {
     const response = await client.get(url);
     return response.data;
   } catch (err) {
-    if (err & err.response) return err.response.data;
+    if (err && err.response) return err.response.data;
     throw err;
   }
 };
