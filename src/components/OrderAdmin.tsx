@@ -10,6 +10,7 @@ import * as API from "../lib/api";
 // components
 import SelectCompany from "./SelectCompany";
 import OrderList from "./OrderList";
+import Loading from "./Loading";
 
 interface OrderAdminProps {
   orderStatus: string[];
@@ -18,6 +19,7 @@ interface OrderAdminProps {
 
 const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
   const [companyOrders, setCompanyOrders] = useState<Order[]>([emptyOrder]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { slug } = useParams();
   const history = useHistory();
@@ -27,6 +29,10 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
   );
 
   const currentCompanyId = currentCompany ? currentCompany.id : 0;
+
+  useEffect(() => {
+    setLoading(!companyOrders.length);
+  }, [loading, companyOrders]);
 
   useEffect(() => {
     const setOrdersAsync = async () => {
@@ -128,15 +134,19 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
           />
         </div>
         <div className="col">
-          <OrderList
-            orders={companyOrders}
-            products={products}
-            orderStatus={orderStatus}
-            changeStatus={changeStatus}
-            updateItem={updateItem}
-            saveOrder={saveOrder}
-            deleteOrder={deleteOrder}
-          />
+          {loading ? (
+            <Loading />
+          ) : (
+            <OrderList
+              orders={companyOrders}
+              products={products}
+              orderStatus={orderStatus}
+              changeStatus={changeStatus}
+              updateItem={updateItem}
+              saveOrder={saveOrder}
+              deleteOrder={deleteOrder}
+            />
+          )}
         </div>
       </div>
     </>
