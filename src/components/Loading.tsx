@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Loading = () => {
   return (
-    <div className="loading text-primary">
-      <FontAwesomeIcon icon="spinner" size="10x" pulse />
+    <div className="d-flex align-items-center vh-100">
+      <div className="container text-center text-primary">
+        <FontAwesomeIcon icon="spinner" size="10x" pulse />
+      </div>
     </div>
   );
 };
