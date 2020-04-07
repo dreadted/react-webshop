@@ -34,6 +34,7 @@ const Order: React.FC<OrderProps> = ({
 }) => {
   const [openClass, setOpenClass] = useState<string>("");
   const [isDirty, setDirty] = useState<boolean>(false);
+  const [isSaving, setSaving] = useState<boolean>(false);
   const [isSaved, setSaved] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,10 +43,15 @@ const Order: React.FC<OrderProps> = ({
     }
   });
 
+  useEffect(() => {
+    if (isSaving && isSaved) setSaving(false);
+  }, [isSaved, isSaving]);
+
   const onChangeStatus: HandleChange = e => {
     setSaved(false);
     setDirty(true);
     changeStatus(e, order);
+    if (!openClass) toggleOpen(e);
   };
 
   const onChangeItem: HandleChange = (e, params) => {
@@ -55,6 +61,7 @@ const Order: React.FC<OrderProps> = ({
   };
 
   const onSubmit: HandleClick = async (order: Order) => {
+    setSaving(true);
     const response = await saveOrder(order);
     if (response && response.status && [200, 204].includes(response.status)) {
       setSaved(true);
@@ -70,8 +77,12 @@ const Order: React.FC<OrderProps> = ({
     setOpenClass(openClass === "" ? "open" : "");
   };
 
-  const saved = () => {
-    return isSaved ? "btn-success" : "btn-primary";
+  const saveButtonClass = () => {
+    return isSaved
+      ? "btn-success"
+      : isDirty
+      ? "btn-primary"
+      : "btn-outline-secondary";
   };
 
   const toCartItems = (orderRows: OrderRow[] | undefined) => {
@@ -96,14 +107,12 @@ const Order: React.FC<OrderProps> = ({
     <li className="list-group-item p-0 mb-4">
       <ul className="list-group">
         <li
-          className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between bg-primary ${openClass}`}
+          className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between ${openClass}`}
           onClick={onClick}
         >
-          <div className="w-20">
-            <small>{order.id}</small>
-          </div>
+          <div className="w-20">{order.id}</div>
           <div className="w-20 text-center">
-            <small>{new Date(order.created).toLocaleDateString("en-gb")}</small>
+            {new Date(order.created).toLocaleDateString("en-gb")}
           </div>
           <div className="badge badge-pill bg-dark w-30 ml-4">
             <SelectOrderStatus
@@ -149,11 +158,13 @@ const Order: React.FC<OrderProps> = ({
             <div className="w-15 ml-2">
               <button
                 type="button"
-                className={`w-100 btn ${saved()}`}
+                className={`w-100 btn ${saveButtonClass()}`}
                 disabled={!isDirty}
                 onClick={() => onSubmit(order)}
               >
-                {(isSaved && <FontAwesomeIcon icon="check" />) || "Save"}
+                {(isSaving && <FontAwesomeIcon icon="spinner" pulse />) ||
+                  (isSaved && <FontAwesomeIcon icon="check" />) ||
+                  "Save"}
               </button>
             </div>
           ) : undefined}
