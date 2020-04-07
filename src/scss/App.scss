@@ -213,7 +213,8 @@ nav {
 
 .badge {
   select,
-  select:focus {
+  select:focus,
+  option {
     background: $dark;
     color: $secondary;
     font-weight: bold;
@@ -221,6 +222,16 @@ nav {
     box-shadow: none;
     outline: none;
     padding: 0.4em;
+
+    &:checked {
+      background: $primary;
+      color: $light;
+    }
+
+    &::backdrop {
+      background: $primary;
+      color: $light;
+    }
   }
 }
 

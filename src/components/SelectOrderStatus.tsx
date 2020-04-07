@@ -16,7 +16,7 @@ const SelectOrderStatus: React.FC<SelectOrderStatusProps> = ({
   return (
     <select
       name="orderStatus"
-      className="badge-select"
+      className="badge-select w-100"
       defaultValue={selected}
       onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e, order)}
     >
