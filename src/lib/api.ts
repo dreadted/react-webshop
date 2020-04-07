@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { APP_INFO } from "../components/App";
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: "https://medieinstitutet-wie-products.azurewebsites.net/api",
+  baseURL: "https://dreadnallen-react-webshop.firebaseapp.com/api/v1",
   responseType: "json",
   headers: { "Content-Type": "application/json" }
 });
@@ -33,10 +33,10 @@ export const save = async <T extends {}>(
   try {
     if (id) {
       const response = await apiClient.put<T>(`/${slug}/${id}`, input);
-      return response;
+      return { status: response.status, data: response.data };
     } else {
       const response = await apiClient.post<T>(`/${slug}`, input);
-      return response;
+      return { status: response.status, data: response.data };
     }
   } catch (err) {
     if (err && err.response) return err.response;
