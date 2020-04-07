@@ -99,11 +99,13 @@ const Order: React.FC<OrderProps> = ({
           className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between bg-primary ${openClass}`}
           onClick={onClick}
         >
-          <div className="">{order.id}</div>
-          <div className="w-25 text-center">
-            {new Date(order.created).toLocaleDateString("en-gb")}
+          <div className="w-20">
+            <small>{order.id}</small>
           </div>
-          <div className="badge badge-pill bg-dark w-25">
+          <div className="w-20 text-center">
+            <small>{new Date(order.created).toLocaleDateString("en-gb")}</small>
+          </div>
+          <div className="badge badge-pill bg-dark w-30 ml-4">
             <SelectOrderStatus
               order={order}
               orderStatus={orderStatus}
@@ -111,8 +113,8 @@ const Order: React.FC<OrderProps> = ({
               selected={order.status}
             />
           </div>
-          <div className="w-25 text-right">
-            {getCurrencyFormat(order.totalPrice)}{" "}
+          <div className="w-20 text-right">
+            {getCurrencyFormat(order.totalPrice)}
           </div>
           <div className="ml-auto">
             <FontAwesomeIcon icon="angle-up" />
