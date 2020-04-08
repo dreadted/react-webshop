@@ -16,6 +16,7 @@ const PAY_METHODS = [
 interface OrderProps {
   order: Order;
   orderStatus: string[];
+  statusFilter: number;
   changeStatus: HandleChange;
   products: Product[];
   updateItem: UpdateItem;
@@ -26,6 +27,7 @@ interface OrderProps {
 const Order: React.FC<OrderProps> = ({
   order,
   orderStatus,
+  statusFilter,
   changeStatus,
   products,
   updateItem,
@@ -33,9 +35,16 @@ const Order: React.FC<OrderProps> = ({
   deleteOrder
 }) => {
   const [openClass, setOpenClass] = useState<string>("");
+  const [selectedStatus, setSelectedStatus] = useState<number | undefined>(
+    order.status
+  );
   const [isDirty, setDirty] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isSaved, setSaved] = useState<boolean>(false);
+
+  const isVisible = () => {
+    return statusFilter === -1 || order.status === statusFilter;
+  };
 
   useEffect(() => {
     if (isSaved) {
@@ -50,8 +59,9 @@ const Order: React.FC<OrderProps> = ({
   const onChangeStatus: HandleChange = e => {
     setSaved(false);
     setDirty(true);
-    changeStatus(e, order);
-    if (!openClass) toggleOpen(e);
+    // changeStatus(e, order); // commented out to delay status change until save
+    setSelectedStatus(parseInt(e.target.value));
+    if (!openClass) toggleOpen();
   };
 
   const onChangeItem: HandleChange = (e, params) => {
@@ -62,6 +72,10 @@ const Order: React.FC<OrderProps> = ({
 
   const onSubmit: HandleClick = async (order: Order) => {
     setSaving(true);
+    if (selectedStatus !== order.status) {
+      changeStatus(selectedStatus, order);
+      toggleOpen();
+    }
     const response = await saveOrder(order);
     if (response && response.status && [200, 204].includes(response.status)) {
       setSaved(true);
@@ -70,10 +84,10 @@ const Order: React.FC<OrderProps> = ({
   };
 
   const onClick: HandleClick = e => {
-    if (!e.target.className.includes("badge-select")) toggleOpen(e);
+    if (!e.target.className.includes("badge-select")) toggleOpen();
   };
 
-  const toggleOpen = (e: any) => {
+  const toggleOpen = () => {
     setOpenClass(openClass === "" ? "open" : "");
   };
 
@@ -104,73 +118,77 @@ const Order: React.FC<OrderProps> = ({
   };
 
   return (
-    <li className="list-group-item p-0 mb-4">
-      <ul className="list-group">
-        <li
-          className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between ${openClass}`}
-          onClick={onClick}
-        >
-          <div className="w-20">{order.id}</div>
-          <div className="w-20 text-center">
-            {new Date(order.created).toLocaleDateString("en-gb")}
-          </div>
-          <div className="badge badge-pill bg-dark w-30 ml-4">
-            <SelectOrderStatus
-              order={order}
-              orderStatus={orderStatus}
-              onChange={onChangeStatus}
-              selected={order.status}
-            />
-          </div>
-          <div className="w-20 text-right">
-            {getCurrencyFormat(order.totalPrice)}
-          </div>
-          <div className="ml-auto">
-            <FontAwesomeIcon icon="angle-up" />
-          </div>
-        </li>
-        <OrderRows
-          items={toCartItems(order.orderRows)}
-          editable={true}
-          onChange={onChangeItem}
-          updateParams={{ order }}
-          openClass={openClass}
-        />
-        <li
-          className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-2 pl-3 m-0 ${openClass}`}
-        >
-          <div>
-            <small>{getPaymentIcon(order.paymentMethod)}</small>
-          </div>
-          <div className="flex-grow-1 overflow-hidden mx-2">
-            <small>{order.createdBy}</small>
-          </div>
-          <div>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => deleteOrder(order)}
+    <>
+      {isVisible() && (
+        <li className="list-group-item p-0 mb-4">
+          <ul className="list-group">
+            <li
+              className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between ${openClass}`}
+              onClick={onClick}
             >
-              Delete
-            </button>
-          </div>
-          {order.totalPrice ? (
-            <div className="w-15 ml-2">
-              <button
-                type="button"
-                className={`w-100 btn ${saveButtonClass()}`}
-                disabled={!isDirty}
-                onClick={() => onSubmit(order)}
-              >
-                {(isSaving && <FontAwesomeIcon icon="spinner" pulse />) ||
-                  (isSaved && <FontAwesomeIcon icon="check" />) ||
-                  "Save"}
-              </button>
-            </div>
-          ) : undefined}
+              <div className="w-20">{order.id}</div>
+              <div className="w-20 text-center">
+                {new Date(order.created).toLocaleDateString("en-gb")}
+              </div>
+              <div className="badge badge-pill bg-dark w-30 ml-4">
+                <SelectOrderStatus
+                  order={order}
+                  orderStatus={orderStatus}
+                  onChange={onChangeStatus}
+                  selected={order.status}
+                />
+              </div>
+              <div className="w-20 text-right">
+                {getCurrencyFormat(order.totalPrice)}
+              </div>
+              <div className="ml-auto">
+                <FontAwesomeIcon icon="angle-up" />
+              </div>
+            </li>
+            <OrderRows
+              items={toCartItems(order.orderRows)}
+              editable={true}
+              onChange={onChangeItem}
+              updateParams={{ order }}
+              openClass={openClass}
+            />
+            <li
+              className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-2 pl-3 m-0 ${openClass}`}
+            >
+              <div>
+                <small>{getPaymentIcon(order.paymentMethod)}</small>
+              </div>
+              <div className="flex-grow-1 overflow-hidden mx-2">
+                <small>{order.createdBy}</small>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => deleteOrder(order)}
+                >
+                  Delete
+                </button>
+              </div>
+              {order.totalPrice ? (
+                <div className="w-15 ml-2">
+                  <button
+                    type="button"
+                    className={`w-100 btn ${saveButtonClass()}`}
+                    disabled={!isDirty}
+                    onClick={() => onSubmit(order)}
+                  >
+                    {(isSaving && <FontAwesomeIcon icon="spinner" pulse />) ||
+                      (isSaved && <FontAwesomeIcon icon="check" />) ||
+                      "Save"}
+                  </button>
+                </div>
+              ) : undefined}
+            </li>
+          </ul>
         </li>
-      </ul>
-    </li>
+      )}
+    </>
   );
 };
 
@@ -193,14 +211,58 @@ const OrderList: React.FC<OrderListProps> = ({
   saveOrder,
   deleteOrder
 }) => {
+  const [statusFilter, setStatusFilter] = useState<number>(-1);
+
+  const changeStatusFilter = (selectedStatus: number) => {
+    if (selectedStatus < orderStatus.length) {
+      setStatusFilter(selectedStatus);
+    }
+  };
+
   return (
     <div className="cart open">
+      <fieldset className="form-group pb-4">
+        <div className="form-check form-check-inline m-0" key={"no"}>
+          <label className="form-check-label">
+            <span>
+              <input
+                type="radio"
+                className="form-check-input"
+                name="status"
+                id="no"
+                value={statusFilter}
+                onChange={() => changeStatusFilter(-1)}
+                checked={statusFilter === -1}
+              />
+              All
+            </span>
+          </label>
+        </div>
+        {orderStatus.map((status, index) => (
+          <div className="form-check form-check-inline m-0" key={status}>
+            <label className="form-check-label">
+              <span>
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="status"
+                  id={status}
+                  value={statusFilter}
+                  onChange={() => changeStatusFilter(index)}
+                />
+                {status}
+              </span>
+            </label>
+          </div>
+        ))}
+      </fieldset>
       <ul className="list-group m-0 open">
         {orders.map(order => (
           <Order
             key={order.created}
             order={order}
             orderStatus={orderStatus}
+            statusFilter={statusFilter}
             changeStatus={changeStatus}
             products={products}
             updateItem={updateItem}

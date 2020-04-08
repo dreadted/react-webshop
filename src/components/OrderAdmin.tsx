@@ -53,14 +53,15 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
     history.push(`/admin/${selectedCompany?.slug}`);
   };
 
-  const changeStatus: HandleChange = (e, order) => {
-    order.status = parseInt(e.target.value);
+  const changeOrderStatus = (status: number, order: Order) => {
+    order.status = status;
 
     const filteredOrders = companyOrders.filter(o => o !== order);
     const updatedOrders = filteredOrders
       .concat([order])
       .sort((x, y) => (x.created < y.created ? 1 : -1));
     setCompanyOrders(updatedOrders);
+    console.log("changeOrderStatus:", order.id, order.status, status);
   };
 
   const updateItem: UpdateItem = ({ items, item, order, quantity }) => {
@@ -123,16 +124,18 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
   return (
     <>
       <div className="row">
-        <h1 className="m-4 text-secondary">Order admin</h1>
-      </div>
-      <div className="row">
-        <div className="col col-12 col-lg-6 mb-4">
+        <div className="col">
+          <h1 className="pt-4 text-secondary">Order admin</h1>
+        </div>
+        <div className="col col-12 col-sm-6 my-2">
           <SelectCompany
             companies={companies}
             selected={currentCompanyId}
             onChange={changeCompany}
           />
         </div>
+      </div>
+      <div className="row">
         <div className="col">
           {loading ? (
             <Loading />
@@ -141,7 +144,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
               orders={companyOrders}
               products={products}
               orderStatus={orderStatus}
-              changeStatus={changeStatus}
+              changeStatus={changeOrderStatus}
               updateItem={updateItem}
               saveOrder={saveOrder}
               deleteOrder={deleteOrder}
