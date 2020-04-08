@@ -182,7 +182,6 @@ const App = () => {
       blink: !cart.open,
       open: cart.open
     });
-    console.log("newCartItems:", newCartItems);
     if (!newCartItems.size) resetCart();
   };
 

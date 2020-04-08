@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // api
@@ -7,7 +7,6 @@ import { save } from "../../lib/api";
 // components
 import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
-import { OrderContext } from "../../contexts/OrderContext";
 
 interface CheckoutProps {
   cart: Cart;
@@ -29,8 +28,6 @@ const Checkout: React.FC<CheckoutProps> = ({
     createdBy: "",
     paymentMethod: ""
   });
-
-  const { companies } = useContext(OrderContext);
 
   useEffect(() => {
     if (cart.open) toggleCart();
@@ -126,7 +123,12 @@ const Checkout: React.FC<CheckoutProps> = ({
           />
         </div>
         <div className="col">
-          <CheckoutForm onSubmit={handleSubmit} errors={errors} />
+          <CheckoutForm
+            order={order}
+            setOrder={setOrder}
+            onSubmit={handleSubmit}
+            errors={errors}
+          />
         </div>
       </div>
     </>

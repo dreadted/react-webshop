@@ -6,7 +6,6 @@ import { OrderContext } from "../../contexts/OrderContext";
 
 // components
 import OrderItems from "../admin/OrderItems";
-import { ProductContext } from "../../contexts/ProductContext";
 
 interface ConfirmationProps {
   cart: Cart;
@@ -19,7 +18,6 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   resetCart,
   order
 }) => {
-  const { products } = useContext(ProductContext);
   const { companies } = useContext(OrderContext);
 
   useEffect(() => {
