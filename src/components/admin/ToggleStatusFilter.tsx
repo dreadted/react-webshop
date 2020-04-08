@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 // context
 import { OrderContext } from "../../contexts/OrderContext";
-
-// components
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
 
 interface ToggleStatusFilter {
   statusFilter: number;

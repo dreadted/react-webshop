@@ -8,7 +8,7 @@ import * as API from "../../lib/api";
 import { OrderContext } from "../../contexts/OrderContext";
 
 // components
-import SelectCompany from "./SelectCompany";
+import SelectCompany from "../common/SelectCompany";
 import OrderList from "./OrderList";
 import Loading from "../common/Loading";
 
