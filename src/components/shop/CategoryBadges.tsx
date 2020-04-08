@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+
+// context
+import { ProductContext } from "../../contexts/ProductContext";
 
 interface CategoryBadges {
   product: Product;
-  categories: ProductCategory[];
 }
 
-const CategoryBadges: React.FC<CategoryBadges> = ({ product, categories }) => {
+const CategoryBadges: React.FC<CategoryBadges> = ({ product }) => {
+  const { categories } = useContext(ProductContext);
+
   let result: React.ReactNodeArray = [];
   const currentCategories = categories.filter(
     category =>

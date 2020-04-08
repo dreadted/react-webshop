@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+
+// utils
 import { getCurrencyFormat } from "../../lib/utils";
+
+// context
+import { ProductContext } from "../../contexts/ProductContext";
 
 interface OrderItemsProps {
   order: Order;
-  products: Product[];
 }
 
-const OrderItems: React.FC<OrderItemsProps> = ({ order, products }) => {
+const OrderItems: React.FC<OrderItemsProps> = ({ order }) => {
+  const { products } = useContext(ProductContext);
+
   return (
     <>
       <li className="cart-item list-group-item d-flex justify-content-between font-weight-light open">

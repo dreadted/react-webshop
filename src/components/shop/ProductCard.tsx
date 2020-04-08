@@ -6,15 +6,10 @@ import CategoryBadges from "./CategoryBadges";
 
 interface ProductCardProps {
   product: Product;
-  categories: ProductCategory[];
   addToCart: AddToCart;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  product,
-  categories,
-  addToCart
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   return (
     <div className="d-flex">
       <div className="card m-3 bg-dark shadow-sm">
@@ -31,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div className="card-footer px-4 px-md-3">
           <div className="d-flex mb-3">
-            <CategoryBadges product={product} categories={categories} />
+            <CategoryBadges product={product} />
           </div>
           <div className="d-flex flex-md-wrap align-items-center">
             <div className="h5 font-weight-bold mb-0 mr-1">

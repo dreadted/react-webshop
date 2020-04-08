@@ -10,7 +10,6 @@ import ToggleStatusFilter from "./ToggleStatusFilter";
 interface OrderListProps {
   orders: Order[];
   changeStatus: HandleChange;
-  products: Product[];
   updateItem: UpdateItem;
   saveOrder: (order: Order) => Promise<Order>;
   deleteOrder: (order: Order) => Promise<Order>;
@@ -19,7 +18,6 @@ interface OrderListProps {
 const OrderList: React.FC<OrderListProps> = ({
   orders,
   changeStatus,
-  products,
   updateItem,
   saveOrder,
   deleteOrder
@@ -66,7 +64,6 @@ const OrderList: React.FC<OrderListProps> = ({
             order={order}
             statusFilter={statusFilter}
             changeStatus={changeStatus}
-            products={products}
             updateItem={updateItem}
             saveOrder={saveOrder}
             deleteOrder={deleteOrder}

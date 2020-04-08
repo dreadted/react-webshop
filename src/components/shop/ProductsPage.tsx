@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
+
+// context
+import { ProductContext } from "../../contexts/ProductContext";
 
 //components
 import ProductCard from "./ProductCard";
 import Cart from "./Cart";
 
 interface ProductsPageProps {
-  categories: ProductCategory[];
-  products: Product[];
   cart: Cart;
   addToCart: AddToCart;
   updateCart: UpdateCart;
@@ -17,13 +18,13 @@ interface ProductsPageProps {
 const NEWS_CATEGORY = -1;
 
 const ProductsPage: React.FC<ProductsPageProps> = ({
-  categories,
-  products,
   cart,
   addToCart,
   updateCart,
   toggleCart
 }) => {
+  const { categories, products } = useContext(ProductContext);
+
   const { slug } = useParams();
   const currentCategory: ProductCategory | undefined = slug
     ? categories.find(category => category.slug === slug)
@@ -64,7 +65,6 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
             <ProductCard
               key={product.id}
               product={product}
-              categories={categories}
               addToCart={addToCart}
             />
           ))}

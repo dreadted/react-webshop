@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
+
+// context
+import { ProductContext } from "../../contexts/ProductContext";
 
 // components
 import OrderRows from "./OrderRows";
@@ -17,7 +20,6 @@ interface OrderProps {
   order: Order;
   statusFilter: number;
   changeStatus: HandleChange;
-  products: Product[];
   updateItem: UpdateItem;
   saveOrder: (order: Order) => Promise<Order>;
   deleteOrder: (order: Order) => Promise<Order>;
@@ -27,11 +29,12 @@ const Order: React.FC<OrderProps> = ({
   order,
   statusFilter,
   changeStatus,
-  products,
   updateItem,
   saveOrder,
   deleteOrder
 }) => {
+  const { products } = useContext(ProductContext);
+
   const [openClass, setOpenClass] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<number | undefined>(
     order.status

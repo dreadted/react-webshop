@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Dispatch } from "react";
+import React, { useEffect, useState, Dispatch, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 // API
@@ -10,6 +10,7 @@ import Cart from "./Cart";
 import NotFound from "../common/NotFound";
 import Loading from "../common/Loading";
 import slugify from "slugify";
+import { ProductContext } from "../../contexts/ProductContext";
 
 const NO_MOVIES: Product[] = [
   {
@@ -25,8 +26,6 @@ const NO_MOVIES: Product[] = [
 ];
 
 interface SearchHitsProps {
-  categories: ProductCategory[];
-  products: Product[];
   cart: Cart;
   addToCart: AddToCart;
   updateCart: UpdateCart;
@@ -36,8 +35,6 @@ interface SearchHitsProps {
 }
 
 const SearchHits: React.FC<SearchHitsProps> = ({
-  categories,
-  products,
   cart,
   addToCart,
   updateCart,
@@ -45,6 +42,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
   setClearSearch,
   video
 }) => {
+  const { products } = useContext(ProductContext);
   const { slug } = useParams();
   const [foundProducts, setFoundProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -111,7 +109,6 @@ const SearchHits: React.FC<SearchHitsProps> = ({
                 <ProductCard
                   key={product.id}
                   product={product}
-                  categories={categories}
                   addToCart={addToCart}
                 />
               ))}

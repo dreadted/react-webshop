@@ -3,22 +3,25 @@ import React, {
   useRef,
   useEffect,
   Dispatch,
-  useCallback
+  useCallback,
+  useContext
 } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// context
+import { ProductContext } from "../../contexts/ProductContext";
+
 interface NavigationProps {
-  categories: ProductCategory[];
   clearSearch: boolean;
   setClearSearch: Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
-  categories,
   clearSearch,
   setClearSearch
 }) => {
+  const { categories } = useContext(ProductContext);
   const history = useHistory();
   const inputRef = useRef<HTMLInputElement>(null);
   const toggleRef = useRef<HTMLInputElement>(null);

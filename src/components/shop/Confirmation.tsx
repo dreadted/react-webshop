@@ -6,20 +6,20 @@ import { OrderContext } from "../../contexts/OrderContext";
 
 // components
 import OrderItems from "../admin/OrderItems";
+import { ProductContext } from "../../contexts/ProductContext";
 
 interface ConfirmationProps {
   cart: Cart;
   resetCart: () => void;
   order: Order;
-  products: Product[];
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({
   cart,
   resetCart,
-  order,
-  products
+  order
 }) => {
+  const { products } = useContext(ProductContext);
   const { companies } = useContext(OrderContext);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
         <div className="col col-12 col-lg-6 mb-4">
           <div className="cart open">
             <ul className="list-group open">
-              <OrderItems order={order} products={products} />
+              <OrderItems order={order} />
               <li className="cart-item cart-footer list-group-item d-flex justify-content-end open">
                 <div className="font-weight-bold d-flex m-0">
                   <div className="font-weight-light mr-3">Total:</div>

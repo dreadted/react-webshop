@@ -12,11 +12,7 @@ import SelectCompany from "./SelectCompany";
 import OrderList from "./OrderList";
 import Loading from "../common/Loading";
 
-interface OrderAdminProps {
-  products: Product[];
-}
-
-const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
+const OrderAdmin: React.FC = () => {
   const { companies } = useContext(OrderContext);
   const [companyOrders, setCompanyOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -139,7 +135,6 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
           ) : (
             <OrderList
               orders={companyOrders}
-              products={products}
               changeStatus={changeOrderStatus}
               updateItem={updateItem}
               saveOrder={saveOrder}
