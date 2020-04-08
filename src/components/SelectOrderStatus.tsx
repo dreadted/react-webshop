@@ -2,14 +2,14 @@ import React, { ChangeEvent } from "react";
 
 interface SelectOrderStatusProps {
   order: Order;
-  orderStatus: string[];
+  orderStatusArray: string[];
   selected?: number;
   onChange: HandleChange;
 }
 
 const SelectOrderStatus: React.FC<SelectOrderStatusProps> = ({
   order,
-  orderStatus,
+  orderStatusArray,
   selected = 0,
   onChange
 }) => {
@@ -20,7 +20,7 @@ const SelectOrderStatus: React.FC<SelectOrderStatusProps> = ({
       defaultValue={selected}
       onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e, order)}
     >
-      {orderStatus.map((status, index) => (
+      {orderStatusArray.map((status, index) => (
         <option value={index} key={status}>
           {status}
         </option>

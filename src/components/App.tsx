@@ -17,7 +17,6 @@ import {
   emptyCart,
   emptyOrder,
   companies,
-  orderStatus,
   MIN_QTY,
   MAX_QTY,
   NEWS_CATEGORY,
@@ -240,7 +239,7 @@ const App = () => {
             <NotFound video={video} hasButton={true} caption="404" />
           </Route>
           <Route path="/admin/:slug">
-            <OrderAdmin orderStatus={orderStatus} products={products} />
+            <OrderAdmin products={products} />
           </Route>
           <Route path="/search/:slug">
             <SearchHits

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 
+// init
+import { orderStatusArray } from "../lib/init";
+
 // components
 import Order from "./Order";
 
 interface OrderListProps {
   orders: Order[];
-  orderStatus: string[];
   changeStatus: HandleChange;
   products: Product[];
   updateItem: UpdateItem;
@@ -15,7 +17,6 @@ interface OrderListProps {
 
 const OrderList: React.FC<OrderListProps> = ({
   orders,
-  orderStatus,
   changeStatus,
   products,
   updateItem,
@@ -25,7 +26,7 @@ const OrderList: React.FC<OrderListProps> = ({
   const [statusFilter, setStatusFilter] = useState<number>(-1);
 
   const changeStatusFilter = (selectedStatus: number) => {
-    if (selectedStatus < orderStatus.length) {
+    if (selectedStatus < orderStatusArray.length) {
       setStatusFilter(selectedStatus);
     }
   };
@@ -49,7 +50,7 @@ const OrderList: React.FC<OrderListProps> = ({
             </span>
           </label>
         </div>
-        {orderStatus.map((status, index) => (
+        {orderStatusArray.map((status, index) => (
           <div className="form-check form-check-inline m-0" key={status}>
             <label className="form-check-label">
               <span>
@@ -72,7 +73,7 @@ const OrderList: React.FC<OrderListProps> = ({
           <Order
             key={order.created}
             order={order}
-            orderStatus={orderStatus}
+            orderStatusArray={orderStatusArray}
             statusFilter={statusFilter}
             changeStatus={changeStatus}
             products={products}

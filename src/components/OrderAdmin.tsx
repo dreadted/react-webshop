@@ -13,11 +13,10 @@ import OrderList from "./OrderList";
 import Loading from "./Loading";
 
 interface OrderAdminProps {
-  orderStatus: string[];
   products: Product[];
 }
 
-const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
+const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
   const [companyOrders, setCompanyOrders] = useState<Order[]>([emptyOrder]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -31,18 +30,16 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
   const currentCompanyId = currentCompany ? currentCompany.id : 0;
 
   useEffect(() => {
-    setLoading(!companyOrders.length);
-  }, [loading, companyOrders]);
-
-  useEffect(() => {
     const setOrdersAsync = async () => {
       const orders: Order[] = await API.get<Order>(
         `orders?companyId=${currentCompanyId}`
       );
       orders.sort((x, y) => (x.created < y.created ? 1 : -1));
       setCompanyOrders(orders);
+      setLoading(false);
     };
-    setOrdersAsync();
+    if (currentCompanyId) setOrdersAsync();
+    else setLoading(false);
   }, [currentCompanyId]);
 
   const changeCompany = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -61,7 +58,6 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
       .concat([order])
       .sort((x, y) => (x.created < y.created ? 1 : -1));
     setCompanyOrders(updatedOrders);
-    console.log("changeOrderStatus:", order.id, order.status, status);
   };
 
   const updateItem: UpdateItem = ({ items, item, order, quantity }) => {
@@ -143,7 +139,6 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ orderStatus, products }) => {
             <OrderList
               orders={companyOrders}
               products={products}
-              orderStatus={orderStatus}
               changeStatus={changeOrderStatus}
               updateItem={updateItem}
               saveOrder={saveOrder}

@@ -28,7 +28,7 @@ export const companies: Company[] = [
   { id: 9004, name: "ABB" }
 ];
 
-export const orderStatus = [
+export const orderStatusArray = [
   "Confirmed",
   "Denied",
   "Completed",
