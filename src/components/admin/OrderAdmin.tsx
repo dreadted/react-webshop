@@ -2,15 +2,15 @@ import React, { useState, useEffect, ChangeEvent, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 // api
-import * as API from "../lib/api";
+import * as API from "../../lib/api";
 
 // context
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext } from "../../contexts/OrderContext";
 
 // components
 import SelectCompany from "./SelectCompany";
 import OrderList from "./OrderList";
-import Loading from "./Loading";
+import Loading from "../common/Loading";
 
 interface OrderAdminProps {
   products: Product[];

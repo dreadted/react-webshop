@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CartItems from "./CartItems";
 
 // lib
-import { getCurrencyFormat } from "../lib/utils";
+import { getCurrencyFormat } from "../../lib/utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -120,9 +120,7 @@ const Cart: React.FC<CartProps> = ({
               )}
             </div>
           </li>
-        ) : (
-          undefined
-        )}
+        ) : undefined}
       </>
     );
   };
@@ -132,15 +130,16 @@ const Cart: React.FC<CartProps> = ({
       <div className="cart-offset" ref={cartRef}></div>
       <div className="cart" id="cart">
         <ul className={`list-group ${cart.open ? "" : "m-3"}`}>
-          {!atCheckout && (
-            <li
-              onClick={toggleCart}
-              className={`toggle p-0 list-group-item d-flex align-items-center
+          {
+            !atCheckout && (
+              <li
+                onClick={toggleCart}
+                className={`toggle p-0 list-group-item d-flex align-items-center
           ${classOpen()} ${classBlink()}`}
-            >
-              <Header />
-            </li>
-          ) // om jag lägger <li> i <Header /> funkar inte .toggle { transition:... }
+              >
+                <Header />
+              </li>
+            ) // om jag lägger <li> i <Header /> funkar inte .toggle { transition:... }
           }
           <CartItems
             cart={cart}

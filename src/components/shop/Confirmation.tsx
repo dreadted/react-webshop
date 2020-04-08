@@ -1,11 +1,11 @@
 import React, { useEffect, useContext } from "react";
-import { getCurrencyFormat } from "../lib/utils";
+import { getCurrencyFormat } from "../../lib/utils";
 
 // context
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext } from "../../contexts/OrderContext";
 
 // components
-import OrderItems from "./OrderItems";
+import OrderItems from "../admin/OrderItems";
 
 interface ConfirmationProps {
   cart: Cart;

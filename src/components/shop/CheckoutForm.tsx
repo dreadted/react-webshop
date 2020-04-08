@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-common-types";
 
 // components
-import SelectCompany from "./SelectCompany";
+import SelectCompany from "../admin/SelectCompany";
 
 const PAY_METHODS = [
   { icon: "cc-visa" as IconName, name: "Visa" },

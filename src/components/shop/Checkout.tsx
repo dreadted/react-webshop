@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 // api
-import { save } from "../lib/api";
+import { save } from "../../lib/api";
 
 // components
 import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext } from "../../contexts/OrderContext";
 
 interface CheckoutProps {
   cart: Cart;

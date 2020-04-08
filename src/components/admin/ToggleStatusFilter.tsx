@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 // context
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext } from "../../contexts/OrderContext";
 
 // components
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";

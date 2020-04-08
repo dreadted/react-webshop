@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCurrencyFormat } from "../lib/utils";
+import { getCurrencyFormat } from "../../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 
@@ -95,8 +95,7 @@ const Order: React.FC<OrderProps> = ({
 
   const onDelete: HandleClick = async (order: Order) => {
     setDeleting(true);
-    // const response = await deleteOrder(order);
-    // if (response && response.status === 200) setDeleted(true);
+    deleteOrder(order);
   };
 
   const onClick: HandleClick = e => {

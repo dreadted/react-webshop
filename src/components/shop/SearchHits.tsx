@@ -7,8 +7,8 @@ import { useParams, Redirect } from "react-router-dom";
 // components
 import ProductCard from "./ProductCard";
 import Cart from "./Cart";
-import NotFound from "./NotFound";
-import Loading from "./Loading";
+import NotFound from "../common/NotFound";
+import Loading from "../common/Loading";
 import slugify from "slugify";
 
 const NO_MOVIES: Product[] = [

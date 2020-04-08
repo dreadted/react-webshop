@@ -1,5 +1,5 @@
 import React from "react";
-import { getCurrencyFormat } from "../lib/utils";
+import { getCurrencyFormat } from "../../lib/utils";
 
 // components
 import CategoryBadges from "./CategoryBadges";

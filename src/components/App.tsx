@@ -30,15 +30,15 @@ import {
 } from "../contexts/OrderContext";
 
 // components
-import Navigation from "./Navigation";
-import ProductsPage from "./ProductsPage";
-import NotFound from "./NotFound";
-import Checkout from "./Checkout";
-import Confirmation from "./Confirmation";
-import Loading from "./Loading";
-import SearchHits from "./SearchHits";
-import Footer from "./Footer";
-import OrderAdmin from "./OrderAdmin";
+import Navigation from "./common/Navigation";
+import ProductsPage from "./shop/ProductsPage";
+import NotFound from "./common/NotFound";
+import Checkout from "./shop/Checkout";
+import Confirmation from "./shop/Confirmation";
+import Loading from "./common/Loading";
+import SearchHits from "./shop/SearchHits";
+import Footer from "./common/Footer";
+import OrderAdmin from "./admin/OrderAdmin";
 import Test from "./Test";
 
 export const APP_INFO = {
