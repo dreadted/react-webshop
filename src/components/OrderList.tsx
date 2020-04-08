@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
-// init
-import { orderStatusArray } from "../lib/init";
+// context
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import Order from "./Order";
@@ -24,6 +24,7 @@ const OrderList: React.FC<OrderListProps> = ({
   saveOrder,
   deleteOrder
 }) => {
+  const { orderStatusArray } = useContext(OrderContext);
   const [statusFilter, setStatusFilter] = useState<number>(-1);
   const [statusMatches, setStatusMatches] = useState<number[]>([]);
 
@@ -43,7 +44,7 @@ const OrderList: React.FC<OrderListProps> = ({
       matches.push(counter);
     }
     setStatusMatches(matches);
-  }, [orders]);
+  }, [orders, orderStatusArray]);
 
   useEffect(() => {
     if (!statusMatches[statusFilter]) setStatusFilter(-1);
@@ -61,7 +62,6 @@ const OrderList: React.FC<OrderListProps> = ({
           <Order
             key={order.created}
             order={order}
-            orderStatusArray={orderStatusArray}
             statusFilter={statusFilter}
             changeStatus={changeStatus}
             products={products}

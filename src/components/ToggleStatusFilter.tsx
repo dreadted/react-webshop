@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+
+// context
+import { OrderContext } from "../contexts/OrderContext";
+
+// components
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-
-// init
-import { orderStatusArray } from "../lib/init";
 
 interface ToggleStatusFilter {
   statusFilter: number;
@@ -16,6 +18,8 @@ const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
   statusMatches,
   changeStatusFilter
 }) => {
+  const { orderStatusArray } = useContext(OrderContext);
+
   const onChange = (selectedStatus: number) => {
     changeStatusFilter(selectedStatus);
   };

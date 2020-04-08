@@ -1,5 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { getCurrencyFormat } from "../lib/utils";
+
+// context
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import OrderItems from "./OrderItems";
@@ -9,17 +12,15 @@ interface ConfirmationProps {
   resetCart: () => void;
   order: Order;
   products: Product[];
-  companies: Company[];
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({
   cart,
   resetCart,
   order,
-  products,
-  companies
+  products
 }) => {
-  console.log("order:", order);
+  const { companies } = useContext(OrderContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);

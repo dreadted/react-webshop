@@ -1,11 +1,11 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-
-// init
-import { companies, emptyOrder } from "../lib/init";
 
 // api
 import * as API from "../lib/api";
+
+// context
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import SelectCompany from "./SelectCompany";
@@ -17,6 +17,7 @@ interface OrderAdminProps {
 }
 
 const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
+  const { companies, emptyOrder } = useContext(OrderContext);
   const [companyOrders, setCompanyOrders] = useState<Order[]>([emptyOrder]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -124,11 +125,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
           <h1 className="pt-4 text-secondary">Order admin</h1>
         </div>
         <div className="col col-12 col-sm-6 my-2">
-          <SelectCompany
-            companies={companies}
-            selected={currentCompanyId}
-            onChange={changeCompany}
-          />
+          <SelectCompany selected={currentCompanyId} onChange={changeCompany} />
         </div>
       </div>
       <div className="row">

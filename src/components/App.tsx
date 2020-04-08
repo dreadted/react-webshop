@@ -15,13 +15,19 @@ import "../lib/fontAwesome";
 // init
 import {
   emptyCart,
-  emptyOrder,
-  companies,
   MIN_QTY,
   MAX_QTY,
   NEWS_CATEGORY,
   NUMBER_OF_ITEMS_IN_NEWS
 } from "../lib/init";
+
+// context
+import {
+  OrderContext,
+  companies,
+  emptyOrder,
+  orderStatusArray
+} from "../contexts/OrderContext";
 
 // components
 import Navigation from "./Navigation";
@@ -208,68 +214,70 @@ const App = () => {
     <Loading />
   ) : (
     <div id="content">
-      <Navigation
-        categories={categories}
-        clearSearch={clearSearch}
-        setClearSearch={setClearSearch}
-      />
-      <main className="container-fluid text-light px-3">
-        <Switch>
-          <Route path="/test" component={Test} />
-          <Route path="/checkout">
-            <Checkout
-              cart={cart}
-              order={order}
-              companies={companies}
-              setOrder={setOrder}
-              updateCart={updateCart}
-              toggleCart={toggleCart}
-            />
-          </Route>
-          <Route path="/confirmation">
-            <Confirmation
-              cart={cart}
-              resetCart={resetCart}
-              order={order}
-              companies={companies}
-              products={products}
-            />
-          </Route>
-          <Route path="/not-found">
-            <NotFound video={video} hasButton={true} caption="404" />
-          </Route>
-          <Route path="/admin/:slug">
-            <OrderAdmin products={products} />
-          </Route>
-          <Route path="/search/:slug">
-            <SearchHits
-              categories={categories}
-              products={products}
-              cart={cart}
-              addToCart={addToCart}
-              updateCart={updateCart}
-              toggleCart={toggleCart}
-              setClearSearch={setClearSearch}
-              video={video}
-            />
-          </Route>
-          <Route path="/:slug">
-            <ProductsPage
-              categories={categories}
-              products={products}
-              cart={cart}
-              addToCart={addToCart}
-              updateCart={updateCart}
-              toggleCart={toggleCart}
-            />
-          </Route>
-          <Redirect from="/" exact to="/newly-added" />
-          <Route>
-            <Redirect to="/not-found" />
-          </Route>
-        </Switch>
-      </main>
-      <Footer />
+      <OrderContext.Provider
+        value={{ companies, emptyOrder, orderStatusArray }}
+      >
+        <Navigation
+          categories={categories}
+          clearSearch={clearSearch}
+          setClearSearch={setClearSearch}
+        />
+        <main className="container-fluid text-light px-3">
+          <Switch>
+            <Route path="/test" component={Test} />
+            <Route path="/checkout">
+              <Checkout
+                cart={cart}
+                order={order}
+                setOrder={setOrder}
+                updateCart={updateCart}
+                toggleCart={toggleCart}
+              />
+            </Route>
+            <Route path="/confirmation">
+              <Confirmation
+                cart={cart}
+                resetCart={resetCart}
+                order={order}
+                products={products}
+              />
+            </Route>
+            <Route path="/not-found">
+              <NotFound video={video} hasButton={true} caption="404" />
+            </Route>
+            <Route path="/admin/:slug">
+              <OrderAdmin products={products} />
+            </Route>
+            <Route path="/search/:slug">
+              <SearchHits
+                categories={categories}
+                products={products}
+                cart={cart}
+                addToCart={addToCart}
+                updateCart={updateCart}
+                toggleCart={toggleCart}
+                setClearSearch={setClearSearch}
+                video={video}
+              />
+            </Route>
+            <Route path="/:slug">
+              <ProductsPage
+                categories={categories}
+                products={products}
+                cart={cart}
+                addToCart={addToCart}
+                updateCart={updateCart}
+                toggleCart={toggleCart}
+              />
+            </Route>
+            <Redirect from="/" exact to="/newly-added" />
+            <Route>
+              <Redirect to="/not-found" />
+            </Route>
+          </Switch>
+        </main>
+        <Footer />
+      </OrderContext.Provider>
     </div>
   );
 };

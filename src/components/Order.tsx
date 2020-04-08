@@ -15,7 +15,6 @@ const PAY_METHODS = [
 
 interface OrderProps {
   order: Order;
-  orderStatusArray: string[];
   statusFilter: number;
   changeStatus: HandleChange;
   products: Product[];
@@ -26,7 +25,6 @@ interface OrderProps {
 
 const Order: React.FC<OrderProps> = ({
   order,
-  orderStatusArray,
   statusFilter,
   changeStatus,
   products,
@@ -133,7 +131,6 @@ const Order: React.FC<OrderProps> = ({
               <div className="badge badge-pill bg-dark w-30 ml-4">
                 <SelectOrderStatus
                   order={order}
-                  orderStatusArray={orderStatusArray}
                   onChange={onChangeStatus}
                   selected={order.status}
                 />

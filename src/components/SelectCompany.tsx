@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+
+// context
+import { OrderContext } from "../contexts/OrderContext";
 
 interface SelectCompanyProps {
-  companies: Company[];
   selected?: number;
   onChange?: HandleChange;
 }
 
 const SelectCompany: React.FC<SelectCompanyProps> = ({
-  companies,
   selected = 0,
   onChange
 }) => {
+  const { companies } = useContext(OrderContext);
   return (
     <div className="form-group">
       <label htmlFor="companyId">company</label>
