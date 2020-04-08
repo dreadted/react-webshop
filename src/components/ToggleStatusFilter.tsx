@@ -35,6 +35,9 @@ const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
       >
         <ToggleButton value={-1} variant="info" size="sm">
           All
+          <span className="badge badge-pill bg-dark ml-2">
+            {statusMatches.reduce((a, b) => a + b, 0)}
+          </span>
         </ToggleButton>
         {orderStatusArray.map((status, index) =>
           statusMatches[index] ? (

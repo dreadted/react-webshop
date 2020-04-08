@@ -17,8 +17,8 @@ interface OrderAdminProps {
 }
 
 const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
-  const { companies, emptyOrder } = useContext(OrderContext);
-  const [companyOrders, setCompanyOrders] = useState<Order[]>([emptyOrder]);
+  const { companies } = useContext(OrderContext);
+  const [companyOrders, setCompanyOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const { slug } = useParams();
@@ -48,7 +48,8 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
     const selectedCompany = companies.find(
       company => company.id === selectedCompanyId
     );
-    history.push(`/admin/${selectedCompany?.slug}`);
+    const _slug = selectedCompany ? selectedCompany.slug : "";
+    history.push(`/admin/${_slug}`);
   };
 
   const changeOrderStatus = (status: number, order: Order) => {

@@ -10,7 +10,7 @@ import * as API from "../lib/api";
 import "../scss/App.scss";
 
 // icons
-import "../lib/fontAwesome";
+import "../lib/FontAwesome";
 
 // init
 import {
@@ -244,6 +244,9 @@ const App = () => {
             </Route>
             <Route path="/not-found">
               <NotFound video={video} hasButton={true} caption="404" />
+            </Route>
+            <Route path="/admin" exact>
+              <OrderAdmin products={products} />
             </Route>
             <Route path="/admin/:slug">
               <OrderAdmin products={products} />

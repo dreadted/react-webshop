@@ -124,9 +124,11 @@ const Order: React.FC<OrderProps> = ({
               className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between ${openClass}`}
               onClick={onClick}
             >
-              <div className="w-20">{order.id}</div>
-              <div className="w-20 text-center">
-                {new Date(order.created).toLocaleDateString("en-gb")}
+              <div className="w-30 d-flex flex-wrap">
+                <div className="w-50">{order.id}</div>
+                <div className="text-center">
+                  {new Date(order.created).toLocaleDateString("en-gb")}
+                </div>
               </div>
               <div className="badge badge-pill bg-dark w-30 ml-4">
                 <SelectOrderStatus
@@ -158,17 +160,17 @@ const Order: React.FC<OrderProps> = ({
               <div className="flex-grow-1 overflow-hidden mx-2">
                 <small>{order.createdBy}</small>
               </div>
-              <div>
+              <div className="w-25">
                 <button
                   type="button"
-                  className="btn btn-danger"
+                  className="w-100 btn btn-danger"
                   onClick={() => deleteOrder(order)}
                 >
                   Delete
                 </button>
               </div>
               {order.totalPrice ? (
-                <div className="w-15 ml-2">
+                <div className="w-25 ml-2">
                   <button
                     type="button"
                     className={`w-100 btn ${saveButtonClass()}`}

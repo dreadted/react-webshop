@@ -52,11 +52,13 @@ const OrderList: React.FC<OrderListProps> = ({
 
   return (
     <div className="cart open">
-      <ToggleStatusFilter
-        statusFilter={statusFilter}
-        statusMatches={statusMatches}
-        changeStatusFilter={changeStatusFilter}
-      />
+      {orders.length ? (
+        <ToggleStatusFilter
+          statusFilter={statusFilter}
+          statusMatches={statusMatches}
+          changeStatusFilter={changeStatusFilter}
+        />
+      ) : undefined}
       <ul className="list-group m-0 open">
         {orders.map(order => (
           <Order
