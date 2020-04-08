@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // init
 import { orderStatusArray } from "../lib/init";
@@ -25,6 +25,7 @@ const OrderList: React.FC<OrderListProps> = ({
   deleteOrder
 }) => {
   const [statusFilter, setStatusFilter] = useState<number>(-1);
+  const [statusMatches, setStatusMatches] = useState<number[]>([]);
 
   const changeStatusFilter = (selectedStatus: number) => {
     if (selectedStatus < orderStatusArray.length) {
@@ -32,10 +33,27 @@ const OrderList: React.FC<OrderListProps> = ({
     }
   };
 
+  useEffect(() => {
+    let matches: number[] = [];
+    for (let i = 0; i < orderStatusArray.length; i++) {
+      let counter = 0;
+      orders.forEach(order => {
+        if (order.status === i) counter++;
+      });
+      matches.push(counter);
+    }
+    setStatusMatches(matches);
+  }, [orders]);
+
+  useEffect(() => {
+    if (!statusMatches[statusFilter]) setStatusFilter(-1);
+  }, [statusFilter, statusMatches]);
+
   return (
     <div className="cart open">
       <ToggleStatusFilter
         statusFilter={statusFilter}
+        statusMatches={statusMatches}
         changeStatusFilter={changeStatusFilter}
       />
       <ul className="list-group m-0 open">

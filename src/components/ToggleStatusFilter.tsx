@@ -7,11 +7,13 @@ import { orderStatusArray } from "../lib/init";
 
 interface ToggleStatusFilter {
   statusFilter: number;
+  statusMatches: number[];
   changeStatusFilter: Function;
 }
 
 const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
   statusFilter,
+  statusMatches,
   changeStatusFilter
 }) => {
   const onChange = (selectedStatus: number) => {
@@ -30,11 +32,16 @@ const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
         <ToggleButton value={-1} variant="info" size="sm">
           All
         </ToggleButton>
-        {orderStatusArray.map((status, index) => (
-          <ToggleButton key={status} value={index} variant="info" size="sm">
-            {status}
-          </ToggleButton>
-        ))}
+        {orderStatusArray.map((status, index) =>
+          statusMatches[index] ? (
+            <ToggleButton key={status} value={index} variant="info" size="sm">
+              {status}
+              <span className="badge badge-pill bg-dark ml-2">
+                {statusMatches[index]}
+              </span>
+            </ToggleButton>
+          ) : undefined
+        )}
       </ToggleButtonGroup>
     </div>
   );
