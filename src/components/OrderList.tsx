@@ -13,7 +13,7 @@ interface OrderListProps {
   products: Product[];
   updateItem: UpdateItem;
   saveOrder: (order: Order) => Promise<Order>;
-  deleteOrder: (order: Order) => void;
+  deleteOrder: (order: Order) => Promise<Order>;
 }
 
 const OrderList: React.FC<OrderListProps> = ({

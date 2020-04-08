@@ -20,7 +20,7 @@ interface OrderProps {
   products: Product[];
   updateItem: UpdateItem;
   saveOrder: (order: Order) => Promise<Order>;
-  deleteOrder: (order: Order) => void;
+  deleteOrder: (order: Order) => Promise<Order>;
 }
 
 const Order: React.FC<OrderProps> = ({
@@ -39,6 +39,8 @@ const Order: React.FC<OrderProps> = ({
   const [isDirty, setDirty] = useState<boolean>(false);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [isSaved, setSaved] = useState<boolean>(false);
+  const [isDeleting, setDeleting] = useState<boolean>(false);
+  const [isDeleted, setDeleted] = useState<boolean>(false);
 
   const isVisible = () => {
     return statusFilter === -1 || order.status === statusFilter;
@@ -48,11 +50,21 @@ const Order: React.FC<OrderProps> = ({
     if (isSaved) {
       setTimeout(() => setSaved(false), 1000);
     }
-  });
+  }, [isSaved]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      setTimeout(() => setDeleted(false), 1000);
+    }
+  }, [isDeleted]);
 
   useEffect(() => {
     if (isSaving && isSaved) setSaving(false);
-  }, [isSaved, isSaving]);
+  }, [isSaving, isSaved]);
+
+  useEffect(() => {
+    if (isDeleting && isDeleted) setDeleting(false);
+  }, [isDeleting, isDeleted]);
 
   const onChangeStatus: HandleChange = e => {
     setSaved(false);
@@ -79,6 +91,12 @@ const Order: React.FC<OrderProps> = ({
       setSaved(true);
       setDirty(false);
     }
+  };
+
+  const onDelete: HandleClick = async (order: Order) => {
+    setDeleting(true);
+    // const response = await deleteOrder(order);
+    // if (response && response.status === 200) setDeleted(true);
   };
 
   const onClick: HandleClick = e => {
@@ -164,9 +182,11 @@ const Order: React.FC<OrderProps> = ({
                 <button
                   type="button"
                   className="w-100 btn btn-danger"
-                  onClick={() => deleteOrder(order)}
+                  onClick={() => onDelete(order)}
                 >
-                  Delete
+                  {(isDeleting && <FontAwesomeIcon icon="spinner" pulse />) ||
+                    (isDeleted && <FontAwesomeIcon icon="check" />) ||
+                    "Delete"}
                 </button>
               </div>
               {order.totalPrice ? (

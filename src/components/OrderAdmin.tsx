@@ -91,7 +91,9 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
     setCompanyOrders(updatedOrders);
   };
 
-  const deleteOrder: (order: Order) => void = async (order: Order) => {
+  const deleteOrder: (order: Order) => Promise<Order> = async (
+    order: Order
+  ) => {
     if (order.id) {
       const response = await API.del<Order>("orders", order.id);
       console.log("delete order:", JSON.stringify(order));
@@ -102,6 +104,7 @@ const OrderAdmin: React.FC<OrderAdminProps> = ({ products }) => {
           .sort((x, y) => (x.created < y.created ? 1 : -1));
         setCompanyOrders(filteredOrders);
       }
+      return response;
     }
   };
 
