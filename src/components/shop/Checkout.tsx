@@ -23,6 +23,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   updateCart,
   toggleCart
 }) => {
+  const [isSaving, setSaving] = useState<boolean>(false);
   const [errors, setErrors] = useState<OrderErrors>({
     companyId: "",
     createdBy: "",
@@ -73,6 +74,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
 
   const submitOrder = async (createdOrder: Order) => {
+    setSaving(true);
     console.log("createdOrder:", JSON.stringify(createdOrder));
     const response = await save<Order>(createdOrder, "orders");
     console.log("response:", response);
@@ -116,6 +118,7 @@ const Checkout: React.FC<CheckoutProps> = ({
             errors={errors}
             setErrors={setErrors}
             isValidEmail={isValidEmail}
+            isSaving={isSaving}
             onSubmit={handleSubmit}
           />
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 
 // icons
@@ -14,6 +14,7 @@ interface CheckoutFormProps {
   errors: OrderErrors;
   setErrors: React.Dispatch<React.SetStateAction<OrderErrors>>;
   isValidEmail: () => boolean;
+  isSaving: boolean;
   onSubmit: HandleSubmit;
 }
 
@@ -23,6 +24,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   errors,
   setErrors,
   isValidEmail,
+  isSaving,
   onSubmit
 }) => {
   const handleChange: HandleChange = e => {
@@ -70,9 +72,15 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         setErrors={setErrors}
       />
       <div className="text-right">
-        <button type="submit" className="btn btn-primary">
-          Place Order
-          <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
+        <button type="submit" className="w-40 btn btn-primary">
+          {isSaving ? (
+            <FontAwesomeIcon icon="spinner" pulse />
+          ) : (
+            <>
+              Place order
+              <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
+            </>
+          )}
         </button>
       </div>
     </Form>
