@@ -60,7 +60,7 @@ const OrderList: React.FC<OrderListProps> = ({
       <ul className="list-group m-0 open">
         {orders.map(order => (
           <Order
-            key={order.created}
+            key={order.id}
             order={order}
             statusFilter={statusFilter}
             changeStatus={changeStatus}

@@ -56,14 +56,14 @@ const Order: React.FC<OrderProps> = ({
   }, [isSaved]);
 
   useEffect(() => {
+    if (isSaving && isSaved) setSaving(false);
+  }, [isSaving, isSaved]);
+
+  useEffect(() => {
     if (isDeleted) {
       setTimeout(() => setDeleted(false), 1000);
     }
   }, [isDeleted]);
-
-  useEffect(() => {
-    if (isSaving && isSaved) setSaving(false);
-  }, [isSaving, isSaved]);
 
   useEffect(() => {
     if (isDeleting && isDeleted) setDeleting(false);
