@@ -42,24 +42,13 @@ const Checkout: React.FC<CheckoutProps> = ({
 
   const handleSubmit: HandleSubmit = e => {
     e.preventDefault();
-    const formData = new FormData(e.target);
 
-    if (!formIsValid(formData)) return;
-
-    const values: { [key: string]: string } = {
-      created: new Date().toISOString()
-    };
-
-    for (let [key, value] of formData.entries()) {
-      const k = key as string;
-      const v = value as string;
-      values[k] = v;
-    }
+    if (!isValidForm()) return;
 
     delete order.id; // important!
     const newOrder = {
       ...order,
-      ...values,
+      created: new Date().toISOString(),
       totalPrice: cart.subTotal,
       orderRows: getOrderRows(order)
     };
@@ -67,22 +56,20 @@ const Checkout: React.FC<CheckoutProps> = ({
     submitOrder(newOrder);
   };
 
-  const formIsValid = (formData: FormData) => {
+  const isValidForm = () => {
     const err: OrderErrors = {};
-    const email = formData.get("createdBy") as string;
-
-    if (!emailIsValid(email))
+    if (!isValidEmail())
       err.createdBy = "Please provide correct e-mail address!";
-    if (!formData.get("companyId")) err.companyId = "Please select company!";
-    if (!formData.get("paymentMethod"))
+    if (!order.companyId) err.companyId = "Please select company!";
+    if (!order.paymentMethod)
       err.paymentMethod = "Please select payment method!";
     setErrors(err);
     return Object.keys(err).length === 0;
   };
 
-  const emailIsValid = (input: string) => {
+  const isValidEmail = () => {
     const format = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    return input.match(format);
+    return order.createdBy.match(format) ? true : false;
   };
 
   const submitOrder = async (createdOrder: Order) => {
@@ -126,8 +113,10 @@ const Checkout: React.FC<CheckoutProps> = ({
           <CheckoutForm
             order={order}
             setOrder={setOrder}
-            onSubmit={handleSubmit}
             errors={errors}
+            setErrors={setErrors}
+            isValidEmail={isValidEmail}
+            onSubmit={handleSubmit}
           />
         </div>
       </div>

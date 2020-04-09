@@ -228,24 +228,8 @@ nav {
 
 /* checkout form
 -----------------------------------------------------------------------------*/
-label {
-  font-weight: lighter;
-}
-
-.form-check-input,
-.form-check-label {
-  cursor: pointer;
-  margin-right: 2em;
-}
-
-.form-check-input {
-  transform: scale(1.2);
-}
-
-.form-check-label svg {
-  position: relative;
-  top: 0.15em;
-  left: 0.15em;
+.form-group {
+  height: 7rem;
 }
 
 /* 404 not found

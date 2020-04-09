@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "react-bootstrap/Form";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,57 +11,71 @@ import TogglePayMethod from "./TogglePayMethod";
 interface CheckoutFormProps {
   order: Order;
   setOrder: React.Dispatch<React.SetStateAction<Order>>;
-  onSubmit: HandleSubmit;
   errors: OrderErrors;
+  setErrors: React.Dispatch<React.SetStateAction<OrderErrors>>;
+  isValidEmail: () => boolean;
+  onSubmit: HandleSubmit;
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
   order,
   setOrder,
-  onSubmit,
-  errors
+  errors,
+  setErrors,
+  isValidEmail,
+  onSubmit
 }) => {
-  const handleChangeCompany: HandleChange = e => {
-    order.companyId = parseInt(e.target.value);
-    setOrder(order);
+  const handleChange: HandleChange = e => {
+    if (e.target.name) {
+      setErrors({ ...errors, [e.target.name]: "" });
+      const value = { [e.target.name]: e.target.value };
+      setOrder({ ...order, ...value });
+      // console.log("value:", value);
+      // console.log("order:", order);
+    }
+    console.log("errors:", errors);
   };
 
   return (
-    <form className="h5 mt-4" onSubmit={onSubmit}>
-      <div className="form-group">
-        <SelectCompany
-          selected={order.companyId}
-          onChange={handleChangeCompany}
+    <Form
+      onSubmit={onSubmit}
+      noValidate
+      className="bg-secondary rounded text-info p-3 mt-4"
+    >
+      <SelectCompany
+        selected={order.companyId}
+        onChange={handleChange}
+        errors={errors}
+      />
+      <Form.Group controlId="formGroupEmail">
+        <Form.Label>e-mail address</Form.Label>
+        <Form.Control
+          type="text"
+          name="createdBy"
+          placeholder="e-mail"
+          size="lg"
+          value={order.createdBy}
+          onChange={handleChange}
+          isValid={isValidEmail()}
+          isInvalid={!!errors.createdBy}
         />
-        {errors.companyId && (
-          <div className="alert alert-danger mt-3">{errors.companyId}</div>
-        )}
-      </div>
-      <div className="form-group">
-        <label htmlFor="createdBy">e-mail</label>
-        <div className="field">
-          <input
-            id="createdBy"
-            name="createdBy"
-            type="text"
-            className="form-control form-control-lg"
-          />
-          {errors.createdBy && (
-            <div className="alert alert-danger mt-3">{errors.createdBy}</div>
-          )}
-        </div>
-      </div>
-      <TogglePayMethod order={order} setOrder={setOrder} />
-      {errors.paymentMethod && (
-        <div className="alert alert-danger mt-3">{errors.paymentMethod}</div>
-      )}
-      <div className="mt-4 text-right">
+        <Form.Control.Feedback type="invalid">
+          {errors.createdBy}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <TogglePayMethod
+        order={order}
+        setOrder={setOrder}
+        errors={errors}
+        setErrors={setErrors}
+      />
+      <div className="text-right">
         <button type="submit" className="btn btn-primary">
           Place Order
           <FontAwesomeIcon icon="angle-right" size="lg" className="ml-2" />
         </button>
       </div>
-    </form>
+    </Form>
   );
 };
 

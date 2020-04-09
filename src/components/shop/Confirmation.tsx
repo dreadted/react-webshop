@@ -73,7 +73,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
                 <div>{order.id}</div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
-                <div>customer</div>
+                <div className="font-weight-light">customer</div>
                 <div>
                   {companies.map(company => {
                     return company.id === order.companyId
