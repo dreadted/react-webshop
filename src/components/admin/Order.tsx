@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
+
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconName } from "@fortawesome/fontawesome-svg-core";
 
 // context
 import { ProductContext } from "../../contexts/ProductContext";
 
+// hooks
+import { SaveState, useSaveState } from "./hooks/useSaveState";
+
 // components
 import OrderRows from "./OrderRows";
 import SelectOrderStatus from "./SelectOrderStatus";
-
-const PAY_METHODS = [
-  { icon: "cc-visa" as IconName, name: "Visa" },
-  { icon: "cc-mastercard" as IconName, name: "MasterCard" },
-  { icon: "cc-amex" as IconName, name: "Amex" }
-];
+import PaymentIcon from "./PaymentIcon";
 
 interface OrderProps {
   order: Order;
@@ -39,65 +38,42 @@ const Order: React.FC<OrderProps> = ({
   const [selectedStatus, setSelectedStatus] = useState<number | undefined>(
     order.status
   );
-  const [isDirty, setDirty] = useState<boolean>(false);
-  const [isSaving, setSaving] = useState<boolean>(false);
-  const [isSaved, setSaved] = useState<boolean>(false);
-  const [isDeleting, setDeleting] = useState<boolean>(false);
-  const [isDeleted, setDeleted] = useState<boolean>(false);
+
+  const [
+    { isDirty, isSaving, isSaved, isDeleting, isDeleted },
+    setSaveState
+  ] = useSaveState();
 
   const isVisible = () => {
     return statusFilter === -1 || order.status === statusFilter;
   };
 
-  useEffect(() => {
-    if (isSaved) {
-      setTimeout(() => setSaved(false), 1000);
-    }
-  }, [isSaved]);
-
-  useEffect(() => {
-    if (isSaving && isSaved) setSaving(false);
-  }, [isSaving, isSaved]);
-
-  useEffect(() => {
-    if (isDeleted) {
-      setTimeout(() => setDeleted(false), 1000);
-    }
-  }, [isDeleted]);
-
-  useEffect(() => {
-    if (isDeleting && isDeleted) setDeleting(false);
-  }, [isDeleting, isDeleted]);
-
   const onChangeStatus: HandleChange = e => {
-    setSaved(false);
-    setDirty(true);
+    setSaveState(SaveState.DIRTY);
     // changeStatus(e, order); // commented out to delay status change until save
     setSelectedStatus(parseInt(e.target.value));
     if (!openClass) toggleOpen();
   };
 
   const onChangeItem: HandleChange = (e, params) => {
-    setSaved(false);
-    setDirty(true);
+    setSaveState(SaveState.DIRTY);
     updateItem(params);
   };
 
   const onSubmit: HandleClick = async (order: Order) => {
-    setSaving(true);
+    setSaveState(SaveState.SAVING);
     if (selectedStatus !== order.status) {
       changeStatus(selectedStatus, order);
       toggleOpen();
     }
     const response = await saveOrder(order);
     if (response && response.status && [200, 204].includes(response.status)) {
-      setSaved(true);
-      setDirty(false);
+      setSaveState(SaveState.SAVED);
     }
   };
 
   const onDelete: HandleClick = async (order: Order) => {
-    setDeleting(true);
+    setSaveState(SaveState.DELETING);
     deleteOrder(order);
   };
 
@@ -127,12 +103,70 @@ const Order: React.FC<OrderProps> = ({
     });
   };
 
-  const getPaymentIcon = (name: string) => {
-    const icon = PAY_METHODS.find(
-      i => i.name.toLowerCase() === name.toLowerCase()
+  const Header: React.FC = () => {
+    return (
+      <>
+        <div className="w-30 d-flex flex-wrap">
+          <div className="w-50">{order.id}</div>
+          <div className="text-center">
+            {new Date(order.created).toLocaleDateString("en-gb")}
+          </div>
+        </div>
+        <div className="badge badge-pill bg-dark w-30 ml-4">
+          <SelectOrderStatus
+            order={order}
+            onChange={onChangeStatus}
+            selected={order.status}
+          />
+        </div>
+        <div className="w-20 text-right">
+          {getCurrencyFormat(order.totalPrice)}
+        </div>
+        <div className="ml-auto">
+          <FontAwesomeIcon icon="angle-up" />
+        </div>
+      </>
     );
-    if (icon) return <FontAwesomeIcon icon={["fab", icon.icon]} size="lg" />;
-    return undefined;
+  };
+
+  const Footer: React.FC = () => {
+    return (
+      <li
+        className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-2 pl-3 m-0 ${openClass}`}
+      >
+        <div>
+          <PaymentIcon name={order.paymentMethod} size="sm" />
+        </div>
+        <div className="flex-grow-1 overflow-hidden mx-2">
+          <small>{order.createdBy}</small>
+        </div>
+        <div className="w-25">
+          <button
+            type="button"
+            className="w-100 btn btn-danger"
+            onClick={() => onDelete(order)}
+          >
+            {(isDeleting && <FontAwesomeIcon icon="spinner" pulse />) ||
+              (isDeleted && <FontAwesomeIcon icon="check" />) ||
+              "Delete"}
+          </button>
+        </div>
+        {order.totalPrice ? (
+          <div className="w-25 ml-2">
+            <button
+              type="button"
+              className={`w-100 btn ${saveButtonClass()}`}
+              disabled={!isDirty}
+              onClick={() => onSubmit(order)}
+            >
+              {(isSaving && <FontAwesomeIcon icon="spinner" pulse />) ||
+                (isSaved && <FontAwesomeIcon icon="check" />) ||
+                "Save"}
+            </button>
+          </div>
+        ) : undefined}
+      </li>
+    );
   };
 
   return (
@@ -144,25 +178,7 @@ const Order: React.FC<OrderProps> = ({
               className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between ${openClass}`}
               onClick={onClick}
             >
-              <div className="w-30 d-flex flex-wrap">
-                <div className="w-50">{order.id}</div>
-                <div className="text-center">
-                  {new Date(order.created).toLocaleDateString("en-gb")}
-                </div>
-              </div>
-              <div className="badge badge-pill bg-dark w-30 ml-4">
-                <SelectOrderStatus
-                  order={order}
-                  onChange={onChangeStatus}
-                  selected={order.status}
-                />
-              </div>
-              <div className="w-20 text-right">
-                {getCurrencyFormat(order.totalPrice)}
-              </div>
-              <div className="ml-auto">
-                <FontAwesomeIcon icon="angle-up" />
-              </div>
+              <Header />
             </li>
             <OrderRows
               items={toCartItems(order.orderRows)}
@@ -171,41 +187,7 @@ const Order: React.FC<OrderProps> = ({
               updateParams={{ order }}
               openClass={openClass}
             />
-            <li
-              className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-2 pl-3 m-0 ${openClass}`}
-            >
-              <div>
-                <small>{getPaymentIcon(order.paymentMethod)}</small>
-              </div>
-              <div className="flex-grow-1 overflow-hidden mx-2">
-                <small>{order.createdBy}</small>
-              </div>
-              <div className="w-25">
-                <button
-                  type="button"
-                  className="w-100 btn btn-danger"
-                  onClick={() => onDelete(order)}
-                >
-                  {(isDeleting && <FontAwesomeIcon icon="spinner" pulse />) ||
-                    (isDeleted && <FontAwesomeIcon icon="check" />) ||
-                    "Delete"}
-                </button>
-              </div>
-              {order.totalPrice ? (
-                <div className="w-25 ml-2">
-                  <button
-                    type="button"
-                    className={`w-100 btn ${saveButtonClass()}`}
-                    disabled={!isDirty}
-                    onClick={() => onSubmit(order)}
-                  >
-                    {(isSaving && <FontAwesomeIcon icon="spinner" pulse />) ||
-                      (isSaved && <FontAwesomeIcon icon="check" />) ||
-                      "Save"}
-                  </button>
-                </div>
-              ) : undefined}
-            </li>
+            <Footer />
           </ul>
         </li>
       )}
