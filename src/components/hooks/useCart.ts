@@ -29,7 +29,6 @@ export const useCart: UseCart = (products: Product[]) => {
       setTimeout(() => setCart({ ...cart, blink: false }), 500);
     }
     if (cart.items.size) {
-      debugger;
       localStorage.setItem(`${APP_INFO.name}.cart`, JSON.stringify(cart));
       const items: number[][] = [];
       cart.items.forEach(
