@@ -42,7 +42,6 @@ import Loading from "./common/Loading";
 import SearchHits from "./shop/SearchHits";
 import Footer from "./common/Footer";
 import OrderAdmin from "./admin/OrderAdmin";
-import Test from "./Test";
 
 export const APP_INFO = {
   name: packageJSON.name,
@@ -191,7 +190,6 @@ const App = () => {
           />
           <main className="container-fluid text-light px-3">
             <Switch>
-              <Route path="/test" component={Test} />
               <Route path="/checkout">
                 <Checkout
                   cart={cart}
