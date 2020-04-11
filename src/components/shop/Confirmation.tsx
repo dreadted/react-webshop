@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
 
 // context
@@ -9,42 +9,38 @@ import OrderItems from "../admin/OrderItems";
 import { CartAction } from "../hooks/useCart";
 
 interface ConfirmationProps {
-  // cart: Cart;
-  // resetCart: () => void;
   order: Order;
 }
 
-const Confirmation: React.FC<ConfirmationProps> = ({
-  // cart,
-  // resetCart,
-  order
-}) => {
+const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
   const { companies, cart, dispatch } = useContext(OrderContext);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    validateOrder();
   }, []);
 
   const validateOrder = () => {
-    let error = "";
+    let message = "";
     if (order.orderRows) {
       if (order.orderRows?.length !== cart.items.size)
-        error = "Order contains wrong number of items.";
+        message = "Order contains wrong number of items.";
       let counter = 0;
       for (let [product, quantity] of cart.items.entries()) {
         const orderRow = order.orderRows[counter];
         if (
           !(product.id === orderRow.productId && quantity === orderRow.amount)
         )
-          error = `Order contains wrong quantity of "${product.name}": ${orderRow.amount} should be ${quantity}!`;
+          message = `Order contains wrong quantity of "${product.name}": ${orderRow.amount} should be ${quantity}!`;
         counter++;
       }
-    } else error = "Order is empty!";
+    } else message = "Order is empty!";
 
-    if (!error) {
+    if (!message) {
       dispatch(CartAction.RESET);
       return "";
-    } else return <div className="alert alert-danger mt-4 mb-0">{error}</div>;
+    } else setError(message);
   };
   return (
     <>
@@ -64,7 +60,9 @@ const Confirmation: React.FC<ConfirmationProps> = ({
               </li>
             </ul>
           </div>
-          {validateOrder()}
+          {!!error && (
+            <div className="alert alert-danger mt-4 mb-0">{error}</div>
+          )}
         </div>
         <div className="col">
           <div className="cart open">

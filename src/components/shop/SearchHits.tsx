@@ -1,9 +1,6 @@
 import React, { useEffect, useState, Dispatch, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
-// API
-// import { get } from "../lib/api";
-
 // components
 import ProductCard from "./ProductCard";
 import Cart from "./Cart";
@@ -27,22 +24,11 @@ const NO_MOVIES: Product[] = [
 ];
 
 interface SearchHitsProps {
-  // cart: Cart;
-  // addToCart: AddToCart;
-  // updateCart: UpdateCart;
-  // toggleCart: () => void;
   setClearSearch: Dispatch<React.SetStateAction<boolean>>;
   video: Video;
 }
 
-const SearchHits: React.FC<SearchHitsProps> = ({
-  // cart,
-  // addToCart,
-  // updateCart,
-  // toggleCart,
-  setClearSearch,
-  video
-}) => {
+const SearchHits: React.FC<SearchHitsProps> = ({ setClearSearch, video }) => {
   const { products } = useContext(ProductContext);
   const { cart } = useContext(OrderContext);
   const { slug } = useParams();
