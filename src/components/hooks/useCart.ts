@@ -93,6 +93,9 @@ export const useCart: UseCart = (products: Product[]) => {
     const product = payload?.product;
     let quantity = payload?.quantity ? payload?.quantity : 0;
     switch (action) {
+      case CartAction.RESET:
+        resetCart();
+        break;
       case CartAction.TOGGLE:
         if (cart.articles) setCart({ ...cart, open: !cart.open });
         break;
