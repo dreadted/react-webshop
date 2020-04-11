@@ -97,16 +97,14 @@ export const useCart: UseCart = (products: Product[]) => {
         if (cart.articles) setCart({ ...cart, open: !cart.open });
         break;
       case CartAction.ADD:
-        [newCart.blink, newCart.open] = [true, false];
         if (product) {
           const currentQuantity = newCart.items.get(product);
           quantity = currentQuantity ? currentQuantity + quantity : quantity;
         }
       /* falls through */
-      case CartAction.UPDATE:
-        [newCart.blink, newCart.open] = [!cart.open, cart.open];
-      /* falls through */
       case (CartAction.ADD, CartAction.UPDATE):
+        [newCart.blink, newCart.open] =
+          action === CartAction.ADD ? [true, false] : [!cart.open, cart.open];
         if (product) {
           // const { product, quantity } = payload;
           const newCartItems = new Map(cart.items);
