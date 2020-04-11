@@ -6,19 +6,20 @@ import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import OrderItems from "../admin/OrderItems";
+import { CartAction } from "../hooks/useCart";
 
 interface ConfirmationProps {
-  cart: Cart;
-  resetCart: () => void;
+  // cart: Cart;
+  // resetCart: () => void;
   order: Order;
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({
-  cart,
-  resetCart,
+  // cart,
+  // resetCart,
   order
 }) => {
-  const { companies } = useContext(OrderContext);
+  const { companies, cart, dispatch } = useContext(OrderContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,7 +42,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({
     } else error = "Order is empty!";
 
     if (!error) {
-      resetCart();
+      dispatch(CartAction.RESET);
       return "";
     } else return <div className="alert alert-danger mt-4 mb-0">{error}</div>;
   };

@@ -8,15 +8,9 @@ import "../scss/App.scss";
 // icons
 import "../lib/FontAwesome";
 
-// utils
-import { APP_INFO } from "../lib/utils";
-
 // context
 import {
   ProductContext,
-  emptyCart,
-  MIN_QTY,
-  MAX_QTY,
   NEWS_CATEGORY,
   NUMBER_OF_ITEMS_IN_NEWS
 } from "./contexts/ProductContext";
@@ -30,6 +24,7 @@ import {
 
 // hooks
 import { useProducts } from "./hooks/useProducts";
+import { useCart } from "./hooks/useCart";
 import { useVideo } from "./hooks/useVideo";
 
 // components
@@ -45,7 +40,7 @@ import OrderAdmin from "./admin/OrderAdmin";
 
 const App = () => {
   const { categories, products, loading } = useProducts();
-  const [cart, setCart] = useState<Cart>(emptyCart);
+  const [cart, dispatch] = useCart(products);
   const [order, setOrder] = useState<Order>(emptyOrder);
 
   const [clearSearch, setClearSearch] = useState<boolean>(false);
@@ -57,102 +52,6 @@ const App = () => {
       company => (company.slug = slugify(company.name, { lower: true }))
     );
   }, []);
-
-  useEffect(() => {
-    if (cart.blink) {
-      setTimeout(() => setCart({ ...cart, blink: false }), 500);
-    }
-    if (cart.items.size) {
-      localStorage.setItem(`${APP_INFO.name}.cart`, JSON.stringify(cart));
-      const items: number[][] = [];
-      cart.items.forEach((quantity, product) =>
-        items.push([product.id, quantity])
-      );
-      localStorage.setItem(`${APP_INFO.name}.items`, JSON.stringify(items));
-    }
-  }, [cart]);
-
-  useEffect(() => {
-    const initialCart: () => Cart = () => {
-      const cartString = localStorage.getItem(`${APP_INFO.name}.cart`);
-      const itemsString = localStorage.getItem(`${APP_INFO.name}.items`);
-      if (
-        cartString &&
-        cartString.length &&
-        itemsString &&
-        itemsString.length
-      ) {
-        const _cart: Cart = JSON.parse(cartString);
-        const itemsArray = JSON.parse(itemsString).map((values: number[]) => {
-          const [productId, quantity] = values;
-          const product = products.find(m => m.id === productId);
-          return [product, quantity];
-        });
-        _cart.items = new Map<Product, number>(itemsArray);
-        return _cart;
-      }
-      return emptyCart;
-    };
-    if (products && products.length) setCart(initialCart());
-  }, [products]);
-
-  const addToCart: AddToCart = (product, quantity) => {
-    const newCartItems = new Map(cart.items);
-    if (newCartItems.has(product)) {
-      const currentQty = newCartItems.get(product);
-      if (currentQty) newCartItems.set(product, currentQty + quantity);
-    } else newCartItems.set(product, quantity);
-    const [subTotal, articles] = getTotals(newCartItems);
-    setCart({
-      items: newCartItems,
-      articles,
-      subTotal,
-      blink: true,
-      open: false
-    });
-  };
-
-  const updateCart: UpdateCart = (product, quantity) => {
-    const newCartItems = new Map(cart.items);
-    if (product && quantity === 0) {
-      newCartItems.delete(product);
-    } else if (quantity >= MIN_QTY && quantity <= MAX_QTY) {
-      newCartItems.set(product, quantity);
-    }
-    const [subTotal, articles] = getTotals(newCartItems);
-    setCart({
-      items: newCartItems,
-      articles,
-      subTotal,
-      blink: !cart.open,
-      open: cart.open
-    });
-    if (!newCartItems.size) resetCart();
-  };
-
-  const resetCart = () => {
-    cart.items.clear();
-    cart.articles = 0;
-    cart.subTotal = 0;
-    cart.open = false;
-    localStorage.removeItem(`${APP_INFO.name}.cart`);
-    localStorage.removeItem(`${APP_INFO.name}.items`);
-  };
-
-  const getTotals = (items: Map<Product, number>) => {
-    let subTotal = 0;
-    let articles = 0;
-    for (let [product, quantity] of items.entries()) {
-      const price = product.price * quantity;
-      subTotal += price;
-      articles += quantity;
-    }
-    return [subTotal, articles];
-  };
-
-  const toggleCart = () => {
-    if (cart.articles) setCart({ ...cart, open: !cart.open });
-  };
 
   return loading ? (
     <Loading />
@@ -166,7 +65,7 @@ const App = () => {
         }}
       >
         <OrderContext.Provider
-          value={{ companies, emptyOrder, orderStatusArray }}
+          value={{ companies, cart, dispatch, emptyOrder, orderStatusArray }}
         >
           <Navigation
             clearSearch={clearSearch}
@@ -175,16 +74,10 @@ const App = () => {
           <main className="container-fluid text-light px-3">
             <Switch>
               <Route path="/checkout">
-                <Checkout
-                  cart={cart}
-                  order={order}
-                  setOrder={setOrder}
-                  updateCart={updateCart}
-                  toggleCart={toggleCart}
-                />
+                <Checkout order={order} setOrder={setOrder} />
               </Route>
               <Route path="/confirmation">
-                <Confirmation cart={cart} resetCart={resetCart} order={order} />
+                <Confirmation order={order} />
               </Route>
               <Route path="/not-found">
                 <NotFound video={video} hasButton={true} caption="404" />
@@ -196,22 +89,10 @@ const App = () => {
                 <OrderAdmin />
               </Route>
               <Route path="/search/:slug">
-                <SearchHits
-                  cart={cart}
-                  addToCart={addToCart}
-                  updateCart={updateCart}
-                  toggleCart={toggleCart}
-                  setClearSearch={setClearSearch}
-                  video={video}
-                />
+                <SearchHits setClearSearch={setClearSearch} video={video} />
               </Route>
               <Route path="/:slug">
-                <ProductsPage
-                  cart={cart}
-                  addToCart={addToCart}
-                  updateCart={updateCart}
-                  toggleCart={toggleCart}
-                />
+                <ProductsPage />
               </Route>
               <Redirect from="/" exact to="/newly-added" />
               <Route>

@@ -11,6 +11,7 @@ import NotFound from "../common/NotFound";
 import Loading from "../common/Loading";
 import slugify from "slugify";
 import { ProductContext } from "../contexts/ProductContext";
+import { OrderContext } from "../contexts/OrderContext";
 
 const NO_MOVIES: Product[] = [
   {
@@ -26,23 +27,24 @@ const NO_MOVIES: Product[] = [
 ];
 
 interface SearchHitsProps {
-  cart: Cart;
-  addToCart: AddToCart;
-  updateCart: UpdateCart;
-  toggleCart: () => void;
+  // cart: Cart;
+  // addToCart: AddToCart;
+  // updateCart: UpdateCart;
+  // toggleCart: () => void;
   setClearSearch: Dispatch<React.SetStateAction<boolean>>;
   video: Video;
 }
 
 const SearchHits: React.FC<SearchHitsProps> = ({
-  cart,
-  addToCart,
-  updateCart,
-  toggleCart,
+  // cart,
+  // addToCart,
+  // updateCart,
+  // toggleCart,
   setClearSearch,
   video
 }) => {
   const { products } = useContext(ProductContext);
+  const { cart } = useContext(OrderContext);
   const { slug } = useParams();
   const [foundProducts, setFoundProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -106,11 +108,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
           <>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
               {foundProducts.map(product => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  addToCart={addToCart}
-                />
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </>
@@ -118,12 +116,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
         <div className="row">
           <div className="col col-sm-8 col-lg-6">
-            <Cart
-              cart={cart}
-              updateCart={updateCart}
-              toggleCart={toggleCart}
-              atCheckout={false}
-            />
+            <Cart atCheckout={false} />
           </div>
         </div>
       </div>

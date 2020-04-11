@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 // api
 import { save } from "../../lib/api";
 
+// context
+import { OrderContext } from "../contexts/OrderContext";
+
 // components
 import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
+import { CartAction } from "../hooks/useCart";
 
 interface CheckoutProps {
-  cart: Cart;
   order: Order;
   setOrder: React.Dispatch<React.SetStateAction<Order>>;
-  updateCart: UpdateCart;
-  toggleCart: () => void;
 }
 
-const Checkout: React.FC<CheckoutProps> = ({
-  cart,
-  order,
-  setOrder,
-  updateCart,
-  toggleCart
-}) => {
+const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
+  const { cart, dispatch } = useContext(OrderContext);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [errors, setErrors] = useState<OrderErrors>({
     companyId: "",
@@ -31,9 +27,9 @@ const Checkout: React.FC<CheckoutProps> = ({
   });
 
   useEffect(() => {
-    if (cart.open) toggleCart();
+    if (cart.open) dispatch(CartAction.TOGGLE);
     window.scrollTo(0, 0);
-  }, [cart.open, toggleCart]);
+  }, [cart.open, dispatch]);
 
   const history = useHistory();
 
@@ -104,12 +100,7 @@ const Checkout: React.FC<CheckoutProps> = ({
     <>
       <div className="row row-cols-1 row-cols-md-2">
         <div className="col mt-2 p-0">
-          <Cart
-            cart={cart}
-            updateCart={updateCart}
-            toggleCart={toggleCart}
-            atCheckout={true}
-          />
+          <Cart atCheckout={true} />
         </div>
         <div className="col">
           <CheckoutForm

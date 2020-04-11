@@ -1,20 +1,23 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useContext } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// context
+import { OrderContext } from "../contexts/OrderContext";
+import { CartAction } from "../hooks/useCart";
 
 interface CartItemProps {
   product: Product;
   quantity: number;
-  updateCart: UpdateCart;
   openClass: string;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
   product,
   quantity,
-  updateCart,
   openClass
 }) => {
+  const { dispatch } = useContext(OrderContext);
   return (
     <li className={`cart-item list-group-item d-flex px-3 pb-2 ${openClass}`}>
       <div className="mr-3">
@@ -27,14 +30,22 @@ const CartItem: React.FC<CartItemProps> = ({
             <div className="d-flex align-items-center justify-content-start">
               <div
                 className="update p-2"
-                onClick={() => updateCart(product, quantity - 1)}
+                onClick={() =>
+                  dispatch(CartAction.UPDATE, {
+                    product,
+                    quantity: quantity - 1
+                  })
+                }
               >
                 <FontAwesomeIcon icon="minus-circle" />
               </div>
               <div className="font-weight-bold">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateCart(product, parseInt(e.target.value))
+                    dispatch(CartAction.UPDATE, {
+                      product,
+                      quantity: parseInt(e.target.value)
+                    })
                   }
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -45,7 +56,12 @@ const CartItem: React.FC<CartItemProps> = ({
               </div>
               <div
                 className="update p-2"
-                onClick={() => updateCart(product, quantity + 1)}
+                onClick={() =>
+                  dispatch(CartAction.UPDATE, {
+                    product,
+                    quantity: quantity + 1
+                  })
+                }
               >
                 <FontAwesomeIcon icon="plus-circle" />
               </div>
@@ -56,7 +72,9 @@ const CartItem: React.FC<CartItemProps> = ({
           </div>
           <div
             className="update text-right p-2"
-            onClick={() => updateCart(product, 0)}
+            onClick={() =>
+              dispatch(CartAction.UPDATE, { product, quantity: 0 })
+            }
           >
             <FontAwesomeIcon icon={["far", "trash-alt"]} />
           </div>
@@ -67,16 +85,11 @@ const CartItem: React.FC<CartItemProps> = ({
 };
 
 interface CartItemsProps {
-  cart: Cart;
-  updateCart: UpdateCart;
   openClass: string;
 }
 
-const CartItems: React.FC<CartItemsProps> = ({
-  cart,
-  updateCart,
-  openClass
-}) => {
+const CartItems: React.FC<CartItemsProps> = ({ openClass }) => {
+  const { cart } = useContext(OrderContext);
   const result = [];
   for (let [product, quantity] of cart.items.entries()) {
     result.push(
@@ -84,7 +97,6 @@ const CartItems: React.FC<CartItemsProps> = ({
         key={product.id}
         product={product}
         quantity={quantity}
-        updateCart={updateCart}
         openClass={openClass}
       />
     );

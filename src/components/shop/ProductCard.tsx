@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
 
 // components
 import CategoryBadges from "./CategoryBadges";
+import { OrderContext } from "../contexts/OrderContext";
+import { CartAction } from "../hooks/useCart";
 
 interface ProductCardProps {
   product: Product;
-  addToCart: AddToCart;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { dispatch } = useContext(OrderContext);
   return (
     <div className="d-flex">
       <div className="card m-3 bg-dark shadow-sm">
@@ -34,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
             </div>
             <button
               className="btn btn-primary ml-auto"
-              onClick={() => addToCart(product, 1)}
+              onClick={() => dispatch(CartAction.ADD, { product, quantity: 1 })}
             >
               Add to cart
             </button>

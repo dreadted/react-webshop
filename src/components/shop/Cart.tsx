@@ -1,5 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+
+// context
+import { OrderContext } from "../contexts/OrderContext";
 
 //components
 import CartItems from "./CartItems";
@@ -9,20 +12,14 @@ import { getCurrencyFormat } from "../../lib/utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CartAction } from "../hooks/useCart";
 
 interface CartProps {
-  cart: Cart;
-  updateCart: UpdateCart;
-  toggleCart: () => void;
   atCheckout: boolean;
 }
 
-const Cart: React.FC<CartProps> = ({
-  cart,
-  updateCart,
-  toggleCart,
-  atCheckout
-}) => {
+const Cart: React.FC<CartProps> = ({ atCheckout }) => {
+  const { cart, dispatch } = useContext(OrderContext);
   const cartRef = useRef<HTMLDivElement>(null);
 
   const scrollToCart = () => {
@@ -133,7 +130,7 @@ const Cart: React.FC<CartProps> = ({
           {
             !atCheckout && (
               <li
-                onClick={toggleCart}
+                onClick={() => dispatch(CartAction.TOGGLE)}
                 className={`toggle p-0 list-group-item d-flex align-items-center
           ${classOpen()} ${classBlink()}`}
               >
@@ -141,11 +138,7 @@ const Cart: React.FC<CartProps> = ({
               </li>
             ) // om jag lägger <li> i <Header /> funkar inte .toggle { transition:... }
           }
-          <CartItems
-            cart={cart}
-            updateCart={updateCart}
-            openClass={classOpen()}
-          />
+          <CartItems openClass={classOpen()} />
           <Footer />
         </ul>
       </div>
