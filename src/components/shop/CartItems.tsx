@@ -42,6 +42,7 @@ const CartItem: React.FC<CartItemProps> = ({
               <div className="font-weight-bold">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    e.target.value &&
                     dispatch(CartAction.UPDATE, {
                       product,
                       quantity: parseInt(e.target.value)
