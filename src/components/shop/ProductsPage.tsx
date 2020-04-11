@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 // context
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext } from "../contexts/ProductContext";
 
 //components
 import ProductCard from "./ProductCard";

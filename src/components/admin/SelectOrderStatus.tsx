@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useContext } from "react";
-import { OrderContext } from "../../contexts/OrderContext";
+import { OrderContext } from "../contexts/OrderContext";
 
 interface SelectOrderStatusProps {
   order: Order;

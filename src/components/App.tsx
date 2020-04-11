@@ -20,14 +20,14 @@ import {
   MAX_QTY,
   NEWS_CATEGORY,
   NUMBER_OF_ITEMS_IN_NEWS
-} from "../contexts/ProductContext";
+} from "./contexts/ProductContext";
 
 import {
   OrderContext,
   companies,
   emptyOrder,
   orderStatusArray
-} from "../contexts/OrderContext";
+} from "./contexts/OrderContext";
 
 // components
 import Navigation from "./common/Navigation";

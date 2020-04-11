@@ -10,7 +10,7 @@ import Cart from "./Cart";
 import NotFound from "../common/NotFound";
 import Loading from "../common/Loading";
 import slugify from "slugify";
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext } from "../contexts/ProductContext";
 
 const NO_MOVIES: Product[] = [
   {

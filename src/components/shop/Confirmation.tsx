@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
 
 // context
-import { OrderContext } from "../../contexts/OrderContext";
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import OrderItems from "../admin/OrderItems";

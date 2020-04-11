@@ -10,7 +10,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // context
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext } from "../contexts/ProductContext";
 
 interface NavigationProps {
   clearSearch: boolean;

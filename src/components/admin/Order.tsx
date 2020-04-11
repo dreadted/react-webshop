@@ -5,7 +5,7 @@ import { getCurrencyFormat } from "../../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // context
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext } from "../contexts/ProductContext";
 
 // hooks
 import { SaveState, useSaveState } from "./hooks/useSaveState";

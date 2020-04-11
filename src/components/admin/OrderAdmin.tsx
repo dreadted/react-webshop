@@ -5,7 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 import * as API from "../../lib/api";
 
 // context
-import { OrderContext } from "../../contexts/OrderContext";
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import SelectCompany from "../common/SelectCompany";

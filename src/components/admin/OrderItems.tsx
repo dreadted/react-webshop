@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { getCurrencyFormat } from "../../lib/utils";
 
 // context
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext } from "../contexts/ProductContext";
 
 interface OrderItemsProps {
   order: Order;

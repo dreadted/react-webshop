@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 // context
-import { OrderContext } from "../../contexts/OrderContext";
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import Order from "./Order";
