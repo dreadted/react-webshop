@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import slugify from "slugify";
-import packageJSON from "../../package.json";
-
-// api
-import * as API from "../lib/api";
 
 // css
 import "../scss/App.scss";
 
 // icons
 import "../lib/FontAwesome";
+
+// utils
+import { APP_INFO } from "../lib/utils";
 
 // context
 import {
@@ -31,6 +30,7 @@ import {
 
 // hooks
 import { useProducts } from "./hooks/useProducts";
+import { useVideo } from "./hooks/useVideo";
 
 // components
 import Navigation from "./common/Navigation";
@@ -43,30 +43,14 @@ import SearchHits from "./shop/SearchHits";
 import Footer from "./common/Footer";
 import OrderAdmin from "./admin/OrderAdmin";
 
-export const APP_INFO = {
-  name: packageJSON.name,
-  version: packageJSON.version,
-  homepage: packageJSON.homepage,
-  root: packageJSON.homepage.slice(packageJSON.homepage.lastIndexOf("/"))
-};
-
 const App = () => {
   const { categories, products, loading } = useProducts();
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [order, setOrder] = useState<Order>(emptyOrder);
 
   const [clearSearch, setClearSearch] = useState<boolean>(false);
-  const [video, setVideo] = useState<Video>({ url: "", poster: "" });
 
-  useEffect(() => {
-    const preloadVideo = async () => {
-      const blob = await API.fetchBLOB(`${APP_INFO.root}/media/404.mkv`);
-      const url = window.URL.createObjectURL(blob);
-      const poster = `${APP_INFO.root}/media/404.jpg`;
-      setVideo({ url, poster });
-    };
-    preloadVideo();
-  }, []);
+  const video = useVideo();
 
   useEffect(() => {
     companies.map(

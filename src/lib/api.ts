@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { APP_INFO } from "../components/App";
+import { APP_INFO } from "./utils";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "https://dreadnallen-react-webshop.firebaseapp.com/api/v1",

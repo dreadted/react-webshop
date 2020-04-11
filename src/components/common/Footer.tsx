@@ -1,5 +1,5 @@
 import React from "react";
-import { APP_INFO } from "../App";
+import { APP_INFO } from "../../lib/utils";
 
 const Footer = () => {
   return (
