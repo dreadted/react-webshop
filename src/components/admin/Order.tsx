@@ -116,7 +116,7 @@ const Order: React.FC<OrderProps> = ({
           <SelectOrderStatus
             order={order}
             onChange={onChangeStatus}
-            selected={order.status}
+            selected={selectedStatus}
           />
         </div>
         <div className="w-20 text-right">
