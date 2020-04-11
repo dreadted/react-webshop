@@ -29,10 +29,11 @@ export const useCart: UseCart = (products: Product[]) => {
       setTimeout(() => setCart({ ...cart, blink: false }), 500);
     }
     if (cart.items.size) {
+      debugger;
       localStorage.setItem(`${APP_INFO.name}.cart`, JSON.stringify(cart));
       const items: number[][] = [];
-      cart.items.forEach((quantity, product) =>
-        items.push([product.id, quantity])
+      cart.items.forEach(
+        (quantity, product) => !!product && items.push([product.id, quantity])
       );
       localStorage.setItem(`${APP_INFO.name}.items`, JSON.stringify(items));
     }
@@ -49,13 +50,19 @@ export const useCart: UseCart = (products: Product[]) => {
         itemsString.length
       ) {
         const _cart: Cart = JSON.parse(cartString);
-        const itemsArray = JSON.parse(itemsString).map((values: number[]) => {
-          const [productId, quantity] = values;
-          const product = products.find(m => m.id === productId);
-          return [product, quantity];
-        });
-        _cart.items = new Map<Product, number>(itemsArray);
-        return _cart;
+        const itemsArray: [Product, number][] = JSON.parse(itemsString).map(
+          (values: number[]) => {
+            const [productId, quantity] = values;
+            const product = products.find(p => p.id === productId);
+            if (product) return [product, quantity];
+            // eslint-disable-next-line array-callback-return
+            else return;
+          }
+        );
+        _cart.items = new Map<Product, number>(
+          itemsArray.filter(item => !!item)
+        );
+        return _cart.items.size ? _cart : emptyCart;
       }
       return emptyCart;
     };
@@ -83,7 +90,6 @@ export const useCart: UseCart = (products: Product[]) => {
     action: CartAction,
     payload?: { product: Product; quantity: number }
   ) => {
-    debugger;
     const newCart = { ...cart };
     const product = payload?.product;
     let quantity = payload?.quantity ? payload?.quantity : 0;
