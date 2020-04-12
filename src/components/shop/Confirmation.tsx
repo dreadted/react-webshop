@@ -17,31 +17,31 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    const validateOrder = () => {
+      let message = "";
+      if (order.orderRows) {
+        if (order.orderRows?.length !== cart.items.size)
+          message = "Order contains wrong number of items.";
+        let counter = 0;
+        for (let [product, quantity] of cart.items.entries()) {
+          const orderRow = order.orderRows[counter];
+          if (
+            !(product.id === orderRow.productId && quantity === orderRow.amount)
+          )
+            message = `Order contains wrong quantity of "${product.name}": ${orderRow.amount} should be ${quantity}!`;
+          counter++;
+        }
+      } else message = "Order is empty!";
+
+      if (!message) {
+        dispatch(CartAction.RESET);
+        return "";
+      } else setError(message);
+    };
     window.scrollTo(0, 0);
     validateOrder();
-  }, []);
+  }, [cart.items, dispatch, order.orderRows]);
 
-  const validateOrder = () => {
-    let message = "";
-    if (order.orderRows) {
-      if (order.orderRows?.length !== cart.items.size)
-        message = "Order contains wrong number of items.";
-      let counter = 0;
-      for (let [product, quantity] of cart.items.entries()) {
-        const orderRow = order.orderRows[counter];
-        if (
-          !(product.id === orderRow.productId && quantity === orderRow.amount)
-        )
-          message = `Order contains wrong quantity of "${product.name}": ${orderRow.amount} should be ${quantity}!`;
-        counter++;
-      }
-    } else message = "Order is empty!";
-
-    if (!message) {
-      dispatch(CartAction.RESET);
-      return "";
-    } else setError(message);
-  };
   return (
     <>
       <div className="row">
