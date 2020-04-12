@@ -59,6 +59,7 @@ type OrderErrors = {
   companyId?: string;
   createdBy?: string;
   paymentMethod?: string;
+  response?: string;
 };
 
 type UpdateParams = {

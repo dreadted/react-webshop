@@ -75,7 +75,19 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
     const response = await save<Order>(createdOrder, "orders");
     console.log("response:", response);
 
-    if (response.status === 201) {
+    if (response.status !== 201) {
+      setSaving(false);
+      if (response.data && response.data.errors) {
+        const messages: string[] = response.data.errors.map(
+          (error: any) => error.msg
+        );
+        console.log("ERROR!", messages.join("\n"));
+        setErrors({ ...errors, response: messages.join("\n") });
+      } else {
+        const message = `${response.status} : ${response.statusText}`;
+        setErrors({ ...errors, response: message });
+      }
+    } else {
       const savedOrder: Order = response.data;
       console.log("savedOrder:", JSON.stringify(savedOrder));
       setOrder({ ...savedOrder });
@@ -112,6 +124,11 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
             isSaving={isSaving}
             onSubmit={handleSubmit}
           />
+          {!!errors && !!errors.response && (
+            <div className="alert alert-danger mt-4 mb-0">
+              {errors.response}
+            </div>
+          )}
         </div>
       </div>
     </>
