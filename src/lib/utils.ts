@@ -14,3 +14,7 @@ export const getCurrencyFormat: (number: number) => string = (number: number) =>
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
   }).format(number);
+
+export const getOrderIdFormat: (
+  number: number | undefined
+) => string = number => String(number).replace(/(.)(?=(\d{5})+$)/g, "$1-");

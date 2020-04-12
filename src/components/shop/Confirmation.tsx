@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { getCurrencyFormat } from "../../lib/utils";
+import { getCurrencyFormat, getOrderIdFormat } from "../../lib/utils";
 
 // context
 import { OrderContext } from "../contexts/OrderContext";
@@ -72,7 +72,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
             <ul className="list-group open m-0">
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div className="font-weight-light">order #</div>
-                <div>{order.id}</div>
+                <div>{getOrderIdFormat(order.id)}</div>
               </li>
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
                 <div className="font-weight-light">customer</div>

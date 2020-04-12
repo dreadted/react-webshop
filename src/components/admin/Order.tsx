@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { getCurrencyFormat } from "../../lib/utils";
+import { getCurrencyFormat, getOrderIdFormat } from "../../lib/utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -107,7 +107,7 @@ const Order: React.FC<OrderProps> = ({
     return (
       <>
         <div className="w-30 d-flex flex-wrap">
-          <div className="w-50">{order.id}</div>
+          <div className="w-50">{getOrderIdFormat(order.id)}</div>
           <div className="text-center">
             {new Date(order.created).toLocaleDateString("en-gb")}
           </div>
