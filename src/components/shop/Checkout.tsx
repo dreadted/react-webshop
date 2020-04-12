@@ -27,8 +27,11 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
   });
 
   useEffect(() => {
-    if (cart.open) dispatch(CartAction.TOGGLE);
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (cart.open) dispatch(CartAction.TOGGLE);
   }, [cart.open, dispatch]);
 
   const history = useHistory();

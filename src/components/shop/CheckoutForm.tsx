@@ -32,10 +32,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       setErrors({ ...errors, [e.target.name]: "" });
       const value = { [e.target.name]: e.target.value };
       setOrder({ ...order, ...value });
-      // console.log("value:", value);
-      // console.log("order:", order);
     }
-    console.log("errors:", errors);
   };
 
   return (
