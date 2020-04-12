@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={product.imageUrl}
           />
           <div className="card-description">
-            <h4>{product.name}</h4>
+            <h4 className="font-weight-bold">{product.name}</h4>
             <p>{product.description}</p>
           </div>
         </div>
