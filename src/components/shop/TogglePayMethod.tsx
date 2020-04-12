@@ -58,7 +58,9 @@ const TogglePayMethod: React.FC<TogglePayMethodProps> = ({
                 key={method.icon}
                 className="mr-2"
               />
-              <span className="d-none d-sm-inline">{method.name}</span>
+              <span className="d-none d-sm-inline font-weight-lighter">
+                {method.name}
+              </span>
             </div>
           </ToggleButton>
         ))}
