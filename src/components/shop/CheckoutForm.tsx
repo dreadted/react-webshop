@@ -45,7 +45,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       <Form.Group controlId="formGroupEmail">
         <Form.Label>e-mail address</Form.Label>
         <Form.Control
-          type="text"
+          type="email"
           name="createdBy"
           placeholder="e-mail"
           size="lg"
