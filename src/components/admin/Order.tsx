@@ -107,20 +107,18 @@ const Order: React.FC<OrderProps> = ({
     return (
       <>
         <div className="w-20">{getOrderIdFormat(order.id)}</div>
-        <div className="badge badge-pill bg-dark w-30 ml-4">
+        <div className="w-40 badge badge-pill bg-dark">
           <SelectOrderStatus
             order={order}
             onChange={onChangeStatus}
             selected={selectedStatus}
           />
         </div>
-        <div className="w-40 d-flex flex-wrap justify-content-end">
-          <div className="w-50 text-center">
+        <div className="w-30 d-flex flex-wrap align-items-center">
+          <div className="ml-auto">
             {new Date(order.created).toLocaleDateString("en-gb")}
           </div>
-          <div className="w-50 text-right">
-            {getCurrencyFormat(order.totalPrice)}
-          </div>
+          <div className="ml-auto">{getCurrencyFormat(order.totalPrice)}</div>
         </div>
         <div className="ml-auto">
           <FontAwesomeIcon icon="angle-up" />
