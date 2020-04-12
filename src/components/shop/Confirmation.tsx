@@ -17,6 +17,10 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const validateOrder = () => {
       let message = "";
       if (order.orderRows) {
@@ -38,8 +42,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
         return "";
       } else setError(message);
     };
-    window.scrollTo(0, 0);
-    validateOrder();
+    if (cart.items.size) validateOrder();
   }, [cart.items, dispatch, order.orderRows]);
 
   return (
