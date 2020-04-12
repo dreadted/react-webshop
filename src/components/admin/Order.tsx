@@ -106,12 +106,7 @@ const Order: React.FC<OrderProps> = ({
   const Header: React.FC = () => {
     return (
       <>
-        <div className="w-30 d-flex flex-wrap">
-          <div className="w-50">{getOrderIdFormat(order.id)}</div>
-          <div className="text-center">
-            {new Date(order.created).toLocaleDateString("en-gb")}
-          </div>
-        </div>
+        <div className="w-20">{getOrderIdFormat(order.id)}</div>
         <div className="badge badge-pill bg-dark w-30 ml-4">
           <SelectOrderStatus
             order={order}
@@ -119,8 +114,13 @@ const Order: React.FC<OrderProps> = ({
             selected={selectedStatus}
           />
         </div>
-        <div className="w-20 text-right">
-          {getCurrencyFormat(order.totalPrice)}
+        <div className="w-40 d-flex flex-wrap justify-content-end">
+          <div className="w-50 text-center">
+            {new Date(order.created).toLocaleDateString("en-gb")}
+          </div>
+          <div className="w-50 text-right">
+            {getCurrencyFormat(order.totalPrice)}
+          </div>
         </div>
         <div className="ml-auto">
           <FontAwesomeIcon icon="angle-up" />
