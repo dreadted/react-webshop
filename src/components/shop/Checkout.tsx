@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { save } from "../../lib/api";
 
 // context
-import { OrderContext } from "../contexts/OrderContext";
+import { errorMessage, OrderContext } from "../contexts/OrderContext";
 
 // components
 import Cart from "./Cart";
@@ -58,11 +58,9 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
 
   const isValidForm = () => {
     const err: OrderErrors = {};
-    if (!isValidEmail())
-      err.createdBy = "Please provide correct e-mail address!";
-    if (!order.companyId) err.companyId = "Please select company!";
-    if (!order.paymentMethod)
-      err.paymentMethod = "Please select payment method!";
+    if (!isValidEmail()) err.createdBy = errorMessage.createdBy;
+    if (!order.companyId) err.companyId = errorMessage.companyId;
+    if (!order.paymentMethod) err.paymentMethod = errorMessage.paymentMethod;
     setErrors(err);
     return Object.keys(err).length === 0;
   };

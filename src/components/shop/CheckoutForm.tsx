@@ -36,11 +36,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   };
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      noValidate
-      className="bg-secondary rounded text-info p-3 mt-4"
-    >
+    <Form onSubmit={onSubmit} noValidate className="mt-4">
       <SelectCompany
         selected={order.companyId}
         onChange={handleChange}
@@ -58,7 +54,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           isValid={isValidEmail()}
           isInvalid={!!errors.createdBy}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback
+          type="invalid"
+          // className="alert alert-danger py-1"
+        >
           {errors.createdBy}
         </Form.Control.Feedback>
       </Form.Group>
@@ -68,8 +67,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         errors={errors}
         setErrors={setErrors}
       />
-      <div className="text-right">
-        <button type="submit" className="w-40 btn btn-primary">
+      <div className="text-right mt-4">
+        <button type="submit" className="w-40 btn btn-primary mt-4 mt-md-0">
           {isSaving ? (
             <FontAwesomeIcon icon="spinner" pulse />
           ) : (

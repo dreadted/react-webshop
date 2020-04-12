@@ -29,6 +29,12 @@ export const emptyOrder: Order = {
 export const MIN_QTY = 1;
 export const MAX_QTY = 99;
 
+export const errorMessage = {
+  createdBy: "Please provide an accurate e-mail address!",
+  companyId: "Please select company!",
+  paymentMethod: "Please select payment method!"
+};
+
 export const orderStatusArray = [
   "Confirmed",
   "Denied",

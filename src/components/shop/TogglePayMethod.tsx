@@ -35,8 +35,10 @@ const TogglePayMethod: React.FC<TogglePayMethodProps> = ({
     <div className="form-group">
       <Form.Label>payment method</Form.Label>
       <ToggleButtonGroup
-        className={`d-flex flex-wrap border-0 ${
-          errors.paymentMethod ? "is-invalid" : ""
+        className={`d-flex flex-wrap rounded ${
+          errors.paymentMethod
+            ? "border border-danger is-invalid"
+            : "border border-dark"
         }`}
         type="radio"
         name="options"
@@ -47,16 +49,17 @@ const TogglePayMethod: React.FC<TogglePayMethodProps> = ({
           <ToggleButton
             key={method.icon}
             value={method.name}
-            variant={order.paymentMethod === method.name ? "info" : "secondary"}
-            size="lg"
-            className="py-2 m-0 border-0"
+            variant={order.paymentMethod === method.name ? "secondary" : "info"}
           >
-            <FontAwesomeIcon
-              icon={["fab", method.icon]}
-              size="2x"
-              key={method.icon}
-              className="p-0 m-0"
-            />
+            <div className="d-flex align-items-center justify-content-center">
+              <FontAwesomeIcon
+                icon={["fab", method.icon]}
+                size="2x"
+                key={method.icon}
+                className="mr-2"
+              />
+              <span className="d-none d-sm-inline">{method.name}</span>
+            </div>
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
