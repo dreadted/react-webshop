@@ -54,10 +54,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           isValid={isValidEmail()}
           isInvalid={!!errors.createdBy}
         />
-        <Form.Control.Feedback
-          type="invalid"
-          // className="alert alert-danger py-1"
-        >
+        <Form.Control.Feedback type="invalid">
           {errors.createdBy}
         </Form.Control.Feedback>
       </Form.Group>
