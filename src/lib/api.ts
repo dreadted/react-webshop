@@ -44,9 +44,11 @@ export const save = async <T extends {}>(
   }
 };
 
-export const del = async <T extends {}>(slug: string, id: number) => {
+export const del = async (slug: string, id: number) => {
   try {
-    const response = await apiClient.delete(`/${slug}/${id}`);
+    const response = await apiClient.delete(`/${slug}/${id}`, {
+      data: { id }
+    });
     return response;
   } catch (err) {
     if (err && err.response) return err.response;

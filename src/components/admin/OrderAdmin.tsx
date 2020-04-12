@@ -91,7 +91,7 @@ const OrderAdmin: React.FC = () => {
     order: Order
   ) => {
     if (order.id) {
-      const response = await API.del<Order>("orders", order.id);
+      const response = await API.del("orders", order.id);
       console.log("delete order:", JSON.stringify(order));
       console.log("response:", response);
       if (response && response.status && response.status === 200) {
