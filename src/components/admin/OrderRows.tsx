@@ -118,14 +118,16 @@ const OrderRows: React.FC<OrderRowsProps> = ({
     <>
       {items.map(item => {
         return (
-          <OrderRow
-            key={item.product.id}
-            item={item}
-            editable={editable}
-            onChange={onChange}
-            updateParams={{ ...updateParams, items }}
-            openClass={openClass}
-          />
+          !!item.product && (
+            <OrderRow
+              key={item.product.id}
+              item={item}
+              editable={editable}
+              onChange={onChange}
+              updateParams={{ ...updateParams, items }}
+              openClass={openClass}
+            />
+          )
         );
       })}
     </>
