@@ -27,6 +27,7 @@ type Cart = {
   subTotal: number;
   blink: boolean;
   open: boolean;
+  modal: ModalProps;
 };
 
 type CartItem = {
@@ -86,3 +87,9 @@ type HandleClick = (
 ) => void;
 
 type Video = { url: string; poster: string };
+
+type ModalProps = {
+  caption: string;
+  content: {};
+  show: boolean;
+};

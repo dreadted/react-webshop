@@ -6,6 +6,7 @@ import { APP_INFO } from "../../lib/utils";
 export enum CartAction {
   ADD,
   UPDATE,
+  DELETE,
   RESET,
   TOGGLE
 }
@@ -40,6 +41,8 @@ export const useCart: UseCart = (products: Product[]) => {
 
   useEffect(() => {
     const initialCart: () => Cart = () => {
+      let _cart: Cart = emptyCart;
+
       const cartString = localStorage.getItem(`${APP_INFO.name}.cart`);
       const itemsString = localStorage.getItem(`${APP_INFO.name}.items`);
       if (
@@ -48,7 +51,7 @@ export const useCart: UseCart = (products: Product[]) => {
         itemsString &&
         itemsString.length
       ) {
-        const _cart: Cart = JSON.parse(cartString);
+        const storedCart: Cart = { ..._cart, ...JSON.parse(cartString) };
         const itemsArray: [Product, number][] = JSON.parse(itemsString).map(
           (values: number[]) => {
             const [productId, quantity] = values;
@@ -58,12 +61,12 @@ export const useCart: UseCart = (products: Product[]) => {
             else return;
           }
         );
-        _cart.items = new Map<Product, number>(
+        storedCart.items = new Map<Product, number>(
           itemsArray.filter(item => !!item)
         );
-        return _cart.items.size ? _cart : emptyCart;
+        if (storedCart.items.size) _cart = storedCart;
       }
-      return emptyCart;
+      return _cart;
     };
     if (products && products.length) setCart(initialCart());
   }, [products]);
@@ -93,6 +96,10 @@ export const useCart: UseCart = (products: Product[]) => {
     const product = payload?.product;
     let quantity = payload?.quantity ? payload?.quantity : 0;
     switch (action) {
+      case CartAction.DELETE:
+        const newModal: ModalProps = { ...cart.modal, show: false };
+        setCart({ ...cart, modal: newModal });
+        break;
       case CartAction.RESET:
         resetCart();
         break;
@@ -105,19 +112,18 @@ export const useCart: UseCart = (products: Product[]) => {
           quantity = currentQuantity ? currentQuantity + quantity : quantity;
         }
       /* falls through */
-      case (CartAction.ADD, CartAction.UPDATE):
+      case (CartAction.ADD, CartAction.UPDATE, CartAction.DELETE):
         [newCart.blink, newCart.open] =
           action === CartAction.ADD ? [true, false] : [!cart.open, cart.open];
         if (product) {
-          // const { product, quantity } = payload;
           const newCartItems = new Map(cart.items);
-          if (quantity === 0) {
-            newCartItems.delete(product);
+          if (action === CartAction.DELETE) {
+            // newCartItems.delete(product);
             if (!newCartItems.size) resetCart();
-          } else {
-            if (quantity >= MIN_QTY && quantity <= MAX_QTY) {
-              newCartItems.set(product, quantity);
-            }
+          } else if (quantity === 0) {
+            newCart.modal.show = true;
+          } else if (quantity >= MIN_QTY && quantity <= MAX_QTY) {
+            newCartItems.set(product, quantity);
           }
           [newCart.items, newCart.subTotal, newCart.articles] = [
             newCartItems,

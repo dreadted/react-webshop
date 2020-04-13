@@ -13,6 +13,7 @@ import { getCurrencyFormat } from "../../lib/utils";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CartAction } from "../hooks/useCart";
+import ModalDelete from "../common/ModalDelete";
 
 interface CartProps {
   atCheckout: boolean;
@@ -20,6 +21,8 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ atCheckout }) => {
   const { cart, dispatch } = useContext(OrderContext);
+  // const [showModal, setShowModal] = useState<boolean>(false);
+
   const cartRef = useRef<HTMLDivElement>(null);
 
   const scrollToCart = () => {
@@ -142,6 +145,11 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
           <Footer />
         </ul>
       </div>
+      <ModalDelete
+        show={cart.modal.show}
+        onClick={() => dispatch(CartAction.DELETE)}
+        props={cart.modal}
+      />
     </>
   );
 };

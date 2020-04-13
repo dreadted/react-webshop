@@ -14,7 +14,12 @@ export const emptyCart: Cart = {
   articles: 0,
   subTotal: 0,
   blink: false,
-  open: false
+  open: false,
+  modal: {
+    caption: "Delete item?",
+    content: { product: null, quantity: null },
+    show: false
+  }
 };
 
 export const emptyOrder: Order = {
