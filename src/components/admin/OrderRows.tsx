@@ -1,5 +1,7 @@
 import React, { ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// utils
 import { getCurrencyFormat } from "../../lib/utils";
 
 interface OrderRowProps {

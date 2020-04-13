@@ -7,6 +7,8 @@ import React, {
   useContext
 } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // context

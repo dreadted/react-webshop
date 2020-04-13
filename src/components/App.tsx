@@ -4,6 +4,7 @@ import slugify from "slugify";
 
 // css
 import "../scss/App.scss";
+import Container from "react-bootstrap/Container";
 
 // icons
 import "../lib/FontAwesome";
@@ -71,7 +72,7 @@ const App = () => {
             clearSearch={clearSearch}
             setClearSearch={setClearSearch}
           />
-          <main className="container-fluid text-light px-3">
+          <Container fluid as="main">
             <Switch>
               <Route path="/checkout">
                 <Checkout order={order} setOrder={setOrder} />
@@ -99,7 +100,7 @@ const App = () => {
                 <Redirect to="/not-found" />
               </Route>
             </Switch>
-          </main>
+          </Container>
           <Footer />
         </OrderContext.Provider>
       </ProductContext.Provider>

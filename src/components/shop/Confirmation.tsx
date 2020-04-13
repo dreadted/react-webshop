@@ -1,6 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import { getCurrencyFormat, getOrderIdFormat } from "../../lib/utils";
 
+// css
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 // context
 import { OrderContext } from "../contexts/OrderContext";
 
@@ -47,11 +51,11 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
 
   return (
     <>
-      <div className="row">
+      <Row>
         <h1 className="m-4 text-secondary">Order confirmation</h1>
-      </div>
-      <div className="row">
-        <div className="col col-12 col-lg-6 mb-4">
+      </Row>
+      <Row>
+        <Col xs={12} lg={6} className="mb-4">
           <div className="cart open">
             <ul className="list-group open">
               <OrderItems order={order} />
@@ -66,8 +70,8 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
           {!!error && (
             <div className="alert alert-danger mt-4 mb-0">{error}</div>
           )}
-        </div>
-        <div className="col">
+        </Col>
+        <Col>
           <div className="cart open">
             <ul className="list-group open m-0">
               <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
@@ -100,8 +104,8 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
               </li>
             </ul>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </>
   );
 };

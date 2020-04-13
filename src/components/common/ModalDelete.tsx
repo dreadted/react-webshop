@@ -1,6 +1,10 @@
 import React from "react";
+
+// css
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+
+// utils
 import { getCurrencyFormat } from "../../lib/utils";
 
 interface ModalDeleteProps {

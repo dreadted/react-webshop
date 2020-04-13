@@ -7,7 +7,7 @@ import { OrderContext } from "../contexts/OrderContext";
 //components
 import CartItems from "./CartItems";
 
-// lib
+// utils
 import { getCurrencyFormat } from "../../lib/utils";
 
 // icons

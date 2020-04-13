@@ -1,5 +1,9 @@
 import React, { ChangeEvent, useContext } from "react";
+
+// utils
 import { getCurrencyFormat } from "../../lib/utils";
+
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // context

@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
+// css
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 // context
 import { ProductContext } from "../contexts/ProductContext";
 import { OrderContext } from "../contexts/OrderContext";
@@ -50,18 +54,18 @@ const ProductsPage: React.FC = () => {
     <>
       {!currentCategory && <Redirect to="/not-found" />}
       {!slug && currentCategory && <Redirect to={`/${currentCategory.slug}`} />}
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+      <Row xs={1} sm={2} md={3} lg={4} xl={5}>
         {currentCategory &&
           getProductsFromCategory(currentCategory).map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
-      </div>
+      </Row>
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
-        <div className="row">
-          <div className="col col-sm-8 col-lg-6 px-1 px-md-3">
+        <Row>
+          <Col sm={8} lg={6} className="px-1 px-sm-3">
             <Cart atCheckout={false} />
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     </>
   );

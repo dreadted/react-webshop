@@ -1,14 +1,20 @@
 import React, { useEffect, useState, Dispatch, useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
+import slugify from "slugify";
+
+// css
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+// context
+import { ProductContext } from "../contexts/ProductContext";
+import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import ProductCard from "./ProductCard";
 import Cart from "./Cart";
 import NotFound from "../common/NotFound";
 import Loading from "../common/Loading";
-import slugify from "slugify";
-import { ProductContext } from "../contexts/ProductContext";
-import { OrderContext } from "../contexts/OrderContext";
 
 const NO_MOVIES: Product[] = [
   {
@@ -91,20 +97,18 @@ const SearchHits: React.FC<SearchHitsProps> = ({ setClearSearch, video }) => {
         (foundProducts === NO_MOVIES && (
           <NotFound video={video} hasButton={false} caption="Nope" />
         )) || (
-          <>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-              {foundProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </>
+          <Row xs={1} sm={2} md={3} lg={4} xl={5}>
+            {foundProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </Row>
         )}
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
-        <div className="row">
-          <div className="col col-sm-8 col-lg-6">
+        <Row>
+          <Col sm={8} lg={6}>
             <Cart atCheckout={false} />
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     </>
   );

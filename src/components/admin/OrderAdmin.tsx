@@ -1,6 +1,10 @@
 import React, { useState, useEffect, ChangeEvent, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
+// css
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 // api
 import * as API from "../../lib/api";
 
@@ -120,16 +124,16 @@ const OrderAdmin: React.FC = () => {
 
   return (
     <>
-      <div className="row">
-        <div className="col">
+      <Row>
+        <Col>
           <h1 className="pt-4 text-secondary">Order admin</h1>
-        </div>
-        <div className="col col-12 col-sm-6 my-2">
+        </Col>
+        <Col xs={12} sm={6} className="my-2">
           <SelectCompany selected={currentCompanyId} onChange={changeCompany} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           {loading ? (
             <Loading />
           ) : (
@@ -141,8 +145,8 @@ const OrderAdmin: React.FC = () => {
               deleteOrder={deleteOrder}
             />
           )}
-        </div>
-      </div>
+        </Col>
+      </Row>
     </>
   );
 };

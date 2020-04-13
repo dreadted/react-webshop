@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+
+// utils
 import { getCurrencyFormat } from "../../lib/utils";
 
 // components

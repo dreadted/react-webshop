@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
+// css
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 // api
 import { save } from "../../lib/api";
 
@@ -111,11 +115,11 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
 
   return (
     <>
-      <div className="row row-cols-1 row-cols-md-2">
-        <div className="col mt-2 p-0">
+      <Row xs={1} md={2}>
+        <Col className="mt-2 p-0">
           <Cart atCheckout={true} />
-        </div>
-        <div className="col">
+        </Col>
+        <Col>
           <CheckoutForm
             order={order}
             setOrder={setOrder}
@@ -130,8 +134,8 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
               {errors.response}
             </div>
           )}
-        </div>
-      </div>
+        </Col>
+      </Row>
     </>
   );
 };
