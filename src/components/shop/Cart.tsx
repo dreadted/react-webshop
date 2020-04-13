@@ -42,8 +42,8 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
       !cart.open &&
       (cart.items.size ? " d-none d-sm-none" : "") +
         (cart.items.size > 2 ? " d-md-none" : " d-md-block") +
-        (cart.items.size > 5 ? " d-lg-none" : " d-lg-block") +
-        (cart.items.size > 7 ? " d-xl-none" : " d-xl-block")
+        (cart.items.size > 3 ? " d-lg-none" : " d-lg-block") +
+        (cart.items.size > 6 ? " d-xl-none" : " d-xl-block")
     );
   };
 
@@ -76,7 +76,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
           <div>
             <FontAwesomeIcon icon="shopping-cart" />
           </div>
-          <div className={`ml-2 font-weight-bold${classHeader()}`}>
+          <div className={`ml-2 font-weight-bold ${classHeader()}`}>
             Shopping cart
           </div>
         </div>
@@ -126,7 +126,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
     <>
       <div className="cart-offset" ref={cartRef}></div>
       <div className="cart" id="cart">
-        <ul className={`list-group ${cart.open ? "" : "m-3"}`}>
+        <ul className={`list-group ${cart.open ? "" : "mx-3 m-md-3"}`}>
           {
             !atCheckout && (
               <li

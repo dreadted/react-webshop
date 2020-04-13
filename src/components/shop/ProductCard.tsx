@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { dispatch } = useContext(OrderContext);
   return (
     <div className="d-flex">
-      <div className="card m-3 bg-dark shadow-sm">
+      <div className="card mx-1 mx-sm-3 my-3 bg-dark shadow-sm">
         <div className="overlay">
           <img
             className="card-img-top img-fluid"
@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <p>{product.description}</p>
           </div>
         </div>
-        <div className="card-footer px-4 px-md-3">
+        <div className="card-footer px-3 px-md-3">
           <div className="d-flex mb-3">
             <CategoryBadges product={product} />
           </div>

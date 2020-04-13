@@ -58,7 +58,7 @@ const ProductsPage: React.FC = () => {
       </div>
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
         <div className="row">
-          <div className="col col-sm-8 col-lg-6">
+          <div className="col col-sm-8 col-lg-6 px-1 px-md-3">
             <Cart atCheckout={false} />
           </div>
         </div>
