@@ -14,25 +14,21 @@ import { SaveState, useSaveState } from "./hooks/useSaveState";
 import OrderRows from "./OrderRows";
 import SelectOrderStatus from "./SelectOrderStatus";
 import PaymentIcon from "./PaymentIcon";
+import { AdminContext } from "../contexts/AdminContext";
 
 interface OrderProps {
   order: Order;
-  statusFilter: number;
-  changeStatus: HandleChange;
-  updateItem: UpdateItem;
-  saveOrder: (order: Order) => Promise<Order>;
-  deleteOrder: (order: Order) => Promise<Order>;
 }
 
-const Order: React.FC<OrderProps> = ({
-  order,
-  statusFilter,
-  changeStatus,
-  updateItem,
-  saveOrder,
-  deleteOrder
-}) => {
+const Order: React.FC<OrderProps> = ({ order }) => {
   const { products } = useContext(ProductContext);
+  const {
+    statusFilter,
+    changeOrderStatus,
+    updateItem,
+    saveOrder,
+    deleteOrder
+  } = useContext(AdminContext);
 
   const [openClass, setOpenClass] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<number | undefined>(
@@ -50,7 +46,6 @@ const Order: React.FC<OrderProps> = ({
 
   const onChangeStatus: HandleChange = e => {
     setSaveState(SaveState.DIRTY);
-    // changeStatus(e, order); // commented out to delay status change until save
     setSelectedStatus(parseInt(e.target.value));
     if (!openClass) toggleOpen();
   };
@@ -62,8 +57,8 @@ const Order: React.FC<OrderProps> = ({
 
   const onSubmit: HandleClick = async (order: Order) => {
     setSaveState(SaveState.SAVING);
-    if (selectedStatus !== order.status) {
-      changeStatus(selectedStatus, order);
+    if (selectedStatus && selectedStatus !== order.status) {
+      changeOrderStatus(selectedStatus, order);
       toggleOpen();
     }
     const response = await saveOrder(order);

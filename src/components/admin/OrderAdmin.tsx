@@ -10,6 +10,7 @@ import * as API from "../../lib/api";
 
 // context
 import { OrderContext } from "../contexts/OrderContext";
+import { AdminContext } from "../contexts/AdminContext";
 
 // components
 import SelectCompany from "../common/SelectCompany";
@@ -20,6 +21,8 @@ const OrderAdmin: React.FC = () => {
   const { companies } = useContext(OrderContext);
   const [companyOrders, setCompanyOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [statusFilter, setStatusFilter] = useState<number>(-1);
+  const [statusMatches, setStatusMatches] = useState<number[]>([]);
 
   const { slug } = useParams();
   const history = useHistory();
@@ -29,6 +32,10 @@ const OrderAdmin: React.FC = () => {
   );
 
   const currentCompanyId = currentCompany ? currentCompany.id : 0;
+
+  useEffect(() => {
+    if (!statusMatches[statusFilter]) setStatusFilter(-1);
+  }, [statusFilter, statusMatches]);
 
   useEffect(() => {
     const setOrdersAsync = async () => {
@@ -123,7 +130,18 @@ const OrderAdmin: React.FC = () => {
   };
 
   return (
-    <>
+    <AdminContext.Provider
+      value={{
+        statusFilter,
+        setStatusFilter,
+        statusMatches,
+        setStatusMatches,
+        changeOrderStatus,
+        updateItem,
+        saveOrder,
+        deleteOrder
+      }}
+    >
       <Row>
         <Col>
           <h1 className="pt-4 text-secondary">Order admin</h1>
@@ -134,20 +152,10 @@ const OrderAdmin: React.FC = () => {
       </Row>
       <Row>
         <Col>
-          {loading ? (
-            <Loading />
-          ) : (
-            <OrderList
-              orders={companyOrders}
-              changeStatus={changeOrderStatus}
-              updateItem={updateItem}
-              saveOrder={saveOrder}
-              deleteOrder={deleteOrder}
-            />
-          )}
+          {loading ? <Loading /> : <OrderList orders={companyOrders} />}
         </Col>
       </Row>
-    </>
+    </AdminContext.Provider>
   );
 };
 

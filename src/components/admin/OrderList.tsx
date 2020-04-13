@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 
 // context
 import { OrderContext } from "../contexts/OrderContext";
+import { AdminContext } from "../contexts/AdminContext";
 
 // components
 import Order from "./Order";
@@ -9,22 +10,16 @@ import ToggleStatusFilter from "./ToggleStatusFilter";
 
 interface OrderListProps {
   orders: Order[];
-  changeStatus: HandleChange;
-  updateItem: UpdateItem;
-  saveOrder: (order: Order) => Promise<Order>;
-  deleteOrder: (order: Order) => Promise<Order>;
 }
 
-const OrderList: React.FC<OrderListProps> = ({
-  orders,
-  changeStatus,
-  updateItem,
-  saveOrder,
-  deleteOrder
-}) => {
+const OrderList: React.FC<OrderListProps> = ({ orders }) => {
   const { orderStatusArray } = useContext(OrderContext);
-  const [statusFilter, setStatusFilter] = useState<number>(-1);
-  const [statusMatches, setStatusMatches] = useState<number[]>([]);
+  const {
+    statusFilter,
+    setStatusFilter,
+    statusMatches,
+    setStatusMatches
+  } = useContext(AdminContext);
 
   const changeStatusFilter = (selectedStatus: number) => {
     if (selectedStatus < orderStatusArray.length) {
@@ -42,11 +37,7 @@ const OrderList: React.FC<OrderListProps> = ({
       matches.push(counter);
     }
     setStatusMatches(matches);
-  }, [orders, orderStatusArray]);
-
-  useEffect(() => {
-    if (!statusMatches[statusFilter]) setStatusFilter(-1);
-  }, [statusFilter, statusMatches]);
+  }, [orders, orderStatusArray, setStatusMatches]);
 
   return (
     <div className="cart open">
@@ -59,15 +50,7 @@ const OrderList: React.FC<OrderListProps> = ({
       ) : undefined}
       <ul className="list-group m-0 open">
         {orders.map(order => (
-          <Order
-            key={order.id}
-            order={order}
-            statusFilter={statusFilter}
-            changeStatus={changeStatus}
-            updateItem={updateItem}
-            saveOrder={saveOrder}
-            deleteOrder={deleteOrder}
-          />
+          <Order key={order.id} order={order} />
         ))}
       </ul>
     </div>
