@@ -8,7 +8,8 @@ export enum CartAction {
   UPDATE,
   DELETE,
   RESET,
-  TOGGLE
+  TOGGLE,
+  HIDE_MODAL
 }
 export type CartDispatch = (
   action: CartAction,
@@ -95,43 +96,50 @@ export const useCart: UseCart = (products: Product[]) => {
     const newCart = { ...cart };
     const product = payload?.product;
     let quantity = payload?.quantity ? payload?.quantity : 0;
+    const currentQuantity = product ? newCart.items.get(product) : 0;
+
     switch (action) {
-      case CartAction.DELETE:
-        const newModal: ModalProps = { ...cart.modal, show: false };
-        setCart({ ...cart, modal: newModal });
-        break;
       case CartAction.RESET:
         resetCart();
         break;
       case CartAction.TOGGLE:
         if (cart.articles) setCart({ ...cart, open: !cart.open });
         break;
+      case CartAction.HIDE_MODAL:
+        newCart.modal.show = false;
+        setCart({ ...newCart });
+        break;
       case CartAction.ADD:
-        if (product) {
-          const currentQuantity = newCart.items.get(product);
-          quantity = currentQuantity ? currentQuantity + quantity : quantity;
-        }
+        quantity = currentQuantity ? currentQuantity + quantity : quantity;
       /* falls through */
-      case (CartAction.ADD, CartAction.UPDATE, CartAction.DELETE):
+      default:
         [newCart.blink, newCart.open] =
           action === CartAction.ADD ? [true, false] : [!cart.open, cart.open];
-        if (product) {
-          const newCartItems = new Map(cart.items);
-          if (action === CartAction.DELETE) {
-            // newCartItems.delete(product);
-            if (!newCartItems.size) resetCart();
-          } else if (quantity === 0) {
+        const newCartItems = new Map(cart.items);
+        if (action === CartAction.DELETE) {
+          newCart.modal.show = false;
+          if (cart.modal.item?.product)
+            newCartItems.delete(cart.modal.item.product);
+        } else if (product) {
+          if (quantity === 0) {
+            newCart.modal.item = {
+              product,
+              quantity: currentQuantity ? currentQuantity : 0
+            };
             newCart.modal.show = true;
           } else if (quantity >= MIN_QTY && quantity <= MAX_QTY) {
             newCartItems.set(product, quantity);
           }
+        }
+        if (!newCartItems.size) {
+          resetCart();
+        } else {
           [newCart.items, newCart.subTotal, newCart.articles] = [
             newCartItems,
             ...getTotals(newCartItems)
           ];
           setCart({ ...newCart });
         }
-        break;
     }
   };
 

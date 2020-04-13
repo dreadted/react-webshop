@@ -17,7 +17,6 @@ export const emptyCart: Cart = {
   open: false,
   modal: {
     caption: "Delete item?",
-    content: { product: null, quantity: null },
     show: false
   }
 };

@@ -21,8 +21,6 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ atCheckout }) => {
   const { cart, dispatch } = useContext(OrderContext);
-  // const [showModal, setShowModal] = useState<boolean>(false);
-
   const cartRef = useRef<HTMLDivElement>(null);
 
   const scrollToCart = () => {
@@ -146,8 +144,8 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
         </ul>
       </div>
       <ModalDelete
-        show={cart.modal.show}
-        onClick={() => dispatch(CartAction.DELETE)}
+        onDelete={() => dispatch(CartAction.DELETE)}
+        onCancel={() => dispatch(CartAction.HIDE_MODAL)}
         props={cart.modal}
       />
     </>
