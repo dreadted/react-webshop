@@ -1,6 +1,6 @@
 @import "./colors";
-@import "./fonts";
 @import "./sizes";
+@import "./fonts";
 @import "~bootstrap/scss/bootstrap.scss";
 
 body {
@@ -72,20 +72,55 @@ nav {
   color: $light;
 
   .card-img-top {
-    width: 100%;
-    height: 50vh;
-    object-fit: cover;
+    display: none;
+
+    @include media-breakpoint-up(sm) {
+      display: block;
+      width: 100%;
+      height: 60vw;
+      object-fit: cover;
+    }
+
+    @include media-breakpoint-up(md) {
+      height: 40vw;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 30vw;
+    }
+
+    @include media-breakpoint-up(xl) {
+      height: 25vw;
+    }
   }
 
   .card-description {
-    background: #000000cc;
-    position: absolute;
-    display: none;
-    height: 100%;
-    top: 0;
-    left: 0;
+    background-image: linear-gradient(180deg, $black 0%, darken($dark, 2) 100%);
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
     padding: 1em;
-    overflow: hidden;
+
+    @include font-size(16);
+
+    @include media-breakpoint-up(sm) {
+      background-image: none;
+      background-color: #000000cc;
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+    }
+
+    .thumbnail {
+      width: 8rem;
+      height: 12rem;
+      border-radius: 0.2rem;
+      float: left;
+      clear: both;
+      margin-right: 1rem;
+    }
   }
 
   &:hover .card-description {
@@ -95,6 +130,7 @@ nav {
   .overlay {
     position: relative;
     display: inline-block;
+    width: 100%;
   }
 
   .product-category-5 {
@@ -114,6 +150,10 @@ nav {
   .product-category-8 {
     background: $dark;
     border: 1px solid #9fa838;
+  }
+
+  .card-footer {
+    border: none;
   }
 }
 

@@ -24,8 +24,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={product.imageUrl}
           />
           <div className="card-description">
-            <h4 className="font-weight-bold">{product.name}</h4>
-            <p>{product.description}</p>
+            <div className="d-flex">
+              <div>
+                <img
+                  className="thumbnail d-block d-sm-none"
+                  alt={product.name}
+                  src={product.imageUrl}
+                />
+              </div>
+              <div>
+                <h4 className="font-weight-bold">{product.name}</h4>
+                <p>{product.description}</p>
+              </div>
+            </div>
           </div>
         </div>
         <div className="card-footer px-3 px-md-3">
