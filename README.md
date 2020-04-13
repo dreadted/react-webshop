@@ -13,6 +13,7 @@ My first single page app built with [Create React App](https://github.com/facebo
 - [TypeScript 3.7.5](https://github.com/microsoft/TypeScript)
 - [Axios 0.19.2](https://github.com/axios/axios)
 - [Bootstrap 4.4.1](https://github.com/twbs/bootstrap)
+- [React Bootstrap 1.0.0](https://github.com/react-bootstrap/react-bootstrap)
 - [node-sass 4.13.1](https://github.com/sass/node-sass)
 - [slugify 1.4.0](https://github.com/simov/slugify)
 
@@ -22,11 +23,14 @@ My first single page app built with [Create React App](https://github.com/facebo
 - [x] sort products in categories
 - [x] manage shopping cart
 - [x] send order to external API
+- [x] admin view for submitted orders
 
 ### To do
 
-- [ ] admin view for submitted orders
-- [ ] manage submitted orders
+- [ ] user authentication and authorization
+- [ ] admin product catalogue
+- [ ] manage app settings with .env
+- [ ] add unit testing
 
 ## Installation
 
