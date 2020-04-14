@@ -9,8 +9,8 @@ import Col from "react-bootstrap/Col";
 import { OrderContext } from "../contexts/OrderContext";
 
 // components
-import OrderItems from "../admin/OrderItems";
 import { CartAction } from "../hooks/useCart";
+import OrderRows from "../common/OrderRows";
 
 interface ConfirmationProps {
   order: Order;
@@ -58,8 +58,13 @@ const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
         <Col xs={12} lg={6} className="mb-4">
           <div className="cart open">
             <ul className="list-group open">
-              <OrderItems order={order} />
-              <li className="cart-item cart-footer list-group-item d-flex justify-content-end open">
+              <OrderRows
+                editable={false}
+                onChange={() => {}}
+                updateParams={{ order }}
+                openClass="open"
+              />
+              <li className="cart-item cart-footer h5 list-group-item d-flex justify-content-end open">
                 <div className="font-weight-bold d-flex m-0">
                   <div className="font-weight-light mr-3">Total:</div>
                   <div>{getCurrencyFormat(order.totalPrice)}</div>

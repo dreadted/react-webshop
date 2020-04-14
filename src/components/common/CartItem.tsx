@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // utils
 import { getCurrencyFormat } from "../../lib/utils";
 
-interface OrderRowProps {
+interface CartItemProps {
   item: CartItem;
   editable: boolean;
   onChange: HandleChange;
@@ -12,7 +12,7 @@ interface OrderRowProps {
   openClass: string;
 }
 
-const OrderRow: React.FC<OrderRowProps> = ({
+const CartItem: React.FC<CartItemProps> = ({
   item,
   editable,
   onChange,
@@ -51,6 +51,7 @@ const OrderRow: React.FC<OrderRowProps> = ({
                 <div className="font-weight-bold">
                   <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      e.target.value &&
                       onChange(e, {
                         ...updateParams,
                         item,
@@ -101,39 +102,4 @@ const OrderRow: React.FC<OrderRowProps> = ({
   );
 };
 
-interface OrderRowsProps {
-  items: CartItem[];
-  editable: boolean;
-  onChange: HandleChange;
-  updateParams: UpdateParams;
-  openClass: string;
-}
-
-const OrderRows: React.FC<OrderRowsProps> = ({
-  items,
-  editable,
-  onChange,
-  updateParams,
-  openClass
-}) => {
-  return (
-    <>
-      {items.map(item => {
-        return (
-          !!item.product && (
-            <OrderRow
-              key={item.product.id}
-              item={item}
-              editable={editable}
-              onChange={onChange}
-              updateParams={{ ...updateParams, items }}
-              openClass={openClass}
-            />
-          )
-        );
-      })}
-    </>
-  );
-};
-
-export default OrderRows;
+export default CartItem;

@@ -275,6 +275,14 @@ nav {
 -----------------------------------------------------------------------------*/
 .modal-content {
   background-color: $light;
+  .cart ul li:nth-child(odd) {
+    background: $secondary;
+    color: $info;
+
+    input {
+      color: $info;
+    }
+  }
 }
 
 /* 404 not found

@@ -5,23 +5,21 @@ import { getCurrencyFormat, getOrderIdFormat } from "../../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // context
-import { ProductContext } from "../contexts/ProductContext";
+import { AdminContext } from "../contexts/AdminContext";
 
 // hooks
 import { SaveState, useSaveState } from "./hooks/useSaveState";
 
 // components
-import OrderRows from "./OrderRows";
+import OrderRows from "../common/OrderRows";
 import SelectOrderStatus from "./SelectOrderStatus";
 import PaymentIcon from "./PaymentIcon";
-import { AdminContext } from "../contexts/AdminContext";
 
 interface OrderProps {
   order: Order;
 }
 
 const Order: React.FC<OrderProps> = ({ order }) => {
-  const { products } = useContext(ProductContext);
   const {
     statusFilter,
     changeOrderStatus,
@@ -86,16 +84,6 @@ const Order: React.FC<OrderProps> = ({ order }) => {
       : isDirty
       ? "btn-primary"
       : "btn-outline-secondary";
-  };
-
-  const toCartItems = (orderRows: OrderRow[] | undefined) => {
-    if (!orderRows) return [];
-    return orderRows.map(orderRow => {
-      const product: Product | undefined = products.find(
-        product => product.id === orderRow.productId
-      );
-      return { product, quantity: orderRow.amount } as CartItem;
-    });
   };
 
   const Header: React.FC = () => {
@@ -174,7 +162,6 @@ const Order: React.FC<OrderProps> = ({ order }) => {
               <Header />
             </li>
             <OrderRows
-              items={toCartItems(order.orderRows)}
               editable={true}
               onChange={onChangeItem}
               updateParams={{ order }}
