@@ -90,6 +90,8 @@ type Video = { url: string; poster: string };
 
 type ModalProps = {
   caption: string;
+  labelConfirm: string;
+  labelCancel: string;
   item?: CartItem;
   show: boolean;
 };

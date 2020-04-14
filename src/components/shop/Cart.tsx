@@ -13,7 +13,7 @@ import { getCurrencyFormat } from "../../lib/utils";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CartAction } from "../hooks/useCart";
-import ModalDelete from "../common/ModalDelete";
+import ModalDialogue from "../common/ModalDialogue";
 
 interface CartProps {
   atCheckout: boolean;
@@ -143,8 +143,8 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
           <Footer />
         </ul>
       </div>
-      <ModalDelete
-        onDelete={() => dispatch(CartAction.DELETE)}
+      <ModalDialogue
+        onConfirm={() => dispatch(CartAction.DELETE)}
         onCancel={() => dispatch(CartAction.HIDE_MODAL)}
         props={cart.modal}
       />

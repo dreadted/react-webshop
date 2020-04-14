@@ -7,20 +7,22 @@ import Button from "react-bootstrap/Button";
 // components
 import CartItem from "./CartItem";
 
-interface ModalDeleteProps {
+interface ModalDialogueProps {
   props: ModalProps;
-  onDelete: HandleClick;
-  onCancel: HandleClick;
+  onConfirm: HandleClick;
+  onCancel: () => void;
 }
-const ModalDelete: React.FC<ModalDeleteProps> = ({
+const ModalDialogue: React.FC<ModalDialogueProps> = ({
   props,
-  onDelete,
+  onConfirm,
   onCancel
 }) => {
   return (
-    <Modal show={props.show} backdrop="static" centered>
-      <Modal.Body>
-        <h5 className="font-weight-bold">{props.caption}</h5>
+    <Modal show={props.show} onHide={onCancel} centered>
+      <Modal.Header closeButton className="border-0 pb-0">
+        <Modal.Title>{props.caption}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="pt-0">
         <div className="cart my-3">
           <ul className="list-group">
             {props.item && (
@@ -36,10 +38,10 @@ const ModalDelete: React.FC<ModalDeleteProps> = ({
         </div>
         <div className="d-flex align-items-center justify-content-end">
           <Button variant="outline-info" onClick={onCancel}>
-            Cancel
+            {props.labelCancel}
           </Button>
-          <Button variant="danger" onClick={onDelete} className="ml-3">
-            Delete
+          <Button variant="danger" onClick={onConfirm} className="ml-3">
+            {props.labelConfirm}
           </Button>
         </div>
       </Modal.Body>
@@ -47,4 +49,4 @@ const ModalDelete: React.FC<ModalDeleteProps> = ({
   );
 };
 
-export default ModalDelete;
+export default ModalDialogue;

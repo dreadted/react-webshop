@@ -17,6 +17,8 @@ export const emptyCart: Cart = {
   open: false,
   modal: {
     caption: "Delete item?",
+    labelConfirm: "Delete",
+    labelCancel: "Cancel",
     show: false
   }
 };
