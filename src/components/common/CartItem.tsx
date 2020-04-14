@@ -21,7 +21,9 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
   return (
     <>
-      <li className={`cart-item list-group-item d-flex px-3 pb-2 ${openClass}`}>
+      <li
+        className={`cart-item list-group-item d-flex align-items-center px-3 ${openClass}`}
+      >
         <div className="mr-3">
           <img
             className="thumbnail"
@@ -29,14 +31,16 @@ const CartItem: React.FC<CartItemProps> = ({
             alt={item.product.name}
           />
         </div>
-        <div className="flex-grow-1 d-flex flex-column h5">
-          <div>{item.product.name}</div>
-          <div className="d-flex align-items-center justify-content-between mt-2">
-            <div>
+        <div className="flex-grow-1 d-flex flex-column h5 mb-0">
+          <div className="mb-2">{item.product.name}</div>
+          <div className="d-flex align-items-center justify-content-between">
+            <div
+              className={editable ? "bg-secondary text-info rounded-pill" : ""}
+            >
               <div className="d-flex align-items-center justify-content-start">
-                {editable && (
+                {(editable && (
                   <div
-                    className="update p-2"
+                    className="update decrease p-1"
                     onClick={e =>
                       onChange(e, {
                         ...updateParams,
@@ -47,7 +51,7 @@ const CartItem: React.FC<CartItemProps> = ({
                   >
                     <FontAwesomeIcon icon="minus-circle" />
                   </div>
-                )}
+                )) || <small className="text-lighter">qty :</small>}
                 <div className="font-weight-bold">
                   <input
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -68,7 +72,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 </div>
                 {editable && (
                   <div
-                    className="update p-2"
+                    className="update increase p-1"
                     onClick={e =>
                       onChange(e, {
                         ...updateParams,

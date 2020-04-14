@@ -227,18 +227,32 @@ nav {
 
   .update {
     cursor: pointer;
+
+    &.increase:hover {
+      color: $success;
+    }
+
+    &.decrease:hover {
+      color: $danger;
+    }
   }
 
   input {
     background-color: transparent;
-    color: $light;
+    font-weight: bold;
     border: none;
     outline: none;
     text-align: center;
+    width: 2em;
+
+    &:disabled {
+      font-weight: normal;
+      color: inherit;
+    }
+
     &::-webkit-inner-spin-button {
       display: none;
     }
-    width: 2em;
   }
 }
 
