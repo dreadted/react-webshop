@@ -90,13 +90,15 @@ const CartItem: React.FC<CartItemProps> = ({
               {getCurrencyFormat(item.product.price * item.quantity)}
             </div>
             {editable && (
-              <div
-                className="update w-25 text-right p-2"
-                onClick={e =>
-                  onChange(e, { ...updateParams, item, quantity: 0 })
-                }
-              >
-                <FontAwesomeIcon icon={["far", "trash-alt"]} />
+              <div className="w-25">
+                <div
+                  className="update ml-auto p-1"
+                  onClick={e =>
+                    onChange(e, { ...updateParams, item, quantity: 0 })
+                  }
+                >
+                  <FontAwesomeIcon icon={["far", "trash-alt"]} size="sm" />
+                </div>
               </div>
             )}
           </div>

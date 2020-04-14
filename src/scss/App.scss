@@ -227,13 +227,17 @@ nav {
 
   .update {
     cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 2rem;
+    text-align: center;
 
-    &.increase:hover {
-      color: $success;
+    &:hover {
+      background-color: $danger;
     }
 
-    &.decrease:hover {
-      color: $danger;
+    &.increase:hover {
+      background-color: $success;
     }
   }
 
