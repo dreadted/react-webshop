@@ -1,4 +1,5 @@
-/** Product types */
+/* Product
+---------------------------------------------------------*/
 type ProductCategory = {
   id: number;
   name: string;
@@ -20,7 +21,8 @@ type APIProductCategory = {
   categoryId: number;
 };
 
-/** Cart types */
+/* Cart 
+---------------------------------------------------------*/
 type Cart = {
   items: Map<Product, number>;
   articles: number;
@@ -35,10 +37,16 @@ type CartItem = {
   quantity: number;
 };
 
-type AddToCart = (product: Product, quantity: number) => void;
-type UpdateCart = (product: Product, quantity: number) => void;
+type ModalProps = {
+  caption: string;
+  labelConfirm: string;
+  labelCancel: string;
+  item?: CartItem;
+  show: boolean;
+};
 
-/** Order types */
+/* Order 
+---------------------------------------------------------*/
 type Order = {
   id?: number;
   companyId: number;
@@ -79,6 +87,8 @@ type Company = {
   slug?: string;
 };
 
+/* Event handlers 
+---------------------------------------------------------*/
 type HandleChange = (e: ChangeEvent<HTMLInputElement>, params?: any) => void;
 type HandleSubmit = (e: FormEvent<HTMLFormElement>, params?: any) => void;
 type HandleClick = (
@@ -86,12 +96,6 @@ type HandleClick = (
   params?: any
 ) => void;
 
+/* Video
+---------------------------------------------------------*/
 type Video = { url: string; poster: string };
-
-type ModalProps = {
-  caption: string;
-  labelConfirm: string;
-  labelCancel: string;
-  item?: CartItem;
-  show: boolean;
-};

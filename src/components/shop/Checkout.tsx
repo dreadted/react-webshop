@@ -86,7 +86,7 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
         const messages: string[] = response.data.errors.map(
           (error: any) => error.msg
         );
-        console.log("ERROR!", messages.join("\n"));
+        console.error("ERROR!", messages.join("\n"));
         setErrors({ ...errors, response: messages.join("\n") });
       } else {
         const message = `${response.status} : ${response.statusText}`;
