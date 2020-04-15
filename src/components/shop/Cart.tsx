@@ -132,7 +132,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
             !atCheckout && (
               <li
                 onClick={() => dispatch(CartAction.TOGGLE)}
-                className={`toggle p-0 list-group-item d-flex align-items-center
+                className={`cart-header toggle p-0 list-group-item d-flex align-items-center
           ${classOpen()} ${classBlink()}`}
               >
                 <Header />

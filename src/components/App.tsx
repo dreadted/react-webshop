@@ -16,12 +16,7 @@ import {
   NUMBER_OF_ITEMS_IN_NEWS
 } from "./contexts/ProductContext";
 
-import {
-  OrderContext,
-  companies,
-  emptyOrder,
-  orderStatusArray
-} from "./contexts/OrderContext";
+import { OrderContext, companies, emptyOrder } from "./contexts/OrderContext";
 
 // hooks
 import { useProducts } from "./hooks/useProducts";
@@ -66,7 +61,7 @@ const App = () => {
         }}
       >
         <OrderContext.Provider
-          value={{ companies, cart, dispatch, emptyOrder, orderStatusArray }}
+          value={{ companies, cart, dispatch, emptyOrder }}
         >
           <Navigation
             clearSearch={clearSearch}

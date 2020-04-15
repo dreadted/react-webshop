@@ -41,23 +41,11 @@ export const errorMessage = {
   paymentMethod: "Please select payment method!"
 };
 
-export const orderStatusArray = [
-  "Confirmed",
-  "Denied",
-  "Completed",
-  "Pending",
-  "Refunded",
-  "Shipped",
-  "Received",
-  "Cancelled"
-];
-
 interface IOrderContext {
   companies: Company[];
   cart: Cart;
   dispatch: CartDispatch;
   emptyOrder: Order;
-  orderStatusArray: string[];
 }
 
 const cart = { ...emptyCart };
@@ -67,6 +55,5 @@ export const OrderContext = createContext<IOrderContext>({
   companies,
   cart,
   dispatch,
-  emptyOrder,
-  orderStatusArray
+  emptyOrder
 });

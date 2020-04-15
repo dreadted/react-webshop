@@ -173,7 +173,7 @@ nav {
         background: darken($info, 2);
       }
 
-      &.toggle {
+      &.cart-header {
         background-color: $primary;
         transition-duration: 400ms;
       }
@@ -269,23 +269,12 @@ nav {
   select,
   select:focus,
   option {
-    background: $dark;
-    color: $secondary;
+    background-color: $secondary;
     font-weight: bold;
     border: none;
     box-shadow: none;
     outline: none;
     padding: 0.4em;
-
-    &:checked {
-      background: $primary;
-      color: $light;
-    }
-
-    &::backdrop {
-      background: $primary;
-      color: $light;
-    }
   }
 }
 

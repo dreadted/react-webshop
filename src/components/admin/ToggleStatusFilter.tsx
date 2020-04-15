@@ -3,7 +3,7 @@ import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
 // context
-import { OrderContext } from "../contexts/OrderContext";
+import { AdminContext } from "../contexts/AdminContext";
 
 interface ToggleStatusFilter {
   statusFilter: number;
@@ -16,7 +16,7 @@ const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
   statusMatches,
   changeStatusFilter
 }) => {
-  const { orderStatusArray } = useContext(OrderContext);
+  const { orderStatusArray, orderStatusColors } = useContext(AdminContext);
 
   const onChange = (selectedStatus: number) => {
     changeStatusFilter(selectedStatus);
@@ -50,7 +50,10 @@ const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
               size="sm"
             >
               {status}
-              <span className="badge badge-pill bg-dark text-light ml-2">
+              <span
+                className="badge badge-pill text-light ml-2"
+                style={{ backgroundColor: orderStatusColors[index] }}
+              >
                 {statusMatches[index]}
               </span>
             </ToggleButton>

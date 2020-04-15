@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useContext } from "react";
-import { OrderContext } from "../contexts/OrderContext";
+import { AdminContext } from "../contexts/AdminContext";
 
 interface SelectOrderStatusProps {
   order: Order;
@@ -12,16 +12,29 @@ const SelectOrderStatus: React.FC<SelectOrderStatusProps> = ({
   selected = 0,
   onChange
 }) => {
-  const { orderStatusArray } = useContext(OrderContext);
+  const { orderStatusArray, orderStatusColors } = useContext(AdminContext);
+
+  const statusColor =
+    selected !== undefined
+      ? orderStatusColors[selected]
+      : order?.status !== undefined
+      ? orderStatusColors[order.status]
+      : "inherit";
+
   return (
     <select
       name="orderStatus"
-      className="badge-select w-100"
+      className="w-100 badge-select text-white"
+      style={{ color: statusColor, backgroundColor: "transparent" }}
       defaultValue={selected}
       onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e, order)}
     >
       {orderStatusArray.map((status, index) => (
-        <option value={index} key={status}>
+        <option
+          value={index}
+          key={status}
+          style={{ color: orderStatusColors[index] }}
+        >
           {status}
         </option>
       ))}

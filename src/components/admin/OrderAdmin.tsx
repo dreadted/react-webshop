@@ -10,7 +10,11 @@ import * as API from "../../lib/api";
 
 // context
 import { OrderContext } from "../contexts/OrderContext";
-import { AdminContext } from "../contexts/AdminContext";
+import {
+  orderStatusArray,
+  orderStatusColors,
+  AdminContext
+} from "../contexts/AdminContext";
 
 // components
 import SelectCompany from "../common/SelectCompany";
@@ -132,6 +136,8 @@ const OrderAdmin: React.FC = () => {
   return (
     <AdminContext.Provider
       value={{
+        orderStatusArray,
+        orderStatusColors,
         statusFilter,
         setStatusFilter,
         statusMatches,

@@ -21,6 +21,7 @@ interface OrderProps {
 
 const Order: React.FC<OrderProps> = ({ order }) => {
   const {
+    orderStatusColors,
     statusFilter,
     changeOrderStatus,
     updateItem,
@@ -86,11 +87,21 @@ const Order: React.FC<OrderProps> = ({ order }) => {
       : "btn-outline-secondary";
   };
 
+  const statusColor =
+    selectedStatus !== undefined
+      ? orderStatusColors[selectedStatus]
+      : order?.status !== undefined
+      ? orderStatusColors[order.status]
+      : "inherit";
+
   const Header: React.FC = () => {
     return (
       <>
         <div className="w-20">{getOrderIdFormat(order.id)}</div>
-        <div className="w-30 badge badge-pill bg-dark">
+        <div
+          className="w-30 badge badge-pill"
+          style={{ backgroundColor: statusColor }}
+        >
           <SelectOrderStatus
             order={order}
             onChange={onChangeStatus}
@@ -153,10 +164,10 @@ const Order: React.FC<OrderProps> = ({ order }) => {
   return (
     <>
       {isVisible() && (
-        <li className="list-group-item p-0 mb-4">
+        <li className="list-group-item p-0 mb-3">
           <ul className="list-group">
             <li
-              className={`cart-header toggle list-group-item d-flex align-items-center justify-content-between ${openClass}`}
+              className={`toggle list-group-item d-flex align-items-center justify-content-between py-2 ${openClass}`}
               onClick={onClick}
             >
               <Header />

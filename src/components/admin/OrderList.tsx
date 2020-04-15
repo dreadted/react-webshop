@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 
 // context
-import { OrderContext } from "../contexts/OrderContext";
 import { AdminContext } from "../contexts/AdminContext";
 
 // components
@@ -13,7 +12,7 @@ interface OrderListProps {
 }
 
 const OrderList: React.FC<OrderListProps> = ({ orders }) => {
-  const { orderStatusArray } = useContext(OrderContext);
+  const { orderStatusArray } = useContext(AdminContext);
   const {
     statusFilter,
     setStatusFilter,
