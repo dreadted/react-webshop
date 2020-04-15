@@ -86,7 +86,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 )}
               </div>
             </div>
-            <div className="w-25 text-right">
+            <div className={editable ? "w-25 text-right" : "text-right"}>
               {getCurrencyFormat(item.product.price * item.quantity)}
             </div>
             {editable && (
