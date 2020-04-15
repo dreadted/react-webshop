@@ -1,6 +1,6 @@
 # React Webshop
 
-My first single page app built with [Create React App](https://github.com/facebook/create-react-app).
+A webshop mockup built with [Create React App](https://github.com/facebook/create-react-app).
 
 [![React Webshop Screen Shot][screenshot]](https://dreadnallen.github.io/react-webshop)
 
@@ -28,9 +28,10 @@ My first single page app built with [Create React App](https://github.com/facebo
 ### To do
 
 - [ ] user authentication and authorization
-- [ ] admin product catalogue
-- [ ] manage app settings with .env
-- [ ] add unit testing
+- [ ] add products to order in admin
+- [ ] manage product catalogue in admin
+- [ ] add app settings with .env
+- [ ] add testing
 
 ## Installation
 
@@ -46,9 +47,21 @@ git clone https://github.com/dreadnallen/react-webshop.git
 npm install
 ```
 
+3. Run in development mode
+
+```sh
+npm start
+```
+
+4. Build for production
+
+```sh
+npm build
+```
+
 ## Contact
 
 email: <christofer.laurin@gmail.com>
 linkedin: <https://www.linkedin.com/in/laurin/>
 
-[screenshot]: https://i.imgur.com/JhR1y2Y.png
+[screenshot]: https://i.imgur.com/PS45vaT.png
