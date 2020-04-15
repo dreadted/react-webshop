@@ -352,6 +352,24 @@ label {
   color: $secondary;
 }
 
+/* order admin
+-----------------------------------------------------------------------------*/
+.select-order {
+  background-color: $info;
+  border-top: 0.25rem solid $info;
+  border-bottom: 0.25rem solid $info;
+  padding: 0 0.25rem 0 0.25rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  label {
+    border-radius: 0;
+    &:hover,
+    &.active {
+      border-radius: 0.25rem 0.25rem 0 0 !important;
+    }
+  }
+}
+
 /* footer
 -----------------------------------------------------------------------------*/
 footer {

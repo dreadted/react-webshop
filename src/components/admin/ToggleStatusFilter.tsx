@@ -25,7 +25,7 @@ const ToggleStatusFilter: React.FC<ToggleStatusFilter> = ({
   return (
     <div className="my-3 w-100">
       <ToggleButtonGroup
-        className="d-flex flex-wrap w-100"
+        className="select-order d-flex flex-wrap w-100"
         type="radio"
         name="options"
         value={statusFilter}
