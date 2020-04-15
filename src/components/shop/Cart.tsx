@@ -96,16 +96,16 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
       <>
         {cart.articles ? (
           <li
-            className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap
+            className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-0
         ${classOpen()}`}
           >
-            <div className="d-flex h5 ml-auto my-0 mr-3">
+            <div className="d-flex h5 ml-auto m-3">
               <div className="font-weight-light mr-3">Total:</div>
               <div className="font-weight-bold">
                 {getCurrencyFormat(cart.subTotal)}
               </div>
             </div>
-            <div className="text-right">
+            <div className="ml-auto m-2">
               {!atCheckout && (
                 <Link to={"/checkout"} className="btn btn-primary">
                   Check Out

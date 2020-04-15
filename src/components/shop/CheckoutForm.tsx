@@ -65,7 +65,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         setErrors={setErrors}
       />
       <div className="text-right mt-4">
-        <button type="submit" className="w-40 btn btn-primary mt-4 mt-md-0">
+        <button type="submit" className="w-50 btn btn-primary mt-4 mt-md-0">
           {isSaving ? (
             <FontAwesomeIcon icon="spinner" pulse />
           ) : (

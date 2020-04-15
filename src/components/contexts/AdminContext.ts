@@ -25,14 +25,14 @@ export const orderStatusArray = [
 ];
 
 export const orderStatusColors = [
-  "#2f4858",
-  "#19629e",
-  "#dc8346",
-  "#4a9147",
-  "#006f60",
-  "#d9534f",
-  "#954f87",
-  "#665074"
+  "#395f97",
+  "#327694",
+  "#2d7b64",
+  "#5d8039",
+  "#ac833a",
+  "#97527a",
+  "#95373c",
+  "#6e5c9d"
 ];
 
 const statusFilter = 0;
