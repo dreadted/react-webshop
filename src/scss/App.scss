@@ -170,7 +170,7 @@ nav {
       background: $info;
       color: $light;
       &:nth-child(odd) {
-        background: darken($info, 2);
+        background: darken($info, 4);
       }
 
       &.cart-header {
