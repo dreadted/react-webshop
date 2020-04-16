@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import Form from "react-bootstrap/Form";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// contexts
+
+import { OrderContext } from "../contexts/OrderContext";
 // components
 import SelectCompany from "../common/SelectCompany";
 import TogglePayMethod from "./TogglePayMethod";
 
 interface CheckoutFormProps {
-  order: Order;
-  setOrder: React.Dispatch<React.SetStateAction<Order>>;
   errors: OrderErrors;
   setErrors: React.Dispatch<React.SetStateAction<OrderErrors>>;
   isValidEmail: () => boolean;
@@ -19,14 +20,13 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
-  order,
-  setOrder,
   errors,
   setErrors,
   isValidEmail,
   isSaving,
   onSubmit
 }) => {
+  const { order, setOrder } = useContext(OrderContext);
   const handleChange: HandleChange = e => {
     if (e.target.name) {
       setErrors({ ...errors, [e.target.name]: "" });

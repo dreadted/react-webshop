@@ -12,12 +12,8 @@ import { OrderContext } from "../contexts/OrderContext";
 import { CartAction } from "../hooks/useCart";
 import OrderRows from "../common/OrderRows";
 
-interface ConfirmationProps {
-  order: Order;
-}
-
-const Confirmation: React.FC<ConfirmationProps> = ({ order }) => {
-  const { companies, cart, dispatch } = useContext(OrderContext);
+const Confirmation: React.FC = () => {
+  const { companies, cart, dispatch, order } = useContext(OrderContext);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {

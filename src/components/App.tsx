@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import slugify from "slugify";
 
 // css
 import "../scss/App.scss";
@@ -43,12 +42,6 @@ const App = () => {
 
   const video = useVideo();
 
-  useEffect(() => {
-    companies.map(
-      company => (company.slug = slugify(company.name, { lower: true }))
-    );
-  }, []);
-
   return loading ? (
     <Loading />
   ) : (
@@ -61,7 +54,7 @@ const App = () => {
         }}
       >
         <OrderContext.Provider
-          value={{ companies, cart, dispatch, emptyOrder }}
+          value={{ companies, cart, dispatch, order, setOrder }}
         >
           <Navigation
             clearSearch={clearSearch}
@@ -70,10 +63,10 @@ const App = () => {
           <Container fluid as="main">
             <Switch>
               <Route path="/checkout">
-                <Checkout order={order} setOrder={setOrder} />
+                <Checkout />
               </Route>
               <Route path="/confirmation">
-                <Confirmation order={order} />
+                <Confirmation />
               </Route>
               <Route path="/not-found">
                 <NotFound video={video} hasButton={true} caption="404" />

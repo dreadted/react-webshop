@@ -16,13 +16,8 @@ import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
 import { CartAction } from "../hooks/useCart";
 
-interface CheckoutProps {
-  order: Order;
-  setOrder: React.Dispatch<React.SetStateAction<Order>>;
-}
-
-const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
-  const { cart, dispatch } = useContext(OrderContext);
+const Checkout: React.FC = () => {
+  const { cart, dispatch, order, setOrder } = useContext(OrderContext);
   const [isSaving, setSaving] = useState<boolean>(false);
   const [errors, setErrors] = useState<OrderErrors>({
     companyId: "",
@@ -121,8 +116,6 @@ const Checkout: React.FC<CheckoutProps> = ({ order, setOrder }) => {
         </Col>
         <Col>
           <CheckoutForm
-            order={order}
-            setOrder={setOrder}
             errors={errors}
             setErrors={setErrors}
             isValidEmail={isValidEmail}

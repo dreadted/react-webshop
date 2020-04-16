@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { CartDispatch } from "../hooks/useCart";
+import slugify from "slugify";
 
 export const companies: Company[] = [
   { id: 0, name: "" },
@@ -8,6 +9,10 @@ export const companies: Company[] = [
   { id: 9003, name: "Skanska" },
   { id: 9004, name: "ABB" }
 ];
+
+companies.map(
+  company => (company.slug = slugify(company.name, { lower: true }))
+);
 
 export const emptyCart: Cart = {
   items: new Map<Product, number>(),
@@ -45,15 +50,14 @@ interface IOrderContext {
   companies: Company[];
   cart: Cart;
   dispatch: CartDispatch;
-  emptyOrder: Order;
+  order: Order;
+  setOrder: React.Dispatch<React.SetStateAction<Order>>;
 }
-
-const cart = { ...emptyCart };
-const dispatch: CartDispatch = () => {};
 
 export const OrderContext = createContext<IOrderContext>({
   companies,
-  cart,
-  dispatch,
-  emptyOrder
+  cart: emptyCart,
+  dispatch: () => {},
+  order: emptyOrder,
+  setOrder: () => {}
 });
