@@ -18,7 +18,7 @@ const NotFound: React.FC<NotFoundProps> = ({ video, hasButton, caption }) => {
   const history = useHistory();
   return (
     <div className="video">
-      <div className="overlay w-100">
+      <div className="overlay w-100" style={{ backgroundImage: video.poster }}>
         <video autoPlay loop muted playsInline poster={video.poster}>
           <source src={video.url} type="video/mp4" />
         </video>
