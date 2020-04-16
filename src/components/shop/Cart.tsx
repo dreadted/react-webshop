@@ -105,7 +105,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
                 {getCurrencyFormat(cart.subTotal)}
               </div>
             </div>
-            <div className="ml-auto m-2">
+            <div className="m-2">
               {!atCheckout && (
                 <Link to={"/checkout"} className="btn btn-primary">
                   Check Out
