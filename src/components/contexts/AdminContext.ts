@@ -44,6 +44,6 @@ export const AdminContext = createContext<IAdminContext>({
   setStatusMatches: () => {},
   changeOrderStatus: () => {},
   updateItem: () => {},
-  saveOrder: async order => new Promise(() => {}),
-  deleteOrder: async order => new Promise(() => {})
+  saveOrder: async () => new Promise(() => {}),
+  deleteOrder: async () => new Promise(() => {})
 });
