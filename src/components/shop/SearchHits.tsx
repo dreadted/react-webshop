@@ -4,11 +4,9 @@ import slugify from "slugify";
 
 // css
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 // context
 import { ProductContext } from "../contexts/ProductContext";
-import { OrderContext } from "../contexts/OrderContext";
 
 // components
 import ProductCard from "./ProductCard";
@@ -36,7 +34,6 @@ interface SearchHitsProps {
 
 const SearchHits: React.FC<SearchHitsProps> = ({ setClearSearch, video }) => {
   const { products } = useContext(ProductContext);
-  const { cart } = useContext(OrderContext);
   const { slug } = useParams();
   const [foundProducts, setFoundProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -46,24 +43,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({ setClearSearch, video }) => {
   }, [loading, foundProducts]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (slug) {
-      // const setProductsAsync = async () => {
-      //   console.time("hits");
-      //   const hits: Product[] = await get<Product>(
-      //     `search/?searchText=${slug}`
-      //   );
-      //   const result: Product[] =
-      //     hits && hits.length
-      //       ? products.filter(product =>
-      //           hits.map(hit => hit.id).includes(product.id)
-      //         )
-      //       : NO_MOVIES;
-      //   console.timeEnd("hits");
-
-      //   setFoundProducts(result);
-      // };
-
       const setProducts = () => {
         console.time("hits");
         const slugslug = slugify(slug, { lower: true });
@@ -103,13 +83,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({ setClearSearch, video }) => {
             ))}
           </Row>
         )}
-      <div className={`${cart.open ? "" : "fixed-bottom"}`}>
-        <Row>
-          <Col sm={8} lg={6} className="px-1">
-            <Cart atCheckout={false} />
-          </Col>
-        </Row>
-      </div>
+      <Cart />
     </>
   );
 };

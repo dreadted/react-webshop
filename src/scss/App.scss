@@ -249,7 +249,7 @@ nav {
     li {
       border: none;
       background: $info;
-      &:nth-child(even) {
+      &:nth-child(odd) {
         background: darken($info, 4);
       }
     }

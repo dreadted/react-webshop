@@ -27,7 +27,7 @@ const CartItem: React.FC<CartItemProps> = ({
             alt={item.product.name}
           />
         </div>
-        <div className="flex-grow-1 d-flex flex-column h5 mb-0">
+        <div className="flex-grow-1 d-flex flex-column justify-content-around h5 mb-0">
           <div className="mb-2">{item.product.name}</div>
           <div className="d-flex align-items-center justify-content-between">
             <div

@@ -4,18 +4,20 @@ import { useHistory } from "react-router-dom";
 // css
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
 
 // api
 import { save } from "../../lib/api";
+
+// utils
+import { getCurrencyFormat } from "../../lib/utils";
 
 // context
 import { errorMessage, OrderContext } from "../contexts/OrderContext";
 
 // components
-import Cart from "./Cart";
 import CheckoutForm from "./CheckoutForm";
 import { CartAction } from "../hooks/useCart";
+import CartItems from "./CartItems";
 
 const Checkout: React.FC = () => {
   const { cart, dispatch, order, setOrder } = useContext(OrderContext);
@@ -112,12 +114,18 @@ const Checkout: React.FC = () => {
   return (
     <>
       <Row xs={1} md={2}>
-        <Col className="mt-2 p-0">
-          <Card className="p-0 m-3 bg-info">
-            <Card.Body className="px-3 py-1">
-              <Cart atCheckout={true} />
-            </Card.Body>
-          </Card>
+        <Col className="cart px-1 px-md-3 mt-4">
+          <ul className="list-group">
+            <CartItems />
+            <li className="cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-0">
+              <div className="d-flex h5 ml-auto m-3">
+                <div className="font-weight-light mr-3">Total:</div>
+                <div className="font-weight-bold">
+                  {getCurrencyFormat(cart.subTotal)}
+                </div>
+              </div>
+            </li>
+          </ul>
         </Col>
         <Col>
           <CheckoutForm

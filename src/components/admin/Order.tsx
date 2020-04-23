@@ -1,6 +1,9 @@
 import React, { useState, useContext } from "react";
 import { getCurrencyFormat, getOrderIdFormat } from "../../lib/utils";
 
+// css
+import Collapse from "react-bootstrap/Collapse";
+
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -29,7 +32,8 @@ const Order: React.FC<OrderProps> = ({ order }) => {
     deleteOrder
   } = useContext(AdminContext);
 
-  const [openClass, setOpenClass] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+
   const [selectedStatus, setSelectedStatus] = useState<number | undefined>(
     order.status
   );
@@ -46,7 +50,7 @@ const Order: React.FC<OrderProps> = ({ order }) => {
   const onChangeStatus: HandleChange = e => {
     setSaveState(SaveState.DIRTY);
     setSelectedStatus(parseInt(e.target.value));
-    if (!openClass) toggleOpen();
+    if (!open) toggleOpen();
   };
 
   const onChangeItem: HandleChange = (e, params) => {
@@ -76,7 +80,7 @@ const Order: React.FC<OrderProps> = ({ order }) => {
   };
 
   const toggleOpen = () => {
-    setOpenClass(openClass === "" ? "open" : "");
+    setOpen(!open);
   };
 
   const saveButtonClass = () => {
@@ -123,9 +127,7 @@ const Order: React.FC<OrderProps> = ({ order }) => {
 
   const Footer: React.FC = () => {
     return (
-      <li
-        className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-2 pl-3 m-0 ${openClass}`}
-      >
+      <li className="cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-2 pl-3 m-0">
         <div>
           <PaymentIcon name={order.paymentMethod} size="sm" />
         </div>
@@ -167,18 +169,24 @@ const Order: React.FC<OrderProps> = ({ order }) => {
         <li className="list-group-item p-0 mb-3">
           <ul className="list-group">
             <li
-              className={`toggle list-group-item d-flex align-items-center justify-content-between py-2 ${openClass}`}
+              className={`toggle list-group-item d-flex align-items-center justify-content-between py-2
+              ${open ? "open" : ""}`}
               onClick={onClick}
+              aria-controls={order.id?.toString()}
+              aria-expanded={open}
             >
               <Header />
             </li>
-            <OrderRows
-              editable={true}
-              onChange={onChangeItem}
-              updateParams={{ order }}
-              openClass={openClass}
-            />
-            <Footer />
+            <Collapse in={open}>
+              <div id={order.id?.toString()}>
+                <OrderRows
+                  editable={true}
+                  onChange={onChangeItem}
+                  updateParams={{ order }}
+                />
+                <Footer />
+              </div>
+            </Collapse>
           </ul>
         </li>
       )}

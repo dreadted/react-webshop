@@ -51,16 +51,15 @@ const Confirmation: React.FC = () => {
         <h1 className="m-4 text-secondary">Order confirmation</h1>
       </Row>
       <Row>
-        <Col xs={12} lg={6} className="mb-4">
-          <div className="cart open">
-            <ul className="list-group open">
+        <Col xs={12} lg={6} className="px-1 px-md-3 mb-4">
+          <div className="cart">
+            <ul className="list-group">
               <OrderRows
                 editable={false}
                 onChange={() => {}}
                 updateParams={{ order }}
-                openClass="open"
               />
-              <li className="cart-item cart-footer h5 list-group-item d-flex justify-content-end open">
+              <li className="cart-item cart-footer h5 list-group-item d-flex justify-content-end">
                 <div className="font-weight-bold d-flex m-0">
                   <div className="font-weight-light mr-3">Total:</div>
                   <div>{getCurrencyFormat(order.totalPrice)}</div>
@@ -72,14 +71,14 @@ const Confirmation: React.FC = () => {
             <div className="alert alert-danger mt-4 mb-0">{error}</div>
           )}
         </Col>
-        <Col>
-          <div className="cart open">
+        <Col className="px-1 px-md-3">
+          <div className="cart">
             <ul className="list-group open m-0">
-              <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
+              <li className="cart-item list-group-item d-flex align-items-center justify-content-between">
                 <div className="font-weight-light">order #</div>
                 <div>{getOrderIdFormat(order.id)}</div>
               </li>
-              <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
+              <li className="cart-item list-group-item d-flex align-items-center justify-content-between">
                 <div className="font-weight-light">customer</div>
                 <div>
                   {companies.map(company => {
@@ -89,17 +88,17 @@ const Confirmation: React.FC = () => {
                   })}
                 </div>
               </li>
-              <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
+              <li className="cart-item list-group-item d-flex align-items-center justify-content-between">
                 <div className="font-weight-light">order created</div>
                 <div className="text-nowrap">
                   {new Date(order.created).toLocaleString("en-gb")}
                 </div>
               </li>
-              <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
+              <li className="cart-item list-group-item d-flex align-items-center justify-content-between">
                 <div className="font-weight-light">e-mail</div>
                 <div>{order.createdBy}</div>
               </li>
-              <li className="cart-item list-group-item d-flex align-items-center justify-content-between open">
+              <li className="cart-item list-group-item d-flex align-items-center justify-content-between">
                 <div className="font-weight-light">payment method</div>
                 <div>{order.paymentMethod}</div>
               </li>

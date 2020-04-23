@@ -22,11 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // hooks
 import { CartAction } from "../hooks/useCart";
 
-interface CartProps {
-  atCheckout: boolean;
-}
-
-const Cart: React.FC<CartProps> = ({ atCheckout }) => {
+const Cart: React.FC = () => {
   const { cart, dispatch } = useContext(OrderContext);
   const cartRef = useRef<HTMLDivElement>(null);
 
@@ -38,14 +34,14 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
   useEffect(scrollToCart, [cart.open]);
 
   const classOpen = () => {
-    return cart.open || atCheckout ? "open" : "";
+    return cart.open ? "open" : "";
   };
 
   const classBlink = () => {
     return cart.blink ? "blink" : "";
   };
 
-  const classHeader = () => {
+  const classCaption = () => {
     return (
       !cart.open &&
       (cart.items.size ? " d-none d-sm-none" : "") +
@@ -87,7 +83,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
           <div>
             <FontAwesomeIcon icon="shopping-cart" />
           </div>
-          <div className={`ml-2 font-weight-bold ${classHeader()}`}>
+          <div className={`ml-2 font-weight-bold ${classCaption()}`}>
             Shopping cart
           </div>
         </div>
@@ -105,10 +101,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
     return (
       <>
         {cart.articles ? (
-          <li
-            className={`cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-0
-        ${classOpen()}`}
-          >
+          <li className="cart-item cart-footer list-group-item d-flex justify-content-between align-items-center flex-wrap p-0">
             <div className="d-flex h5 ml-auto m-3">
               <div className="font-weight-light mr-3">Total:</div>
               <div className="font-weight-bold">
@@ -116,16 +109,14 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
               </div>
             </div>
             <div className="m-2">
-              {!atCheckout && (
-                <Link to={"/checkout"} className="btn btn-primary">
-                  Check Out
-                  <FontAwesomeIcon
-                    icon="angle-right"
-                    size="lg"
-                    className="ml-2"
-                  />
-                </Link>
-              )}
+              <Link to={"/checkout"} className="btn btn-primary">
+                Check Out
+                <FontAwesomeIcon
+                  icon="angle-right"
+                  size="lg"
+                  className="ml-2"
+                />
+              </Link>
             </div>
           </li>
         ) : undefined}
@@ -134,15 +125,13 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
   };
 
   return (
-    <Row className={`${cart.open || atCheckout ? "" : "fixed-bottom px-3"}`}>
+    <Row className={`${cart.open ? "" : "fixed-bottom px-3"}`}>
       <Col className="px-0">
         <div className="cart" id="cart" ref={cartRef}>
-          {!atCheckout && (
-            <div className={`cart-header ${classBlink()}`}>
-              <Header />
-            </div>
-          )}
-          <Collapse in={cart.open || atCheckout}>
+          <div className={`cart-header ${classBlink()}`}>
+            <Header />
+          </div>
+          <Collapse in={cart.open}>
             <ul className="list-group list-group-flush">
               <CartItems />
               <Footer />

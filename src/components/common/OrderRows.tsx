@@ -11,15 +11,13 @@ interface OrderRowsProps {
   editable: boolean;
   onChange: HandleChange;
   updateParams: UpdateParams;
-  openClass: string;
 }
 
 const OrderRows: React.FC<OrderRowsProps> = ({
   items,
   editable,
   onChange,
-  updateParams,
-  openClass
+  updateParams
 }) => {
   const { products } = useContext(ProductContext);
 

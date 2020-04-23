@@ -59,7 +59,7 @@ const ProductsPage: React.FC = () => {
             <ProductCard key={product.id} product={product} />
           ))}
       </Row>
-      <Cart atCheckout={false} />
+      <Cart />
     </>
   );
 };
