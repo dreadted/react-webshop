@@ -36,7 +36,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   };
 
   return (
-    <Form onSubmit={onSubmit} noValidate className="mt-4">
+    <Form onSubmit={onSubmit} noValidate autoComplete="off" className="mt-4">
       <SelectCompany
         selected={order.companyId}
         onChange={handleChange}
