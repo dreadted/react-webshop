@@ -64,4 +64,4 @@ npm build
 email: <christofer.laurin@gmail.com>
 linkedin: <https://www.linkedin.com/in/laurin/>
 
-[screenshot]: https://i.imgur.com/PS45vaT.png
+[screenshot]: https://i.imgur.com/xXx3AWk.png
