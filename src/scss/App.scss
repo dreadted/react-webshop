@@ -348,8 +348,32 @@ nav {
 
 /* form
 -----------------------------------------------------------------------------*/
-label {
-  color: $secondary;
+.form-group {
+  label {
+    color: $secondary;
+  }
+
+  input,
+  select {
+    background-color: $info;
+    color: $light;
+    border-color: $info;
+  }
+
+  select:focus {
+    background-color: $light;
+    color: $dark;
+  }
+
+  option {
+    background-color: $light;
+    color: $dark;
+  }
+
+  .is-invalid {
+    background-color: $light;
+    color: $dark;
+  }
 }
 
 /* order admin
