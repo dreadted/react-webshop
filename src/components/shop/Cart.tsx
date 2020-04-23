@@ -44,10 +44,11 @@ const Cart: React.FC = () => {
   const classCaption = () => {
     return (
       !cart.open &&
-      (cart.items.size ? " d-none d-sm-none" : "") +
-        (cart.items.size > 2 ? " d-md-none" : " d-md-block") +
-        (cart.items.size > 3 ? " d-lg-none" : " d-lg-block") +
-        (cart.items.size > 6 ? " d-xl-none" : " d-xl-block")
+      (cart.items.size ? " d-none" : "") +
+        (cart.items.size > 5 ? " d-sm-none" : " d-sm-block") +
+        (cart.items.size > 7 ? " d-md-none" : " d-md-block") +
+        (cart.items.size > 11 ? " d-lg-none" : " d-lg-block") +
+        (cart.items.size > 16 ? " d-xl-none" : " d-xl-block")
     );
   };
 
