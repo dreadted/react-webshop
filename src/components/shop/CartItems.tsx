@@ -7,11 +7,7 @@ import { CartAction } from "../hooks/useCart";
 // components
 import CartItem from "../common/CartItem";
 
-interface CartItemsProps {
-  openClass: string;
-}
-
-const CartItems: React.FC<CartItemsProps> = ({ openClass }) => {
+const CartItems: React.FC = () => {
   const { cart, dispatch } = useContext(OrderContext);
 
   const onChangeItem: HandleChange = (e, params) => {
@@ -29,7 +25,6 @@ const CartItems: React.FC<CartItemsProps> = ({ openClass }) => {
         editable={true}
         onChange={onChangeItem}
         updateParams={{}}
-        openClass={openClass}
       />
     );
   }

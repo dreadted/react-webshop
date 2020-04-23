@@ -9,21 +9,17 @@ interface CartItemProps {
   editable: boolean;
   onChange: HandleChange;
   updateParams: UpdateParams;
-  openClass: string;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
   item,
   editable,
   onChange,
-  updateParams,
-  openClass
+  updateParams
 }) => {
   return (
     <>
-      <li
-        className={`cart-item list-group-item d-flex align-items-center px-3 ${openClass}`}
-      >
+      <li className="cart-item list-group-item d-flex align-items-stretch px-3">
         <div className="mr-3">
           <img
             className="thumbnail"

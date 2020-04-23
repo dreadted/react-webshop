@@ -46,7 +46,6 @@ const OrderRows: React.FC<OrderRowsProps> = ({
               editable={editable}
               onChange={onChange}
               updateParams={{ ...updateParams, items }}
-              openClass={openClass}
             />
           )
         );

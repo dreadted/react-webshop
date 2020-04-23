@@ -3,7 +3,6 @@ import { useParams, Redirect } from "react-router-dom";
 
 // css
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 // context
 import { ProductContext } from "../contexts/ProductContext";
@@ -60,13 +59,7 @@ const ProductsPage: React.FC = () => {
             <ProductCard key={product.id} product={product} />
           ))}
       </Row>
-      <div className={`${cart.open ? "" : "fixed-bottom"}`}>
-        <Row>
-          <Col sm={8} lg={6} className="px-1 px-sm-3">
-            <Cart atCheckout={false} />
-          </Col>
-        </Row>
-      </div>
+      <Cart atCheckout={false} />
     </>
   );
 };

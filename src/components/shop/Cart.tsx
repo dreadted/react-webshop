@@ -2,23 +2,25 @@ import React, { useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // css
-import Accordion from "react-bootstrap/Accordion";
-import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
-import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Collapse from "react-bootstrap/Collapse";
 
 // context
 import { OrderContext } from "../contexts/OrderContext";
 
 //components
 import CartItems from "./CartItems";
+import ModalDialogue from "../common/ModalDialogue";
 
 // utils
 import { getCurrencyFormat } from "../../lib/utils";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// hooks
 import { CartAction } from "../hooks/useCart";
-import ModalDialogue from "../common/ModalDialogue";
 
 interface CartProps {
   atCheckout: boolean;
@@ -77,9 +79,9 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
 
   const Header: React.FC = () => {
     return (
-      <Card.Header
+      <div
         className={`toggle p-0 d-flex align-items-center  ${classOpen()}`}
-        onClick={useAccordionToggle("0", () => dispatch(CartAction.TOGGLE))}
+        onClick={() => dispatch(CartAction.TOGGLE)}
       >
         <div className="d-flex m-3 py-1 align-items-center flex-nowrap h5">
           <div>
@@ -95,7 +97,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
         <div className="ml-auto mr-4">
           <FontAwesomeIcon icon="angle-up" size="lg" />
         </div>
-      </Card.Header>
+      </div>
     );
   };
 
@@ -132,31 +134,28 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
   };
 
   return (
-    <>
-      <div className="cart-offset" ref={cartRef}></div>
-      <Accordion defaultActiveKey={cart.open ? "0" : undefined}>
-        <Card className="cart" id="cart">
+    <Row className={`${cart.open || atCheckout ? "" : "fixed-bottom px-3"}`}>
+      <Col className="px-0">
+        <div className="cart" id="cart" ref={cartRef}>
           {!atCheckout && (
             <div className={`cart-header ${classBlink()}`}>
               <Header />
             </div>
           )}
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <ul className="list-group list-group-flush">
-                <CartItems openClass="open" />
-                <Footer />
-              </ul>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-      <ModalDialogue
-        onConfirm={() => dispatch(CartAction.DELETE)}
-        onCancel={() => dispatch(CartAction.HIDE_MODAL)}
-        props={cart.modal}
-      />
-    </>
+          <Collapse in={cart.open || atCheckout}>
+            <ul className="list-group list-group-flush">
+              <CartItems />
+              <Footer />
+            </ul>
+          </Collapse>
+        </div>
+        <ModalDialogue
+          onConfirm={() => dispatch(CartAction.DELETE)}
+          onCancel={() => dispatch(CartAction.HIDE_MODAL)}
+          props={cart.modal}
+        />
+      </Col>
+    </Row>
   );
 };
 

@@ -160,13 +160,7 @@ nav {
 /* cart
 -----------------------------------------------------------------------------*/
 .cart {
-  .card-header {
-    border-radius: 0;
-  }
-  .card-body {
-    // background-color: transparent;
-    padding: 0;
-  }
+  color: $light;
 
   .cart-header {
     background-color: $primary;
@@ -177,27 +171,7 @@ nav {
     background: $success;
   }
 
-  ul {
-    border: none;
-    min-width: 20rem;
-    user-select: none;
-
-    li {
-      border: none;
-      background: $info;
-      color: $light;
-      &:nth-child(odd) {
-        background: darken($info, 4);
-      }
-    }
-  }
-
   .cart-item {
-    // display: none !important;
-
-    &.open {
-      // display: flex !important;
-    }
     .thumbnail {
       width: 3.2rem;
       height: 4.5rem;
@@ -266,11 +240,20 @@ nav {
       display: none;
     }
   }
-}
 
-.cart-offset {
-  position: relative;
-  top: -6rem;
+  ul {
+    border: none;
+    min-width: 20rem;
+    user-select: none;
+
+    li {
+      border: none;
+      background: $info;
+      &:nth-child(even) {
+        background: darken($info, 4);
+      }
+    }
+  }
 }
 
 .badge {

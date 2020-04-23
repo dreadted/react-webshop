@@ -31,7 +31,6 @@ const ModalDialogue: React.FC<ModalDialogueProps> = ({
                 editable={false}
                 onChange={() => {}}
                 updateParams={{}}
-                openClass="open"
               />
             )}
           </ul>

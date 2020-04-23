@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 // css
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 // api
 import { save } from "../../lib/api";
@@ -112,7 +113,11 @@ const Checkout: React.FC = () => {
     <>
       <Row xs={1} md={2}>
         <Col className="mt-2 p-0">
-          <Cart atCheckout={true} />
+          <Card className="p-0 m-3 bg-info">
+            <Card.Body className="px-3 py-1">
+              <Cart atCheckout={true} />
+            </Card.Body>
+          </Card>
         </Col>
         <Col>
           <CheckoutForm

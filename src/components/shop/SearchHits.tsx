@@ -105,7 +105,7 @@ const SearchHits: React.FC<SearchHitsProps> = ({ setClearSearch, video }) => {
         )}
       <div className={`${cart.open ? "" : "fixed-bottom"}`}>
         <Row>
-          <Col sm={8} lg={6} className="px-1 px-sm-3">
+          <Col sm={8} lg={6} className="px-1">
             <Cart atCheckout={false} />
           </Col>
         </Row>
