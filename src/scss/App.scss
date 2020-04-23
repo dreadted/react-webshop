@@ -160,6 +160,23 @@ nav {
 /* cart
 -----------------------------------------------------------------------------*/
 .cart {
+  .card-header {
+    border-radius: 0;
+  }
+  .card-body {
+    // background-color: transparent;
+    padding: 0;
+  }
+
+  .cart-header {
+    background-color: $primary;
+    transition-duration: 400ms;
+  }
+
+  .blink {
+    background: $success;
+  }
+
   ul {
     border: none;
     min-width: 20rem;
@@ -172,23 +189,14 @@ nav {
       &:nth-child(odd) {
         background: darken($info, 4);
       }
-
-      &.cart-header {
-        background-color: $primary;
-        transition-duration: 400ms;
-      }
-
-      &.blink {
-        background: $success;
-      }
     }
   }
 
   .cart-item {
-    display: none !important;
+    // display: none !important;
 
     &.open {
-      display: flex !important;
+      // display: flex !important;
     }
     .thumbnail {
       width: 3.2rem;

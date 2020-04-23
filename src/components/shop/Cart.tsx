@@ -1,6 +1,11 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
+// css
+import Accordion from "react-bootstrap/Accordion";
+import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
+import Card from "react-bootstrap/Card";
+
 // context
 import { OrderContext } from "../contexts/OrderContext";
 
@@ -72,7 +77,10 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
 
   const Header: React.FC = () => {
     return (
-      <>
+      <Card.Header
+        className={`toggle p-0 d-flex align-items-center  ${classOpen()}`}
+        onClick={useAccordionToggle("0", () => dispatch(CartAction.TOGGLE))}
+      >
         <div className="d-flex m-3 py-1 align-items-center flex-nowrap h5">
           <div>
             <FontAwesomeIcon icon="shopping-cart" />
@@ -87,7 +95,7 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
         <div className="ml-auto mr-4">
           <FontAwesomeIcon icon="angle-up" size="lg" />
         </div>
-      </>
+      </Card.Header>
     );
   };
 
@@ -126,23 +134,23 @@ const Cart: React.FC<CartProps> = ({ atCheckout }) => {
   return (
     <>
       <div className="cart-offset" ref={cartRef}></div>
-      <div className="cart" id="cart">
-        <ul className={`list-group ${cart.open ? "" : "mx-3 m-md-3"}`}>
-          {
-            !atCheckout && (
-              <li
-                onClick={() => dispatch(CartAction.TOGGLE)}
-                className={`cart-header toggle p-0 list-group-item d-flex align-items-center
-          ${classOpen()} ${classBlink()}`}
-              >
-                <Header />
-              </li>
-            ) // om jag lägger <li> i <Header /> funkar inte .toggle { transition:... }
-          }
-          <CartItems openClass={classOpen()} />
-          <Footer />
-        </ul>
-      </div>
+      <Accordion defaultActiveKey={cart.open ? "0" : undefined}>
+        <Card className="cart" id="cart">
+          {!atCheckout && (
+            <div className={`cart-header ${classBlink()}`}>
+              <Header />
+            </div>
+          )}
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <ul className="list-group list-group-flush">
+                <CartItems openClass="open" />
+                <Footer />
+              </ul>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
       <ModalDialogue
         onConfirm={() => dispatch(CartAction.DELETE)}
         onCancel={() => dispatch(CartAction.HIDE_MODAL)}
