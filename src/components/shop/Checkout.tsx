@@ -18,6 +18,7 @@ import { errorMessage, OrderContext } from "../contexts/OrderContext";
 import CheckoutForm from "./CheckoutForm";
 import { CartAction } from "../hooks/useCart";
 import CartItems from "./CartItems";
+import ModalDialogue from "../common/ModalDialogue";
 
 const Checkout: React.FC = () => {
   const { cart, dispatch, order, setOrder } = useContext(OrderContext);
@@ -126,6 +127,11 @@ const Checkout: React.FC = () => {
               </div>
             </li>
           </ul>
+          <ModalDialogue
+            onConfirm={() => dispatch(CartAction.DELETE)}
+            onCancel={() => dispatch(CartAction.HIDE_MODAL)}
+            props={cart.modal}
+          />
         </Col>
         <Col>
           <CheckoutForm
