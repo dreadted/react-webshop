@@ -2,9 +2,9 @@
 
 A webshop mockup built with [Create React App](https://github.com/facebook/create-react-app).
 
-[![React Webshop Screen Shot][screenshot]](https://dreadnallen.github.io/react-webshop)
+[![React Webshop Screen Shot][screenshot]](https://dreadted.github.io/react-webshop)
 
-[Live demo](https://dreadnallen.github.io/react-webshop)
+[Live demo](https://dreadted.github.io/react-webshop)
 
 ## Built with
 
