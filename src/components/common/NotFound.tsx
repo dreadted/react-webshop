@@ -31,7 +31,7 @@ const NotFound: React.FC<NotFoundProps> = ({ video, hasButton, caption }) => {
               </button>
             </div>
           )}
-          <div>
+          <div className="align-self-center text-nowrap">
             <h1>{caption}</h1>
           </div>
         </div>
